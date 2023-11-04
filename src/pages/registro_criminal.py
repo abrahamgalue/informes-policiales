@@ -32,13 +32,18 @@ class FormularioCriminal(tk.Tk):
         self.name_entry = tk.Entry(width=20)
         self.name_entry.grid(row=2, column=1)
 
+        lastname_label = tk.Label(text="Apellido:", justify=tk.LEFT)
+        lastname_label.grid(row=3, column=0, sticky=tk.W)
+        self.lastname_entry = tk.Entry(width=20)
+        self.lastname_entry.grid(row=3, column=1)
+
         dob_label = tk.Label(text="Fecha de nacimiento:")
-        dob_label.grid(row=3, column=0, sticky=tk.W)
+        dob_label.grid(row=4, column=0, sticky=tk.W)
         self.dob_entry = tk.Entry(width=20)
-        self.dob_entry.grid(row=3, column=1)
+        self.dob_entry.grid(row=4, column=1)
 
         sex_label = tk.Label(text="Sexo:")
-        sex_label.grid(row=4, column=0, sticky=tk.W)
+        sex_label.grid(row=5, column=0, sticky=tk.W)
 
         self.sex_entry = ttk.Combobox(
             state="readonly",
@@ -46,20 +51,20 @@ class FormularioCriminal(tk.Tk):
             values=["M", "F"]
         )
         self.sex_entry.current(0)
-        self.sex_entry.grid(row=4, column=1)
+        self.sex_entry.grid(row=5, column=1)
 
         phone_label = tk.Label(text="Número de teléfono:")
-        phone_label.grid(row=5, column=0, sticky=tk.W)
+        phone_label.grid(row=6, column=0, sticky=tk.W)
         self.phone_entry = tk.Entry(width=20)
-        self.phone_entry.grid(row=5, column=1)
+        self.phone_entry.grid(row=6, column=1)
 
         address_label = tk.Label(text="Dirección:")
-        address_label.grid(row=6, column=0, sticky=tk.W)
+        address_label.grid(row=7, column=0, sticky=tk.W)
         self.address_entry = tk.Entry(width=20)
-        self.address_entry.grid(row=6, column=1)
+        self.address_entry.grid(row=7, column=1)
 
         civil_status_label = tk.Label(text="Estado civil:")
-        civil_status_label.grid(row=7, column=0, sticky=tk.W)
+        civil_status_label.grid(row=8, column=0, sticky=tk.W)
 
         self.civil_status_entry = ttk.Combobox(
             state="readonly",
@@ -67,10 +72,10 @@ class FormularioCriminal(tk.Tk):
             values=["Soltero", "Casado"]
         )
         self.civil_status_entry.current(0)
-        self.civil_status_entry.grid(row=7, column=1)
+        self.civil_status_entry.grid(row=8, column=1)
 
         nationality_label = tk.Label(text="Nacionalidad:")
-        nationality_label.grid(row=8, column=0, sticky=tk.W)
+        nationality_label.grid(row=9, column=0, sticky=tk.W)
         self.nationality_entry = ttk.Combobox(
             state="readonly", width=20
         )
@@ -79,23 +84,23 @@ class FormularioCriminal(tk.Tk):
                         )
         self.nationality_entry['values'] = paises
         self.nationality_entry.current(0)
-        self.nationality_entry.grid(row=8, column=1)
+        self.nationality_entry.grid(row=9, column=1)
 
         alias_label = tk.Label(text="Alias:")
-        alias_label.grid(row=9, column=0, sticky=tk.W)
+        alias_label.grid(row=10, column=0, sticky=tk.W)
         self.alias_entry = tk.Entry(width=20)
-        self.alias_entry.grid(row=9, column=1)
+        self.alias_entry.grid(row=10, column=1)
 
         btn_guardar = tk.Button(
             text='Guardar', command=self.save_data)
-        btn_guardar.grid(row=10, column=2)
+        btn_guardar.grid(row=11, column=2)
 
         btn_limpiar = tk.Button(
             text='Limpiar', command=self.clean)
-        btn_limpiar.grid(row=10, column=3)
+        btn_limpiar.grid(row=11, column=3)
 
         btn_salir = tk.Button(text='Salir', command=self.exit)
-        btn_salir.grid(row=10, column=4)
+        btn_salir.grid(row=11, column=4)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
@@ -105,7 +110,10 @@ class FormularioCriminal(tk.Tk):
         patron_nombre = r'^[\S]{1,60}$'
         self.regex_nombre = re.compile(patron_nombre)
 
-        patron_fecha = r'^([0-9]{4})-((?:0?[1-9]|1[0-2])|(?:0?[1-9]|1[0-2]|2[0-8]))-((?:0?[1-9]|[1-2][0-9]|3[0-1]))$'
+        patron_apellido = r'^[\S]{1,60}$'
+        self.regex_apellido = re.compile(patron_apellido)
+
+        patron_fecha = r'^([0-9]{4})-(0[1-9]|1[0-2])-((?:0?[1-9]|[1-2][0-9]|3[0-1]))$'
         self.regex_fecha = re.compile(patron_fecha)
 
         patron_telefono = r'^\d{7,10}$'
@@ -135,6 +143,13 @@ class FormularioCriminal(tk.Tk):
         if re.match(self.regex_nombre, nombre) is None:
             messagebox.showwarning(
                 'Nombre inválido', 'El nombre no es válido')
+            return
+
+        apellido = self.lastname_entry.get()
+
+        if re.match(self.regex_apellido, apellido) is None:
+            messagebox.showwarning(
+                'Apellido inválido', 'El apellido no es válido')
             return
 
         fecha = self.dob_entry.get().strip()
@@ -168,6 +183,7 @@ class FormularioCriminal(tk.Tk):
         criminal_data = {
             "Documento Identidad": self.dni_entry.get(),
             "Nombre": self.name_entry.get(),
+            "Apellido": self.lastname_entry.get(),
             "Fecha de nacimiento": self.dob_entry.get(),
             "Sexo": self.sex_entry.get(),
             "Número de teléfono": self.phone_entry.get(),
