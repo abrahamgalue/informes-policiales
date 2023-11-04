@@ -17,7 +17,7 @@ class FormularioCriminal(tk.Tk):
 
     def inicializar_gui(self):
         """Configurar la interfaz gráfica"""
-        self.title('Registro Criminal')
+        self.title('Registro de Condena')
         self.minsize(400, 400)
 
         title_label = tk.Label(text='REGISTRO DE CONDENA')
