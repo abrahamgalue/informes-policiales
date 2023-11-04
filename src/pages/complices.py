@@ -73,7 +73,7 @@ class FormularioCriminal(tk.Tk):
 
                         )
         self.nationality_entry['values'] = paises
-        
+        self.nationality_entry.current(0)
         self.nationality_entry.grid(row=8, column=1)
 
         alias_label = tk.Label(text="Alias:")
