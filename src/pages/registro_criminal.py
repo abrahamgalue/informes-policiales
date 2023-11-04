@@ -1,6 +1,7 @@
 """Registro del Criminal"""
 import re
 import tkinter as tk
+from tkinter import messagebox
 from tkinter import ttk
 
 
@@ -22,10 +23,8 @@ class FormularioCriminal(tk.Tk):
         title_label.grid(row=0, column=1, pady=10)
 
         dni_label = tk.Label(text="Documento Identidad:", justify=tk.LEFT)
-        validador = (self.register(self.validar), '%i', '%P')
         dni_label.grid(row=1, column=0, sticky=tk.W)
-        self.dni_entry = tk.Entry(self, validate='key', width=20,
-                                  validatecommand=validador, invalidcommand=self.invalidar)
+        self.dni_entry = tk.Entry(width=20)
         self.dni_entry.grid(row=1, column=1)
 
         name_label = tk.Label(text="Nombre:", justify=tk.LEFT)
@@ -87,7 +86,7 @@ class FormularioCriminal(tk.Tk):
         self.alias_entry.grid(row=9, column=1)
 
         btn_guardar = tk.Button(
-            text='Guardar', command=self.save_data, state='disabled')
+            text='Guardar', command=self.save_data)
         btn_guardar.grid(row=10, column=2)
 
         btn_limpiar = tk.Button(
@@ -102,31 +101,71 @@ class FormularioCriminal(tk.Tk):
         patron_documento = r'^[0-9]{7,10}$'
         self.regex_documento = re.compile(patron_documento)
 
-        patron_nombre = r'^[a-zA-Z0-9_\-.]{0,60}$'
+        patron_nombre = r'^[\S]{1,60}$'
         self.regex_nombre = re.compile(patron_nombre)
 
-        patron_fecha = r'^\d{4}-\d{2}-\d{2}$'
+        patron_fecha = r'^([0-9]{4})-((?:0?[1-9]|1[0-2])|(?:0?[1-9]|1[0-2]|2[0-8]))-((?:0?[1-9]|[1-2][0-9]|3[0-1]))$'
         self.regex_fecha = re.compile(patron_fecha)
 
         patron_telefono = r'^\d{7,10}$'
         self.regex_telefono = re.compile(patron_telefono)
 
-        patron_direccion = r'^[a-zA-Z0-9_\-.]{0,200}$'
+        patron_direccion = r'^[a-zA-Z0-9_\-.\s]{0,200}$'
         self.regex_direccion = re.compile(patron_direccion)
 
         patron_nacionalidad = r'^[a-zA-Z0-9_\-.]{0,45}$'
         self.regex_nacionalidad = re.compile(patron_nacionalidad)
 
-        patron_alias = r'^[a-zA-Z0-9_\-.]{0,45}$'
+        patron_alias = r'^[a-zA-Z0-9_\-.\s]{0,45}$'
         self.regex_alias = re.compile(patron_alias)
-
-    # def on_validate(self, indice, usuario):
-    #     return self.regex_documento.match()
 
     def save_data(self):
         """Create a dictionary"""
 
+        documento = self.dni_entry.get().strip()
+
+        if re.match(self.regex_documento, documento) is None:
+            messagebox.showwarning(
+                'Documento inválido', 'El documento no es válido')
+            return
+
+        nombre = self.name_entry.get()
+
+        if re.match(self.regex_nombre, nombre) is None:
+            messagebox.showwarning(
+                'Nombre inválido', 'El nombre no es válido')
+            return
+
+        fecha = self.dob_entry.get().strip()
+
+        if re.match(self.regex_fecha, fecha) is None:
+            messagebox.showwarning(
+                'Fecha inválida', 'La fecha no es válida')
+            return
+
+        telefono = self.phone_entry.get().strip()
+
+        if re.match(self.regex_telefono, telefono) is None:
+            messagebox.showwarning(
+                'Teléfono inválido', 'El teléfono no es válido')
+            return
+
+        direccion = self.address_entry.get().strip()
+
+        if re.match(self.regex_direccion, direccion) is None:
+            messagebox.showwarning(
+                'Dirección inválida', 'La dirección no es válida')
+            return
+
+        alias = self.alias_entry.get().strip()
+
+        if re.match(self.regex_alias, alias) is None:
+            messagebox.showwarning(
+                'Alias inválido', 'El alias no es válido')
+            return
+
         criminal_data = {
+            "Documento Identidad": self.dni_entry.get(),
             "Nombre": self.name_entry.get(),
             "Fecha de nacimiento": self.dob_entry.get(),
             "Sexo": self.sex_entry.get(),
@@ -137,6 +176,11 @@ class FormularioCriminal(tk.Tk):
             "Alias": self.alias_entry.get()
         }
         print(criminal_data)
+
+        messagebox.showinfo(
+            'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
+        self.clean()
+        return
 
     def clean(self):
         """Limpiar los campos del formulario"""
