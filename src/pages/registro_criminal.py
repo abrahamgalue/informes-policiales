@@ -74,8 +74,9 @@ class FormularioCriminal(tk.Tk):
         self.nationality_entry = ttk.Combobox(
             state="readonly", width=20
         )
-        paises = sorted(['Colombia', 'Chile', 'Venezuela',
-                        'México', 'Brasil', 'Uruguay'])
+        paises = sorted(['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana', 'Ecuador', 'El Salvador', 'Estados Unidos', 'Guatemala', 'Guyana', 'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela']
+
+                        )
         self.nationality_entry['values'] = paises
         self.nationality_entry.current(0)
         self.nationality_entry.grid(row=8, column=1)
