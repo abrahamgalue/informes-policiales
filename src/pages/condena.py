@@ -1,47 +1,95 @@
-"""Registro del Criminal"""
+"""Registro de Condena"""
+from tkinter import ttk
+from tkinter import messagebox
+import tkinter as tk
+import re
 from tkinter import *
 
-root = Tk()
-root.title("Registro Condena")
 
-# create a label and input field with tkinter of name,
-# date of born, sex, phone number, address, civil status, nationality.
-date_label = Label(root, text="Fecha:")
-date_label.grid(row=0, column=0, padx=10, pady=10)
-date_entry = Entry(root)
-date_entry.grid(row=0, column=1, padx=10, pady=10)
+class FormularioCriminal(tk.Tk):
+    """Formulario de registro de criminal"""
 
-reason_label = Label(root, text="Motivo:")
-reason_label.grid(row=1, column=0, padx=10, pady=10)
-reason_entry = Entry(root)
-reason_entry.grid(row=1, column=1, padx=10, pady=10)
+    def __init__(self):
+        super().__init__()
 
-judgment_label = Label(root, text="Sentencia:")
-judgment_label.grid(row=2, column=0, padx=10, pady=10)
-judgment_entry = Entry(root)
-judgment_entry.grid(row=2, column=1, padx=10, pady=10)
+        self.inicializar_gui()
+        self.definir_patrones_validaciones()
 
-# create a button to command of function to save
-#  the data in a python dictionary and show it in a label
+    def inicializar_gui(self):
+        """Configurar la interfaz gráfica"""
+        self.title('Registro Criminal')
+        self.minsize(400, 400)
+
+        title_label = tk.Label(text='REGISTRO DE CONDENA')
+        title_label.grid(row=0, column=1, pady=10)
+
+        date_label = tk.Label(text="Fecha:")
+        date_label.grid(row=1, column=0, sticky=tk.W)
+        self.date_entry = tk.Entry(width=20)
+        self.date_entry.grid(row=1, column=1)
+
+        judgment_label = tk.Label(text="Sentencia:")
+        judgment_label.grid(row=2, column=0, sticky=tk.W)
+        self.judgment_entry = tk.Entry(width=20)
+        self.judgment_entry.grid(row=2, column=1)
+
+        btn_guardar = tk.Button(
+            text='Guardar', command=self.save_data)
+        btn_guardar.grid(row=3, column=2)
+
+        btn_limpiar = tk.Button(
+            text='Limpiar', command=self.clean)
+        btn_limpiar.grid(row=3, column=3)
+
+        btn_salir = tk.Button(text='Salir', command=self.exit)
+        btn_salir.grid(row=3, column=4)
+
+    def definir_patrones_validaciones(self):
+        """Patrones de validación"""
+
+        patron_fecha = r'^([0-9]{4})-(0[1-9]|1[0-2])-((?:0?[1-9]|[1-2][0-9]|3[0-1]))$'
+        self.regex_fecha = re.compile(patron_fecha)
+
+        patron_sentencia = r'^[a-zA-Z0-9_\-.\s]{1,200}$'
+        self.regex_sentencia = re.compile(patron_sentencia)
+
+    def save_data(self):
+        """Create a dictionary"""
+
+        fecha = self.date_entry.get().strip()
+
+        if re.match(self.regex_fecha, fecha) is None:
+            messagebox.showwarning(
+                'Fecha inválida', 'La fecha no es válida')
+            return
+
+        criminal_data = {
+            "Fecha": self.date_entry.get(),
+            "Sentencia": self.judgment_entry.get()
+        }
+
+        print(criminal_data)
+
+        messagebox.showinfo(
+            'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
+        self.clean()
+        return
+
+    def clean(self):
+        """Limpiar los campos del formulario"""
+        self.date_entry.delete(0, tk.END)
+        self.judgment_entry.delete(0, tk.END)
+
+    def exit(self):
+        """Salir de la aplicación"""
+        self.destroy()
 
 
-def save_data():
-    """Create a dictionary"""
-    criminal_data = {
-        "Fecha": date_entry.get(),
-        "Motivo": reason_entry.get(),
-        "Sentencia": judgment_entry.get()
-    }
-    for key, value in criminal_data.items():
-        display_label.config(text=display_label.cget(
-            "text") + f"{key}: {value}\n")
+def main():
+    """Renderizar la aplicacion"""
+    app = FormularioCriminal()
+    app.mainloop()
 
 
-save_button = Button(root, text="Guardar", command=save_data)
-save_button.grid(row=4, column=0, padx=10, pady=10)
-
-# create a label to display the saved data
-display_label = Label(root, text="")
-display_label.grid(row=4, column=1, padx=10, pady=10)
-
-root.mainloop()
+if __name__ == '__main__':
+    main()
