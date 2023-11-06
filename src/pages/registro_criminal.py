@@ -3,7 +3,7 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-
+datos = []
 
 class FormularioCriminal(tk.Tk):
     """Formulario de registro de criminal"""
@@ -18,6 +18,7 @@ class FormularioCriminal(tk.Tk):
         """Configurar la interfaz gráfica"""
         self.title('Registro Criminal')
         self.minsize(400, 400)
+        self.resizable(0,0)
 
         title_label = tk.Label(text='REGISTRO DEL CRIMINAL')
         title_label.grid(row=0, column=1, pady=10)
@@ -47,11 +48,11 @@ class FormularioCriminal(tk.Tk):
 
         self.sex_entry = ttk.Combobox(
             state="readonly",
-            width=20,
             values=["M", "F"]
         )
         self.sex_entry.current(0)
-        self.sex_entry.grid(row=5, column=1)
+        #self.sex_entry.grid(row=5, column=1)
+        self.sex_entry.place(relheight=0.056,relwidth=0.307,relx=0.33,rely=0.312)
 
         phone_label = tk.Label(text="Número de teléfono:")
         phone_label.grid(row=6, column=0, sticky=tk.W)
@@ -62,17 +63,6 @@ class FormularioCriminal(tk.Tk):
         address_label.grid(row=7, column=0, sticky=tk.W)
         self.address_entry = tk.Entry(width=20)
         self.address_entry.grid(row=7, column=1)
-
-        civil_status_label = tk.Label(text="Estado civil:")
-        civil_status_label.grid(row=8, column=0, sticky=tk.W)
-
-        self.civil_status_entry = ttk.Combobox(
-            state="readonly",
-            width=20,
-            values=["Soltero", "Casado"]
-        )
-        self.civil_status_entry.current(0)
-        self.civil_status_entry.grid(row=8, column=1)
 
         nationality_label = tk.Label(text="Nacionalidad:")
         nationality_label.grid(row=9, column=0, sticky=tk.W)
@@ -121,9 +111,6 @@ class FormularioCriminal(tk.Tk):
 
         patron_direccion = r'^[a-zA-Z0-9_\-.\s]{0,200}$'
         self.regex_direccion = re.compile(patron_direccion)
-
-        patron_nacionalidad = r'^[a-zA-Z0-9_\-.]{0,45}$'
-        self.regex_nacionalidad = re.compile(patron_nacionalidad)
 
         patron_alias = r'^[a-zA-Z0-9_\-.\s]{0,45}$'
         self.regex_alias = re.compile(patron_alias)
@@ -188,7 +175,6 @@ class FormularioCriminal(tk.Tk):
             "Sexo": self.sex_entry.get(),
             "Número de teléfono": self.phone_entry.get(),
             "Dirección": self.address_entry.get(),
-            "Estado civil": self.civil_status_entry.get(),
             "Nacionalidad": self.nationality_entry.get(),
             "Alias": self.alias_entry.get()
         }
@@ -200,16 +186,19 @@ class FormularioCriminal(tk.Tk):
         return
 
     def clean(self):
+        from condena import FormularioCriminal
         """Limpiar los campos del formulario"""
         self.dni_entry.delete(0, tk.END)
         self.name_entry.delete(0, tk.END)
+        self.lastname_entry.delete(0, tk.END)
         self.dob_entry.delete(0, tk.END)
         self.sex_entry.current(0)
         self.phone_entry.delete(0, tk.END)
         self.address_entry.delete(0, tk.END)
-        self.civil_status_entry.current(0)
         self.nationality_entry.current(0)
         self.alias_entry.delete(0, tk.END)
+        self.destroy()
+        FormularioCriminal()
 
     def exit(self):
         """Salir de la aplicación"""

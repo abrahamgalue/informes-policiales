@@ -81,8 +81,10 @@ class FormularioCriminal(tk.Tk):
         self.judgment_entry.delete(0, tk.END)
 
     def exit(self):
+        from registro_criminal import FormularioCriminal
         """Salir de la aplicación"""
         self.destroy()
+        FormularioCriminal()
 
 
 def main():
