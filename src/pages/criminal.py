@@ -50,7 +50,7 @@ class FormularioCriminal(tk.Tk):
 
         self.sex_entry = ttk.Combobox(
             state="readonly",
-            values=["M", "F"]
+            values=["Masculino", "Femenino"]
         )
         self.sex_entry.current(0)
         # self.sex_entry.grid(row=5, column=1)
@@ -112,7 +112,7 @@ class FormularioCriminal(tk.Tk):
         patron_telefono = r"^(\(?\+[\d]{1,3}\)?)\s?([\d]{1,5})\s?([\d][\s\.-]?){6,7}$"
         self.regex_telefono = re.compile(patron_telefono)
 
-        patron_direccion = r'^[a-zA-Z0-9_\-.\s]{0,200}$'
+        patron_direccion = r'^[a-zA-Z0-9_\-.\s,]{0,200}$'
         self.regex_direccion = re.compile(patron_direccion)
 
         patron_alias = r'^[a-zA-Z0-9_\-.\s]{0,45}$'
