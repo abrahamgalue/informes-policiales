@@ -1,13 +1,11 @@
-"""Registro de Condena"""
-from tkinter import ttk
-from tkinter import messagebox
-import tkinter as tk
+"""Registro de la Condena"""
 import re
-from tkinter import *
+import tkinter as tk
+from tkinter import messagebox
 
 
-class FormularioCriminal(tk.Tk):
-    """Formulario de registro de criminal"""
+class FormularioCondena(tk.Tk):
+    """Formulario de registro de la condena"""
 
     def __init__(self):
         super().__init__()
@@ -81,15 +79,15 @@ class FormularioCriminal(tk.Tk):
         self.judgment_entry.delete(0, tk.END)
 
     def exit(self):
-        from registro_criminal import FormularioCriminal
         """Salir de la aplicación"""
+        from criminal import FormularioCriminal
         self.destroy()
         FormularioCriminal()
 
 
 def main():
     """Renderizar la aplicacion"""
-    app = FormularioCriminal()
+    app = FormularioCondena()
     app.mainloop()
 
 

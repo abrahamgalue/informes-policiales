@@ -2,10 +2,9 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import ttk
 
 
-class FormularioCriminal(tk.Tk):
+class FormularioIdentificacion(tk.Tk):
     """Formulario de señas de identificacion"""
 
     def __init__(self):
@@ -178,7 +177,7 @@ class FormularioCriminal(tk.Tk):
 
 def main():
     """Renderizar la aplicacion"""
-    app = FormularioCriminal()
+    app = FormularioIdentificacion()
     app.mainloop()
 
 

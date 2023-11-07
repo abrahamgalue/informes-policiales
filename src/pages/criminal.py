@@ -3,7 +3,9 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
+
 datos = []
+
 
 class FormularioCriminal(tk.Tk):
     """Formulario de registro de criminal"""
@@ -18,7 +20,7 @@ class FormularioCriminal(tk.Tk):
         """Configurar la interfaz gráfica"""
         self.title('Registro Criminal')
         self.minsize(400, 400)
-        self.resizable(0,0)
+        self.resizable(0, 0)
 
         title_label = tk.Label(text='REGISTRO DEL CRIMINAL')
         title_label.grid(row=0, column=1, pady=10)
@@ -51,8 +53,9 @@ class FormularioCriminal(tk.Tk):
             values=["M", "F"]
         )
         self.sex_entry.current(0)
-        #self.sex_entry.grid(row=5, column=1)
-        self.sex_entry.place(relheight=0.056,relwidth=0.307,relx=0.33,rely=0.312)
+        # self.sex_entry.grid(row=5, column=1)
+        self.sex_entry.place(
+            relheight=0.056, relwidth=0.307, relx=0.33, rely=0.312)
 
         phone_label = tk.Label(text="Número de teléfono:")
         phone_label.grid(row=6, column=0, sticky=tk.W)
@@ -186,8 +189,8 @@ class FormularioCriminal(tk.Tk):
         return
 
     def clean(self):
-        from condena import FormularioCriminal
         """Limpiar los campos del formulario"""
+        from condena import FormularioCondena
         self.dni_entry.delete(0, tk.END)
         self.name_entry.delete(0, tk.END)
         self.lastname_entry.delete(0, tk.END)
@@ -198,7 +201,7 @@ class FormularioCriminal(tk.Tk):
         self.nationality_entry.current(0)
         self.alias_entry.delete(0, tk.END)
         self.destroy()
-        FormularioCriminal()
+        FormularioCondena()
 
     def exit(self):
         """Salir de la aplicación"""

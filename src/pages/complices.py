@@ -1,12 +1,11 @@
-"""Registro del Criminal"""
+"""Registro de los Complices"""
 import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
-
-class FormularioCriminal(tk.Tk):
-    """Formulario de registro de criminal"""
+class FormularioComplices(tk.Tk):
+    """Formulario de registro de los complices"""
 
     def __init__(self):
         super().__init__()
@@ -187,7 +186,7 @@ class FormularioCriminal(tk.Tk):
 
 def main():
     """Renderizar la aplicacion"""
-    app = FormularioCriminal()
+    app = FormularioComplices()
     app.mainloop()
 
 
