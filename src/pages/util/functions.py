@@ -38,7 +38,7 @@ def get_personas():
         return implicados
 #get_personas()
 
-def set_persona(values):
+def add_persona(values):
     try:
         connection = mysql.connector.connect(host='localhost',database='proyecto',user='root',password='')
         if connection.is_connected():
@@ -55,4 +55,4 @@ def set_persona(values):
             print("MySQL connection is closed")        
 #FORMATO PARA INGRESAR DATOS EN PERSONAS
 # datos = (112233,'Elba','Jito',datetime.date(1999,9,9),'Masculino','999-999-9999','No','Hell','El bajito')
-# set_persona(datos)
+# add_persona(datos)
