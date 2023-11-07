@@ -50,7 +50,7 @@ class FormularioCriminal(tk.Tk):
 
         self.sex_entry = ttk.Combobox(
             state="readonly",
-            values=["M", "F"]
+            values=["Masculino", "Femenino"]
         )
         self.sex_entry.current(0)
         # self.sex_entry.grid(row=5, column=1)
