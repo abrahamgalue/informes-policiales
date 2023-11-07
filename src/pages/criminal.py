@@ -182,7 +182,8 @@ class FormularioCriminal(tk.Tk):
             "Alias": self.alias_entry.get()
         }
         print(criminal_data)
-
+        datos = list(criminal_data.values())
+        
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         self.clean()
