@@ -17,6 +17,7 @@ class FormularioCondena(tk.Tk):
         """Configurar la interfaz gráfica"""
         self.title('Registro de Condena')
         self.minsize(400, 400)
+        self.resizable(0, 0)
 
         title_label = tk.Label(text='REGISTRO DE CONDENA')
         title_label.grid(row=0, column=1, pady=10)

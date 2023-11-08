@@ -18,6 +18,7 @@ class FormularioComplices(tk.Tk):
         """Configurar la interfaz gráfica"""
         self.title('Registro Complices')
         self.minsize(400, 400)
+        self.resizable(0, 0)
 
         title_label = tk.Label(text='REGISTRO DEL COMPLICE')
         title_label.grid(row=0, column=1, pady=10)
