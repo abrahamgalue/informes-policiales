@@ -75,19 +75,19 @@ class FormularioIdentificacion(tk.Tk):
         patron_altura = r'^[0-9]{3}\.[0-9]{2}$'
         self.regex_altura = re.compile(patron_altura)
 
-        patron_color_piel = r'^[a-zA-Z0-9_\-.\s]{3,45}$'
+        patron_color_piel = r'^.{3,45}$'
         self.regex_color_piel = re.compile(patron_color_piel)
 
-        patron_cabello = r'^[a-zA-Z0-9_\-.\s]{4,45}$'
+        patron_cabello = r'^.{4,45}$'
         self.regex_cabello = re.compile(patron_cabello)
 
-        patron_color_cabello = r'^[a-zA-Z0-9_\-.\s]{5,45}$'
+        patron_color_cabello = r'^.{5,45}$'
         self.regex_color_cabello = re.compile(patron_color_cabello)
 
-        patron_ojos = r'^[a-zA-Z0-9_\-.\s]{0,45}$'
+        patron_ojos = r'^.{3,45}$'
         self.regex_ojos = re.compile(patron_ojos)
 
-        patron_otras_caracteristicas = r'^[a-zA-Z0-9_\-.\s]{0,60}$'
+        patron_otras_caracteristicas = r'^.{0,60}$'
         self.regex_otras_caracteristicas = re.compile(
             patron_otras_caracteristicas)
 

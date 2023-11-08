@@ -101,13 +101,13 @@ class FormularioComplices(tk.Tk):
         patron_telefono = r"^(\(?\+[\d]{1,3}\)?)\s?([\d]{1,5})\s?([\d][\s\.-]?){6,7}$"
         self.regex_telefono = re.compile(patron_telefono)
 
-        patron_direccion = r'^[a-zA-Z0-9_\-.\s]{1,200}$'
+        patron_direccion = r'^.{1,200}$'
         self.regex_direccion = re.compile(patron_direccion)
 
         patron_nacionalidad = r'^[a-zA-Z0-9_\-.]{0,45}$'
         self.regex_nacionalidad = re.compile(patron_nacionalidad)
 
-        patron_alias = r'^[a-zA-Z0-9_\-.\s]{0,45}$'
+        patron_alias = r'^.{0,45}$'
         self.regex_alias = re.compile(patron_alias)
 
     def save_data(self):
