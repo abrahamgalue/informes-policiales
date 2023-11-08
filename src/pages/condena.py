@@ -48,7 +48,7 @@ class FormularioCondena(tk.Tk):
         patron_fecha = r'^([0-9]{4})-(0[1-9]|1[0-2])-((?:0?[1-9]|[1-2][0-9]|3[0-1]))$'
         self.regex_fecha = re.compile(patron_fecha)
 
-        patron_sentencia = r'^[a-zA-Z0-9_\-.\s]{1,200}$'
+        patron_sentencia = r'^[a-zA-Z0-9_\-.\s]{1,128}$'
         self.regex_sentencia = re.compile(patron_sentencia)
 
     def save_data(self):

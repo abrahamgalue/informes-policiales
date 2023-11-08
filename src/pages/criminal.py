@@ -100,10 +100,10 @@ class FormularioCriminal(tk.Tk):
         patron_documento = r'^[0-9]{7,10}$'
         self.regex_documento = re.compile(patron_documento)
 
-        patron_nombre = r'^[\S]{1,60}$'
+        patron_nombre = r'^[\S]{1,45}$'
         self.regex_nombre = re.compile(patron_nombre)
 
-        patron_apellido = r'^[\S]{1,60}$'
+        patron_apellido = r'^[\S]{1,45}$'
         self.regex_apellido = re.compile(patron_apellido)
 
         patron_fecha = r'^([0-9]{4})-(0[1-9]|1[0-2])-((?:0?[1-9]|[1-2][0-9]|3[0-1]))$'
@@ -112,7 +112,7 @@ class FormularioCriminal(tk.Tk):
         patron_telefono = r"^(\(?\+[\d]{1,3}\)?)\s?([\d]{1,5})\s?([\d][\s\.-]?){6,7}$"
         self.regex_telefono = re.compile(patron_telefono)
 
-        patron_direccion = r'^[a-zA-Z0-9_\-.\s,]{0,200}$'
+        patron_direccion = r'^[a-zA-Z0-9_\-.\s,]{1,200}$'
         self.regex_direccion = re.compile(patron_direccion)
 
         patron_alias = r'^[a-zA-Z0-9_\-.\s]{0,45}$'
@@ -185,7 +185,7 @@ class FormularioCriminal(tk.Tk):
         datos = list(criminal_data.values())
         from util.functions import add_persona
         add_persona(datos)
-        
+
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         self.clean()
