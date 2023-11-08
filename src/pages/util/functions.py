@@ -25,7 +25,7 @@ def get_personas():
         connection = mysql.connector.connect(host='localhost',database='proyecto',user='root',password='')
         if connection.is_connected():
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM persona;")
+            cursor.execute("SELECT * FROM persona ORDER BY nombre;")
             implicados = cursor.fetchall()
             print(implicados)
     except Error as e:
@@ -36,7 +36,7 @@ def get_personas():
             connection.close()
             print("MySQL connection is closed")
         return implicados
-#get_personas()
+get_personas()
 
 def add_persona(values):
     try:
