@@ -99,7 +99,7 @@ class FormularioComplices(tk.Tk):
         patron_fecha = r'^([0-9]{4})-((?:0?[1-9]|1[0-2])|(?:0?[1-9]|1[0-2]|2[0-8]))-((?:0?[1-9]|[1-2][0-9]|3[0-1]))$'
         self.regex_fecha = re.compile(patron_fecha)
 
-        patron_telefono = r"^(\(?\+[\d]{1,3}\)?)\s?([\d]{1,5})\s?([\d][\s\.-]?){6,7}$"
+        patron_telefono = r"^(\(?\+[\d]{1,3}\)?)\s?([\d]{1,5})\s?([\d][\s\.-]?){5,6}$"
         self.regex_telefono = re.compile(patron_telefono)
 
         patron_direccion = r'^.{1,200}$'
