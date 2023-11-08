@@ -183,6 +183,8 @@ class FormularioCriminal(tk.Tk):
         }
         print(criminal_data)
         datos = list(criminal_data.values())
+        from util.functions import add_persona
+        add_persona(datos)
         
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
