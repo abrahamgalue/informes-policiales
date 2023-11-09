@@ -179,7 +179,7 @@ class FormularioCriminal(tk.Tk):
         }
         print(criminal_data)
         datos = list(criminal_data.values())
-        from util.implicado import add_persona
+        from .util.implicado import add_persona
         add_persona(datos)
 
         messagebox.showinfo(
