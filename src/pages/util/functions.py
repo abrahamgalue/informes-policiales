@@ -36,7 +36,6 @@ def get_personas():
             connection.close()
             print("MySQL connection is closed")
         return implicados
-get_personas()
 
 def add_persona(values):
     try:
