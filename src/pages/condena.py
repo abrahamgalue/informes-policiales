@@ -33,15 +33,12 @@ class FormularioCondena(tk.Tk):
         self.judgment_entry.grid(row=2, column=1)
 
         btn_guardar = tk.Button(
-            text='Guardar', command=self.save_data)
+            text='Siguiente', command=self.save_data)
         btn_guardar.grid(row=3, column=2)
 
         btn_limpiar = tk.Button(
             text='Limpiar', command=self.clean)
         btn_limpiar.grid(row=3, column=3)
-
-        btn_salir = tk.Button(text='Salir', command=self.exit)
-        btn_salir.grid(row=3, column=4)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
@@ -71,19 +68,15 @@ class FormularioCondena(tk.Tk):
 
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
-        self.clean()
-        return
+
+        from main import MenuApp
+        self.destroy()
+        MenuApp()
 
     def clean(self):
         """Limpiar los campos del formulario"""
         self.date_entry.delete(0, tk.END)
         self.judgment_entry.delete(0, tk.END)
-
-    def exit(self):
-        """Salir de la aplicación"""
-        from criminal import FormularioCriminal
-        self.destroy()
-        FormularioCriminal()
 
 
 def main():

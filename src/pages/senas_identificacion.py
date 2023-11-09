@@ -58,15 +58,12 @@ class FormularioIdentificacion(tk.Tk):
         self.other_features_entry.grid(row=7, column=1)
 
         btn_guardar = tk.Button(
-            text='Guardar', command=self.save_data)
+            text='Siguiente', command=self.save_data)
         btn_guardar.grid(row=8, column=2)
 
         btn_limpiar = tk.Button(
             text='Limpiar', command=self.clean)
         btn_limpiar.grid(row=8, column=3)
-
-        btn_salir = tk.Button(text='Salir', command=self.exit)
-        btn_salir.grid(row=8, column=4)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
@@ -158,8 +155,9 @@ class FormularioIdentificacion(tk.Tk):
 
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
-        self.clean()
-        return
+        from pages.condena import FormularioCondena
+        self.destroy()
+        FormularioCondena()
 
     def clean(self):
         """Limpiar los campos del formulario"""
@@ -170,10 +168,6 @@ class FormularioIdentificacion(tk.Tk):
         self.hair_color_entry.delete(0, tk.END)
         self.eyes_entry.delete(0, tk.END)
         self.other_features_entry.delete(0, tk.END)
-
-    def exit(self):
-        """Salir de la aplicación"""
-        self.destroy()
 
 
 def main():

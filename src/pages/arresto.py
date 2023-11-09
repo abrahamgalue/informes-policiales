@@ -53,15 +53,12 @@ class FormularioArresto(tk.Tk):
         self.description_entry.grid(row=6, column=1)
 
         btn_guardar = tk.Button(
-            text='Guardar', command=self.save_data)
+            text='Siguiente', command=self.save_data)
         btn_guardar.grid(row=7, column=2)
 
         btn_limpiar = tk.Button(
             text='Limpiar', command=self.clean)
         btn_limpiar.grid(row=7, column=3)
-
-        btn_salir = tk.Button(text='Salir', command=self.exit)
-        btn_salir.grid(row=7, column=4)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
@@ -141,8 +138,9 @@ class FormularioArresto(tk.Tk):
 
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
-
-        return
+        from pages.criminal import FormularioCriminal
+        self.destroy()
+        FormularioCriminal()
 
     def clean(self):
         """Limpiar los campos del formulario"""
@@ -152,10 +150,6 @@ class FormularioArresto(tk.Tk):
         self.crime_entry.delete(0, tk.END)
         self.type_of_crime_entry.delete(0, tk.END)
         self.description_entry.delete(0, tk.END)
-
-    def exit(self):
-        """Salir de la aplicación"""
-        self.destroy()
 
 
 def main():

@@ -84,9 +84,6 @@ class FormularioComplices(tk.Tk):
             text='Limpiar', command=self.clean)
         btn_limpiar.grid(row=10, column=3)
 
-        btn_salir = tk.Button(text='Salir', command=self.exit)
-        btn_salir.grid(row=10, column=4)
-
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
 
@@ -170,8 +167,9 @@ class FormularioComplices(tk.Tk):
 
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
-        self.clean()
-        return
+        from pages.senas_identificacion import FormularioIdentificacion
+        self.destroy()
+        FormularioIdentificacion()
 
     def clean(self):
         """Limpiar los campos del formulario"""
@@ -183,10 +181,6 @@ class FormularioComplices(tk.Tk):
         self.address_entry.delete(0, tk.END)
         self.nationality_entry.current(0)
         self.alias_entry.delete(0, tk.END)
-
-    def exit(self):
-        """Salir de la aplicación"""
-        self.destroy()
 
 
 def main():
