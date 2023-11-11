@@ -56,7 +56,14 @@ class FormularioCondena(tk.Tk):
 
         if re.match(self.regex_fecha, fecha) is None:
             messagebox.showwarning(
-                'Fecha inválida', 'La fecha no es válida')
+                'Fecha inválida', 'El campo Fecha debe cumplir con el formato YYYY-MM-DD (e.g., 2004-11-24).')
+            return
+
+        sentencia = self.judgment_entry.get().strip()
+
+        if re.match(self.regex_sentencia, sentencia) is None:
+            messagebox.showwarning(
+                'Sentencia inválida', 'El campo sentencia es obligatorio y debe tener máximo 128 caracteres.')
             return
 
         criminal_data = {

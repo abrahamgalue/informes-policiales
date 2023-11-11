@@ -115,42 +115,42 @@ class FormularioComplices(tk.Tk):
 
         if re.match(self.regex_nombre, nombre) is None:
             messagebox.showwarning(
-                'Nombre inválido', 'El nombre no es válido')
+                'Nombre inválido', 'El campo Nombre es obligatorio y debe tener máximo 45 caracteres.')
             return
 
         apellido = self.lastname_entry.get()
 
         if re.match(self.regex_apellido, apellido) is None:
             messagebox.showwarning(
-                'Apellido inválido', 'El apellido no es válido')
+                'Apellido inválido', 'El campo Apellido es obligatorio y debe tener máximo 45 caracteres.')
             return
 
         fecha = self.dob_entry.get().strip()
 
         if re.match(self.regex_fecha, fecha) is None:
             messagebox.showwarning(
-                'Fecha inválida', 'La fecha no es válida')
+                'Fecha inválida', 'El campo Fecha de nacimiento debe cumplir con el formato YYYY-MM-DD (e.g., 2004-09-18).')
             return
 
         telefono = self.phone_entry.get().strip()
 
         if re.match(self.regex_telefono, telefono) is None:
             messagebox.showwarning(
-                'Teléfono inválido', 'El teléfono no es válido')
+                'Teléfono inválido', 'El campo Teléfono debe tener máximo 15 caracteres (e.g., +51 987 654 323).')
             return
 
         direccion = self.address_entry.get().strip()
 
         if re.match(self.regex_direccion, direccion) is None:
             messagebox.showwarning(
-                'Dirección inválida', 'La dirección no es válida')
+                'Dirección inválida', 'El campo Dirección es obligatorio y debe tener máximo 200 caracteres.')
             return
 
         alias = self.alias_entry.get().strip()
 
         if re.match(self.regex_alias, alias) is None:
             messagebox.showwarning(
-                'Alias inválido', 'El alias no es válido')
+                'Alias inválido', 'El campo Alias debe tener máximo 45 caracteres.')
             return
 
         criminal_data = {

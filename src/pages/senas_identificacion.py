@@ -96,49 +96,49 @@ class FormularioIdentificacion(tk.Tk):
 
         if re.match(self.regex_peso, peso) is None:
             messagebox.showwarning(
-                'Peso inválido', 'El peso no es válido')
+                'Peso inválido', 'El campo Peso debe ser un número con mínimo 2 dígitos enteros y dos decimales (e.g., 93.14).')
             return
 
         altura = self.height_entry.get().strip()
 
         if re.match(self.regex_altura, altura) is None:
             messagebox.showwarning(
-                'Altura inválida', 'La altura no es válida')
+                'Altura inválida', 'El campo Altura debe ser un número con mínimo 2 dígitos enteros y dos decimales (e.g., 78.00).')
             return
 
         color_piel = self.skin_color_entry.get().strip()
 
         if re.match(self.regex_color_piel, color_piel) is None:
             messagebox.showwarning(
-                'Color de piel inválido', 'El color de piel no es válido')
+                'Color de piel inválido', 'El campo Color de piel debe tener mínimo 3 caracteres y máximo 45.')
             return
 
         cabello = self.hair_entry.get().strip()
 
         if re.match(self.regex_cabello, cabello) is None:
             messagebox.showwarning(
-                'Cabello inválido', 'El cabello no es válido')
+                'Cabello inválido', 'El campo Cabello debe tener mínimo 4 caracteres y máximo 45.')
             return
 
         color_cabello = self.hair_color_entry.get().strip()
 
         if re.match(self.regex_color_cabello, color_cabello) is None:
             messagebox.showwarning(
-                'Color de cabello inválido', 'El color de cabello no es válido')
+                'Color de cabello inválido', 'El campo Color de cabello debe tener mínimo 5 caracteres y máximo 45.')
             return
 
         ojos = self.eyes_entry.get().strip()
 
         if re.match(self.regex_ojos, ojos) is None:
             messagebox.showwarning(
-                'Ojos inválidos', 'Los ojos no son válidos')
+                'Ojos inválidos', 'El Campo Ojos debe tener mínimo 3 caracteres y máximo 45.')
             return
 
         otras_caracteristicas = self.other_features_entry.get().strip()
 
         if re.match(self.regex_otras_caracteristicas, otras_caracteristicas) is None:
             messagebox.showwarning(
-                'Otras caracteristicas inválidas', 'Las otras caracteristicas no son válidas')
+                'Otras caracteristicas inválidas', 'El campo Otras caracteristicas debe tener como máximo 60 caracteres.')
             return
 
         criminal_data = {

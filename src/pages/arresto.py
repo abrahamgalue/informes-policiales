@@ -88,42 +88,42 @@ class FormularioArresto(tk.Tk):
 
         if re.match(self.regex_fecha, fecha) is None:
             messagebox.showwarning(
-                'Fecha inválida', 'La fecha no es válida')
+                'Fecha inválida', 'El campo Fecha de nacimiento debe cumplir con el formato YYYY-MM-DD (e.g., 1958-08-29).')
             return
 
         hora = self.hour_entry.get()
 
         if re.match(self.regex_hora, hora) is None:
             messagebox.showwarning(
-                'Hora inválida', 'La hora no es válida')
+                'Hora inválida', 'El campo Hora debe cumplir con el formato HH:MM:SS (e.g., 10:30:12).')
             return
 
         lugar = self.place_entry.get()
 
         if re.match(self.regex_lugar, lugar) is None:
             messagebox.showwarning(
-                'Lugar inválido', 'El lugar no es válido')
+                'Lugar inválido', 'El campo Lugar es obligatorio y debe tener máximo 60 caracteres.')
             return
 
         delito = self.crime_entry.get()
 
         if re.match(self.regex_delito, delito) is None:
             messagebox.showwarning(
-                'Delito inválido', 'El delito no es válido')
+                'Delito inválido', 'El campo delito es obligatorio y debe tener máximo 45 caracteres.')
             return
 
         tipo_delito = self.type_of_crime_entry.get()
 
         if re.match(self.regex_tipo_delito, tipo_delito) is None:
             messagebox.showwarning(
-                'Tipo de delito inválido', 'El tipo de delito no es válido')
+                'Tipo de delito inválido', 'El campo tipo de delito es obligatorio y debe tener máximo 45 caracteres.')
             return
 
         descripcion = self.description_entry.get()
 
         if re.match(self.regex_descripcion, descripcion) is None:
             messagebox.showwarning(
-                'Descripción inválida', 'La descripción no es válida')
+                'Descripción inválida', 'El campo Descripción es obligatorio y debe tener máximo 200 caracteres.')
             return
 
         criminal_data = {
