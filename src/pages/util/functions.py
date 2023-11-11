@@ -2,7 +2,7 @@ import datetime
 import mysql.connector
 from mysql.connector import Error
 
-def conneccion(pswrd = '', prt = 3306):
+def coneccion(pswrd = '', prt = 3306):
     try:
         connection = mysql.connector.connect(host='localhost',port=prt,database='proyecto',
                                              user='root',password=pswrd)

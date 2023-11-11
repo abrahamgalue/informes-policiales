@@ -1,10 +1,10 @@
 import mysql.connector
 from mysql.connector import Error
-from .functions import conneccion
+from .functions import coneccion
 
 def add_arresto(values):
     try:
-        connection = conneccion()
+        connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
             sql = """INSERT INTO ocurrencia_de_arresto (fecha, hora, lugar, delito, 
@@ -28,7 +28,7 @@ def add_arresto(values):
 
 def remove_arresto(id):
     try:
-        connection = conneccion()
+        connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
             cursor.execute("DELETE FROM ocurrencia_de_arresto WHERE id = %s;",(id,))
@@ -47,7 +47,7 @@ def remove_arresto(id):
 
 def get_arresto(id):
     try:
-        connection = conneccion()
+        connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
             cursor.execute("SELECT * FROM ocurrencia_de_arresto WHERE id = %s;",(id,))
@@ -68,7 +68,7 @@ def get_arresto(id):
 
 def get_arrestos():
     try:
-        connection = conneccion()
+        connection = coneccion()
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM ocurrencia_de_arresto ORDER BY id;")
         implicados = cursor.fetchall()

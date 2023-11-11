@@ -1,10 +1,10 @@
 import mysql.connector
 from mysql.connector import Error
-from .functions import conneccion
+from .functions import coneccion
 
 def add_persona(values):
     try:
-        connection = conneccion()
+        connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
             cursor.execute("INSERT INTO persona VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);",values)
@@ -25,7 +25,7 @@ def add_persona(values):
 
 def remove_persona(ced):
     try:
-        connection = conneccion()
+        connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
             cursor.execute("DELETE FROM persona WHERE numero_de_identificacion = %s;",(ced,))
@@ -44,7 +44,7 @@ def remove_persona(ced):
 
 def get_persona(ced):
     try:
-        connection = conneccion()
+        connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
             cursor.execute("SELECT * FROM persona WHERE numero_de_identificacion = %s;",(ced,))
@@ -65,7 +65,7 @@ def get_persona(ced):
 
 def get_personas():
     try:
-        connection = conneccion()
+        connection = coneccion()
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM persona ORDER BY nombre;")
         implicados = cursor.fetchall()
