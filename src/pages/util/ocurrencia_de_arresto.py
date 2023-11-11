@@ -1,4 +1,3 @@
-import mysql.connector
 from mysql.connector import Error
 from .functions import coneccion
 
@@ -65,19 +64,20 @@ def get_arresto(id):
                 print("MySQL connection is closed")
 # get_persona(12345678)
 
-
 def get_arrestos():
     try:
         connection = coneccion()
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM ocurrencia_de_arresto ORDER BY id;")
-        implicados = cursor.fetchall()
-        print(implicados)
+        if connection is not None:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM ocurrencia_de_arresto ORDER BY id;")
+            implicados = cursor.fetchall()
+            print(implicados)
     except Error as e:
         print("Error while connecting to MySQL", e)
     finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
-        return implicados
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
+            return implicados
