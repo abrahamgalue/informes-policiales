@@ -67,10 +67,10 @@ class FormularioIdentificacion(tk.Tk):
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
-        patron_peso = r'^[0-9]{3}\.[0-9]{2}$'
+        patron_peso = r'^[0-9]{2,3}\.[0-9]{2}$'
         self.regex_peso = re.compile(patron_peso)
 
-        patron_altura = r'^[0-9]{3}\.[0-9]{2}$'
+        patron_altura = r'^[0-9]{2,3}\.[0-9]{2}$'
         self.regex_altura = re.compile(patron_altura)
 
         patron_color_piel = r'^.{3,45}$'
