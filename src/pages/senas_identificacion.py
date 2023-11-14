@@ -2,6 +2,7 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
+from pages.criminal import tiene_complices
 
 
 class FormularioIdentificacion(tk.Tk):
@@ -152,12 +153,17 @@ class FormularioIdentificacion(tk.Tk):
         }
 
         print(criminal_data)
-
+        print(tiene_complices)
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         from pages.condena import FormularioCondena
+        from pages.complices import FormularioComplices
         self.destroy()
-        FormularioCondena()
+
+        if tiene_complices:
+            FormularioComplices()
+        else:
+            FormularioCondena()
 
     def clean(self):
         """Limpiar los campos del formulario"""

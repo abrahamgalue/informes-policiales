@@ -5,6 +5,7 @@ from tkinter import messagebox
 from tkinter import ttk
 
 datos = []
+tiene_complices = False
 
 
 class FormularioCriminal(tk.Tk):
@@ -78,6 +79,14 @@ class FormularioCriminal(tk.Tk):
         self.nationality_entry['values'] = paises
         self.nationality_entry.current(0)
         self.nationality_entry.grid(row=9, column=1)
+
+        has_complices_label = tk.Label(text="Tiene Complices?")
+        has_complices_label.grid(row=12, column=0, sticky=tk.W)
+        self.has_complices_entry = ttk.Combobox(
+            state="readonly", width=20, values=["No", "Si"]
+        )
+        self.has_complices_entry.current(0)
+        self.has_complices_entry.grid(row=12, column=1)
 
         alias_label = tk.Label(text="Alias:")
         alias_label.grid(row=10, column=0, sticky=tk.W)
@@ -179,6 +188,12 @@ class FormularioCriminal(tk.Tk):
             "Alias": self.alias_entry.get()
         }
         print(criminal_data)
+        print(self.has_complices_entry.get())
+
+        if self.has_complices_entry.get() == 'Si':
+            global tiene_complices
+            tiene_complices = True
+
         datos = list(criminal_data.values())
         from .util.implicado import add_persona
         add_persona(datos)

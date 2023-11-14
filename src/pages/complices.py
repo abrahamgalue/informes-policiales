@@ -20,7 +20,7 @@ class FormularioComplices(tk.Tk):
         self.minsize(400, 400)
         self.resizable(0, 0)
 
-        title_label = tk.Label(text='REGISTRO DEL COMPLICE')
+        title_label = tk.Label(text='REGISTRO DE LOS COMPLICES')
         title_label.grid(row=0, column=1, pady=10)
 
         name_label = tk.Label(text="Nombre:", justify=tk.LEFT)
@@ -81,7 +81,7 @@ class FormularioComplices(tk.Tk):
         btn_guardar.grid(row=10, column=2)
 
         btn_limpiar = tk.Button(
-            text='Limpiar', command=self.clean)
+            text='Siguiente', command=self.next_page)
         btn_limpiar.grid(row=10, column=3)
 
     def definir_patrones_validaciones(self):
@@ -167,9 +167,13 @@ class FormularioComplices(tk.Tk):
 
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
-        from pages.senas_identificacion import FormularioIdentificacion
+        self.clean()
+
+    def next_page(self):
+        """Cambiar a la siguiente página"""
+        from pages.condena import FormularioCondena
         self.destroy()
-        FormularioIdentificacion()
+        FormularioCondena()
 
     def clean(self):
         """Limpiar los campos del formulario"""
