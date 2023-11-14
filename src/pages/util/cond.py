@@ -1,5 +1,5 @@
 from mysql.connector import Error
-from functions import coneccion
+from .functions import coneccion
 
 def add_condena(values):
     try:
