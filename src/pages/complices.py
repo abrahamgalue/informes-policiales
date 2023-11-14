@@ -23,6 +23,11 @@ class FormularioComplices(tk.Tk):
         title_label = tk.Label(text='REGISTRO DE LOS COMPLICES')
         title_label.grid(row=0, column=1, pady=10)
 
+        dni_label = tk.Label(text="Documento Identidad:", justify=tk.LEFT)
+        dni_label.grid(row=1, column=0, sticky=tk.W)
+        self.dni_entry = tk.Entry(width=20)
+        self.dni_entry.grid(row=1, column=1)
+        
         name_label = tk.Label(text="Nombre:", justify=tk.LEFT)
         name_label.grid(row=2, column=0, sticky=tk.W)
         self.name_entry = tk.Entry(width=20)
@@ -44,7 +49,7 @@ class FormularioComplices(tk.Tk):
         self.sex_entry = ttk.Combobox(
             state="readonly",
             width=20,
-            values=["M", "F"]
+            values=["Masculino", "Femenino"]
         )
         self.sex_entry.current(0)
         self.sex_entry.grid(row=5, column=1)
@@ -86,7 +91,9 @@ class FormularioComplices(tk.Tk):
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
-
+        patron_documento = r'^[0-9]{7,10}$'
+        self.regex_documento = re.compile(patron_documento)
+        
         patron_nombre = r'^[\S]{1,45}$'
         self.regex_nombre = re.compile(patron_nombre)
 
@@ -110,7 +117,13 @@ class FormularioComplices(tk.Tk):
 
     def save_data(self):
         """Create a dictionary"""
+        documento = self.dni_entry.get().strip()
 
+        if re.match(self.regex_documento, documento) is None:
+            messagebox.showwarning(
+                'Documento inválido', 'El campo Documento debe tener mínimo 7 dígitos y máximo 10.')
+            return
+        
         nombre = self.name_entry.get()
 
         if re.match(self.regex_nombre, nombre) is None:
@@ -154,6 +167,7 @@ class FormularioComplices(tk.Tk):
             return
 
         criminal_data = {
+            "Documento Identidad": self.dni_entry.get(),
             "Nombre": self.name_entry.get(),
             "Apellido": self.lastname_entry.get(),
             "Fecha de nacimiento": self.dob_entry.get(),
@@ -177,6 +191,7 @@ class FormularioComplices(tk.Tk):
 
     def clean(self):
         """Limpiar los campos del formulario"""
+        self.dni_entry.delete(0, tk.END)
         self.name_entry.delete(0, tk.END)
         self.lastname_entry.delete(0, tk.END)
         self.dob_entry.delete(0, tk.END)
