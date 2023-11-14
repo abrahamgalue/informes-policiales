@@ -3,8 +3,9 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
+from pages.arresto import datos_arresto
 
-datos = []
+datos_criminal = []
 tiene_complices = False
 
 
@@ -194,9 +195,11 @@ class FormularioCriminal(tk.Tk):
             global tiene_complices
             tiene_complices = True
 
-        datos = list(criminal_data.values())
-        from .util.implicado import add_persona
-        add_persona(datos)
+        global datos_criminal
+        datos_criminal = list(criminal_data.values())
+        global datos_arresto
+        datos_arresto.append(self.dni_entry.get())
+        print(datos_arresto)
 
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')

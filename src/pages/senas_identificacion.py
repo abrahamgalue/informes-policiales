@@ -2,8 +2,9 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
-from pages.criminal import tiene_complices
+from pages.criminal import tiene_complices,datos_criminal
 
+datos_senas = []
 
 class FormularioIdentificacion(tk.Tk):
     """Formulario de señas de identificacion"""
@@ -154,6 +155,11 @@ class FormularioIdentificacion(tk.Tk):
 
         print(criminal_data)
         print(tiene_complices)
+        global datos_senas
+        datos_senas = list(criminal_data.values())
+        datos_senas.append(datos_criminal[0])
+        print(datos_senas)
+        
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         from pages.condena import FormularioCondena

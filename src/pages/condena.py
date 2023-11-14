@@ -2,7 +2,11 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
+from pages.arresto import datos_arresto
+from pages.criminal import datos_criminal
+from pages.senas_identificacion import datos_senas
 
+datos_condena = []
 
 class FormularioCondena(tk.Tk):
     """Formulario de registro de la condena"""
@@ -72,7 +76,25 @@ class FormularioCondena(tk.Tk):
         }
 
         print(criminal_data)
-
+        global datos_condena
+        datos_condena = list(criminal_data.values())
+        
+        from pages.util.functions import id_arresto
+        datos_condena.append(id_arresto())
+        print("Datos Arresto:",datos_arresto)
+        print("Datos Implicado:",datos_criminal)
+        print("Datos Señas de Identificacion:",datos_senas)
+        print("Datos Condena:",datos_condena)
+        
+        from pages.util.implicado import add_persona
+        from pages.util.ocurrencia_de_arresto import add_arresto
+        from pages.util.senas_de_identificacion import add_seña
+        from pages.util.cond import add_condena
+        add_persona(datos_criminal)
+        add_arresto(datos_arresto)
+        add_seña(datos_senas)
+        add_condena(datos_condena)        
+        
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
 

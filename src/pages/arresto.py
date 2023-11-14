@@ -3,6 +3,7 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 
+datos_arresto = []
 
 class FormularioArresto(tk.Tk):
     """Formulario de registro de arresto"""
@@ -135,7 +136,9 @@ class FormularioArresto(tk.Tk):
             "Descripción": self.description_entry.get()
         }
         print(criminal_data)
-
+        global datos_arresto
+        datos_arresto = list(criminal_data.values())
+       
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         from pages.criminal import FormularioCriminal
