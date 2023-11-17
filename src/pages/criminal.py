@@ -7,7 +7,9 @@ from pages.arresto import datos_arresto
 
 datos_criminal = []
 tiene_complices = False
-
+img = None
+ButtonImg = None
+ButtonImg2 = None
 
 class FormularioCriminal(tk.Tk):
     """Formulario de registro de criminal"""
@@ -21,86 +23,110 @@ class FormularioCriminal(tk.Tk):
     def inicializar_gui(self):
         """Configurar la interfaz gráfica"""
         self.title('Registro Criminal')
-        self.minsize(400, 400)
+        self.geometry("1000x750")
         self.resizable(0, 0)
 
-        title_label = tk.Label(text='REGISTRO DEL CRIMINAL')
-        title_label.grid(row=0, column=1, pady=10)
+        bg_file = './src/img/persona_entry.png'
+        sig_file = './src/img/sig_button.png'
+        back_file = './src/img/back_button.png'
+        global img
+        img = tk.PhotoImage(file=bg_file) 
+        # sig_file = os.path.join(os.path.dirname(__file__), "sig_button.png")
+        global ButtonImg
+        ButtonImg = tk.PhotoImage(file=sig_file)
+        # bg_file = os.path.join(os.path.dirname(__file__), "sig_button.png")
+        global ButtonImg2
+        ButtonImg2 = tk.PhotoImage(file=back_file)
 
-        dni_label = tk.Label(text="Documento Identidad:", justify=tk.LEFT)
-        dni_label.grid(row=1, column=0, sticky=tk.W)
-        self.dni_entry = tk.Entry(width=20)
-        self.dni_entry.grid(row=1, column=1)
+        self.fondo = tk.Canvas(self,width=1000,height=750)
+        self.fondo.create_image(0,0, image=img, anchor = 'nw') 
+        self.fondo.pack()
 
-        name_label = tk.Label(text="Nombre:", justify=tk.LEFT)
-        name_label.grid(row=2, column=0, sticky=tk.W)
-        self.name_entry = tk.Entry(width=20)
-        self.name_entry.grid(row=2, column=1)
+        self.dni_entry= tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.dni_entry.config(bd=0)
+        self.dni_entry.place(x=234,y=250,height=31,width=210)
+        self.dni_entry.lift()
 
-        lastname_label = tk.Label(text="Apellido:", justify=tk.LEFT)
-        lastname_label.grid(row=3, column=0, sticky=tk.W)
-        self.lastname_entry = tk.Entry(width=20)
-        self.lastname_entry.grid(row=3, column=1)
+        self.name_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.name_entry.config(bd=0)
+        self.name_entry.place(x=234,y=300,height=31,width=210)  
+        self.name_entry.lift()
 
-        dob_label = tk.Label(text="Fecha de nacimiento:")
-        dob_label.grid(row=4, column=0, sticky=tk.W)
-        self.dob_entry = tk.Entry(width=20)
-        self.dob_entry.grid(row=4, column=1)
+        self.lastname_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.lastname_entry.config(bd=0)
+        self.lastname_entry.place(x=234,y=350,height=31,width=210)
+        self.lastname_entry.lift()
+        
+        self.alias_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.alias_entry.config(bd=0)
+        self.alias_entry.place(x=234,y=400,height=31,width=210)
+        self.alias_entry.lift() 
 
-        sex_label = tk.Label(text="Sexo:")
-        sex_label.grid(row=5, column=0, sticky=tk.W)
+        #telefono
+        self.phone_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.phone_entry.config(bd=0)
+        self.phone_entry.place(x=646,y=450,height=31,width=305)
+        self.phone_entry.lift()
 
+        #direccion
+        self.address_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.address_entry.config(bd=0)
+        self.address_entry.place(x=646,y=500,height=31,width=305)
+        self.address_entry.lift()
+
+        self.dob_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.dob_entry.config(bd=0)
+        self.dob_entry.place(x=234,y=580,height=31,width=210)
+        self.dob_entry.lift()
+        
+        #""" NO TOCAR """
+
+        combostyle = ttk.Style()
+
+        combostyle.theme_create('combostyle', parent='alt',
+                                settings = {'TCombobox':
+                                            {'configure':
+                                            {'selectbackground': '#EFA11A', #Color al seleccionar una opcion
+                                            'fieldbackground': '#EFA11A', #Color del fondo 
+                                            'background': '#EFA11A', #color de la flechita
+                                            'font': ('Cascadia Code', 16), #tipo de fuente
+                                            'foreground':'white', #color de la fuente
+                                            'borderwidth': '0',
+                                            'highlightthickness':'0' #borde
+                                            }}}
+                                )
+        # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
+        combostyle.theme_use('combostyle') 
+    
         self.sex_entry = ttk.Combobox(
-            state="readonly",
-            values=["Masculino", "Femenino"]
+        state="readonly",
+        values=["Masculino", "Femenino"],
+        font=("Cascadia Code",16),
         )
         self.sex_entry.current(0)
-        # self.sex_entry.grid(row=5, column=1)
-        self.sex_entry.place(
-            relheight=0.056, relwidth=0.307, relx=0.33, rely=0.312)
-
-        phone_label = tk.Label(text="Número de teléfono:")
-        phone_label.grid(row=6, column=0, sticky=tk.W)
-        self.phone_entry = tk.Entry(width=20)
-        self.phone_entry.grid(row=6, column=1)
-
-        address_label = tk.Label(text="Dirección:")
-        address_label.grid(row=7, column=0, sticky=tk.W)
-        self.address_entry = tk.Entry(width=20)
-        self.address_entry.grid(row=7, column=1)
-
-        nationality_label = tk.Label(text="Nacionalidad:")
-        nationality_label.grid(row=9, column=0, sticky=tk.W)
+        self.sex_entry.place(x=234,y=500,height=31,width=210)
+        self.sex_entry.pack
+        #Nacionalidad NI SE TE OCURRA TOCAR.
+        combostyle.theme_use('combostyle') 
+    
         self.nationality_entry = ttk.Combobox(
-            state="readonly", width=20
+        state="readonly",
+        values=['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana', 'Ecuador', 'El Salvador', 'Estados Unidos', 'España','Guatemala', 'Guyana', 'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela'],
+        font=("Cascadia Code",16),
         )
-        paises = sorted(['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana', 'Ecuador', 'El Salvador', 'Estados Unidos', 'Guatemala', 'Guyana', 'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela']
-
-                        )
-        self.nationality_entry['values'] = paises
         self.nationality_entry.current(0)
-        self.nationality_entry.grid(row=9, column=1)
+        self.nationality_entry.place(x=234,y=450,height=31,width=210)
+        self.nationality_entry.pack
 
-        has_complices_label = tk.Label(text="Tiene Complices?")
-        has_complices_label.grid(row=12, column=0, sticky=tk.W)
-        self.has_complices_entry = ttk.Combobox(
-            state="readonly", width=20, values=["No", "Si"]
-        )
-        self.has_complices_entry.current(0)
-        self.has_complices_entry.grid(row=12, column=1)
+        self.btn_next = tk.Button(bd=0,image=ButtonImg,activebackground='black',command=self.save_data)
+        self.btn_next.place(x = 716, y = 575, height=79, width=235) 
 
-        alias_label = tk.Label(text="Alias:")
-        alias_label.grid(row=10, column=0, sticky=tk.W)
-        self.alias_entry = tk.Entry(width=20)
-        self.alias_entry.grid(row=10, column=1)
-
-        btn_guardar = tk.Button(
-            text='Siguiente', command=self.save_data)
-        btn_guardar.grid(row=11, column=2)
-
-        btn_limpiar = tk.Button(
-            text='Limpiar', command=self.clean)
-        btn_limpiar.grid(row=11, column=3)
+        self.btn_back = tk.Button(bd=0,image=ButtonImg2,activebackground='#021118')
+        self.btn_back.place(x=75, y=87.3, height=53, width=95)
+        
+        # btn_limpiar = tk.Button(
+        #     text='Limpiar', command=self.clean)
+        # btn_limpiar.grid(row=11, column=3)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
@@ -189,11 +215,11 @@ class FormularioCriminal(tk.Tk):
             "Alias": self.alias_entry.get()
         }
         print(criminal_data)
-        print(self.has_complices_entry.get())
+        """ print(self.has_complices_entry.get())
 
         if self.has_complices_entry.get() == 'Si':
             global tiene_complices
-            tiene_complices = True
+            tiene_complices = True """
 
         global datos_criminal
         datos_criminal = list(criminal_data.values())
