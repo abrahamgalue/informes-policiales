@@ -1,6 +1,6 @@
 """Reseñas Policiales"""
 import tkinter as tk
-from pages.arresto import FormularioArresto
+from pages.arresto_condena import FormularioArresto
 from pages.exportar import ExportarDatos
 
 img = None

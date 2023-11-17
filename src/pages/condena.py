@@ -2,7 +2,7 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
-from pages.arresto import datos_arresto
+from pages.arresto_condena import datos_arresto
 from pages.criminal import datos_criminal
 from pages.senas_identificacion import datos_senas
 

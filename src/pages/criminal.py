@@ -3,13 +3,16 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-from pages.arresto import datos_arresto
+from pages.arresto_condena import datos_arresto
 
 datos_criminal = []
 tiene_complices = False
 img = None
 ButtonImg = None
 ButtonImg2 = None
+icono_grande = None
+icono_chico = None
+
 
 class FormularioCriminal(tk.Tk):
     """Formulario de registro de criminal"""
@@ -29,8 +32,17 @@ class FormularioCriminal(tk.Tk):
         bg_file = './src/img/persona_entry.png'
         sig_file = './src/img/sig_button.png'
         back_file = './src/img/back_button.png'
+
+        global icono_grande
+        icono_grande = tk.PhotoImage(file='./src/img/icon-32.png')
+
+        global icono_chico
+        icono_chico = tk.PhotoImage(file='./src/img/icon-16.png')
+
+        self.iconphoto(False, icono_grande, icono_chico)
+
         global img
-        img = tk.PhotoImage(file=bg_file) 
+        img = tk.PhotoImage(file=bg_file)
         # sig_file = os.path.join(os.path.dirname(__file__), "sig_button.png")
         global ButtonImg
         ButtonImg = tk.PhotoImage(file=sig_file)
@@ -38,92 +50,103 @@ class FormularioCriminal(tk.Tk):
         global ButtonImg2
         ButtonImg2 = tk.PhotoImage(file=back_file)
 
-        self.fondo = tk.Canvas(self,width=1000,height=750)
-        self.fondo.create_image(0,0, image=img, anchor = 'nw') 
+        self.fondo = tk.Canvas(self, width=1000, height=750)
+        self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
 
-        self.dni_entry= tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.dni_entry = tk.Entry(self, background="#EFA11A", font=(
+            "Cascadia Code", 16), fg="white")
         self.dni_entry.config(bd=0)
-        self.dni_entry.place(x=234,y=250,height=31,width=210)
+        self.dni_entry.place(x=234, y=250, height=31, width=210)
         self.dni_entry.lift()
 
-        self.name_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.name_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
         self.name_entry.config(bd=0)
-        self.name_entry.place(x=234,y=300,height=31,width=210)  
+        self.name_entry.place(x=234, y=300, height=31, width=210)
         self.name_entry.lift()
 
-        self.lastname_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.lastname_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
         self.lastname_entry.config(bd=0)
-        self.lastname_entry.place(x=234,y=350,height=31,width=210)
+        self.lastname_entry.place(x=234, y=350, height=31, width=210)
         self.lastname_entry.lift()
-        
-        self.alias_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
-        self.alias_entry.config(bd=0)
-        self.alias_entry.place(x=234,y=400,height=31,width=210)
-        self.alias_entry.lift() 
 
-        #telefono
-        self.phone_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.alias_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.alias_entry.config(bd=0)
+        self.alias_entry.place(x=234, y=400, height=31, width=210)
+        self.alias_entry.lift()
+
+        # telefono
+        self.phone_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
         self.phone_entry.config(bd=0)
-        self.phone_entry.place(x=646,y=450,height=31,width=305)
+        self.phone_entry.place(x=646, y=450, height=31, width=305)
         self.phone_entry.lift()
 
-        #direccion
-        self.address_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        # direccion
+        self.address_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
         self.address_entry.config(bd=0)
-        self.address_entry.place(x=646,y=500,height=31,width=305)
+        self.address_entry.place(x=646, y=500, height=31, width=305)
         self.address_entry.lift()
 
-        self.dob_entry = tk.Entry(self,background="#EFA11A",font=("Cascadia Code",16),fg="white")
+        self.dob_entry = tk.Entry(self, background="#EFA11A", font=(
+            "Cascadia Code", 16), fg="white")
         self.dob_entry.config(bd=0)
-        self.dob_entry.place(x=234,y=580,height=31,width=210)
+        self.dob_entry.place(x=234, y=580, height=31, width=210)
         self.dob_entry.lift()
-        
-        #""" NO TOCAR """
+
+        # """ NO TOCAR """
 
         combostyle = ttk.Style()
 
         combostyle.theme_create('combostyle', parent='alt',
-                                settings = {'TCombobox':
-                                            {'configure':
-                                            {'selectbackground': '#EFA11A', #Color al seleccionar una opcion
-                                            'fieldbackground': '#EFA11A', #Color del fondo 
-                                            'background': '#EFA11A', #color de la flechita
-                                            'font': ('Cascadia Code', 16), #tipo de fuente
-                                            'foreground':'white', #color de la fuente
+                                settings={'TCombobox':
+                                          {'configure':
+                                           {'selectbackground': '#EFA11A',  # Color al seleccionar una opcion
+                                            'fieldbackground': '#EFA11A',  # Color del fondo
+                                            'background': '#EFA11A',  # color de la flechita
+                                            # tipo de fuente
+                                            'font': ('Cascadia Code', 16),
+                                            'foreground': 'white',  # color de la fuente
                                             'borderwidth': '0',
-                                            'highlightthickness':'0' #borde
+                                            'highlightthickness': '0'  # borde
                                             }}}
                                 )
         # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
-        combostyle.theme_use('combostyle') 
-    
+        combostyle.theme_use('combostyle')
+
         self.sex_entry = ttk.Combobox(
-        state="readonly",
-        values=["Masculino", "Femenino"],
-        font=("Cascadia Code",16),
+            state="readonly",
+            values=["Masculino", "Femenino"],
+            font=("Cascadia Code", 16),
         )
         self.sex_entry.current(0)
-        self.sex_entry.place(x=234,y=500,height=31,width=210)
+        self.sex_entry.place(x=234, y=500, height=31, width=210)
         self.sex_entry.pack
-        #Nacionalidad NI SE TE OCURRA TOCAR.
-        combostyle.theme_use('combostyle') 
-    
+        # Nacionalidad NI SE TE OCURRA TOCAR.
+        combostyle.theme_use('combostyle')
+
         self.nationality_entry = ttk.Combobox(
-        state="readonly",
-        values=['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana', 'Ecuador', 'El Salvador', 'Estados Unidos', 'España','Guatemala', 'Guyana', 'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela'],
-        font=("Cascadia Code",16),
+            state="readonly",
+            values=['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana', 'Ecuador', 'El Salvador', 'Estados Unidos', 'España', 'Guatemala',
+                    'Guyana', 'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela'],
+            font=("Cascadia Code", 16),
         )
         self.nationality_entry.current(0)
-        self.nationality_entry.place(x=234,y=450,height=31,width=210)
+        self.nationality_entry.place(x=234, y=450, height=31, width=210)
         self.nationality_entry.pack
 
-        self.btn_next = tk.Button(bd=0,image=ButtonImg,activebackground='black',command=self.save_data)
-        self.btn_next.place(x = 716, y = 575, height=79, width=235) 
+        self.btn_next = tk.Button(
+            bd=0, image=ButtonImg, activebackground='black', command=self.save_data)
+        self.btn_next.place(x=716, y=575, height=79, width=235)
 
-        self.btn_back = tk.Button(bd=0,image=ButtonImg2,activebackground='#021118')
+        self.btn_back = tk.Button(
+            bd=0, image=ButtonImg2, activebackground='#021118')
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
-        
+
         # btn_limpiar = tk.Button(
         #     text='Limpiar', command=self.clean)
         # btn_limpiar.grid(row=11, column=3)
