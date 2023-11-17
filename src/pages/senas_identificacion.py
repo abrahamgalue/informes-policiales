@@ -5,6 +5,11 @@ from tkinter import messagebox
 from pages.criminal import tiene_complices,datos_criminal
 
 datos_senas = []
+img = None
+ButtonImg = None
+ButtonImg2 = None
+icono_grande = None
+icono_chico = None
 
 class FormularioIdentificacion(tk.Tk):
     """Formulario de señas de identificacion"""
@@ -17,55 +22,88 @@ class FormularioIdentificacion(tk.Tk):
 
     def inicializar_gui(self):
         """Configurar la interfaz gráfica"""
-        self.title('Registro Criminal')
-        self.minsize(400, 400)
+        self.title('Registro Señas Identificación')
+        self.geometry("1000x750")
         self.resizable(0, 0)
 
-        title_label = tk.Label(text='REGISTRO DE SEÑAS DE IDENTIFICACION')
-        title_label.grid(row=0, column=1, pady=10)
+        bg_file = './src/img/senas_entry.png'
+        sig_file = './src/img/sig_button.png'
+        back_file = './src/img/back_button.png'
 
-        weight_label = tk.Label(text="Peso:")
-        weight_label.grid(row=1, column=0, sticky=tk.W)
-        self.weight_entry = tk.Entry(width=20)
-        self.weight_entry.grid(row=1, column=1)
+        global icono_grande
+        icono_grande = tk.PhotoImage(file='./src/img/icon-32.png')
 
-        height_label = tk.Label(text="Altura:", justify=tk.LEFT)
-        height_label.grid(row=2, column=0, sticky=tk.W)
-        self.height_entry = tk.Entry(width=20)
-        self.height_entry.grid(row=2, column=1)
+        global icono_chico
+        icono_chico = tk.PhotoImage(file='./src/img/icon-16.png')
 
-        skin_color_label = tk.Label(text="Color de piel:", justify=tk.LEFT)
-        skin_color_label.grid(row=3, column=0, sticky=tk.W)
-        self.skin_color_entry = tk.Entry(width=20)
-        self.skin_color_entry.grid(row=3, column=1)
+        self.iconphoto(False, icono_grande, icono_chico)
 
-        hair_label = tk.Label(text="Cabello:")
-        hair_label.grid(row=4, column=0, sticky=tk.W)
-        self.hair_entry = tk.Entry(width=20)
-        self.hair_entry.grid(row=4, column=1)
+        global img
+        img = tk.PhotoImage(file=bg_file)
 
-        hair_color_label = tk.Label(text="Color de Cabello:")
-        hair_color_label.grid(row=5, column=0, sticky=tk.W)
-        self.hair_color_entry = tk.Entry(width=20)
-        self.hair_color_entry.grid(row=5, column=1)
+        global ButtonImg
+        ButtonImg = tk.PhotoImage(file=sig_file)
 
-        eyes_label = tk.Label(text="Ojos:")
-        eyes_label.grid(row=6, column=0, sticky=tk.W)
-        self.eyes_entry = tk.Entry(width=20)
-        self.eyes_entry.grid(row=6, column=1)
+        global ButtonImg2
+        ButtonImg2 = tk.PhotoImage(file=back_file)
 
-        other_features_label = tk.Label(text="Otras Características:")
-        other_features_label.grid(row=7, column=0, sticky=tk.W)
-        self.other_features_entry = tk.Entry(width=20)
-        self.other_features_entry.grid(row=7, column=1)
+        self.fondo = tk.Canvas(self, width=1000, height=750)
+        self.fondo.create_image(0, 0, image=img, anchor='nw')
+        self.fondo.pack()
 
-        btn_guardar = tk.Button(
-            text='Siguiente', command=self.save_data)
-        btn_guardar.grid(row=8, column=2)
+        self.weight_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.weight_entry.config(bd=0)
+        self.weight_entry.place(x=197.3, y=280, height=31, width=210)
+        self.weight_entry.lift()
 
-        btn_limpiar = tk.Button(
-            text='Limpiar', command=self.clean)
-        btn_limpiar.grid(row=8, column=3)
+        self.height_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.height_entry.config(bd=0)
+        self.height_entry.place(x=197.3, y=340, height=31, width=210)
+        self.height_entry.lift()
+
+        self.skin_color_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.skin_color_entry.config(bd=0)
+        self.skin_color_entry.place(x=720, y=280, height=31, width=210)
+        self.skin_color_entry.lift()
+
+        self.hair_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.hair_entry.config(bd=0)
+        self.hair_entry.place(x=197.3, y=400, height=31, width=210)
+        self.hair_entry.lift()
+
+        self.hair_color_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.hair_color_entry.config(bd=0)
+        self.hair_color_entry.place(x=720, y=400, height=31, width=210)
+        self.hair_color_entry.lift()
+
+        self.eyes_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.eyes_entry.config(bd=0)
+        self.eyes_entry.place(x=720, y=340, height=31, width=210)
+        self.eyes_entry.lift()
+
+        self.other_features_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.other_features_entry.config(bd=0)
+        self.other_features_entry.place(x=364.6, y=460, height=31, width=565.4)
+        self.eyes_entry.lift()
+
+        self.btn_next = tk.Button(
+            bd=0, image=ButtonImg, activebackground='black', command=self.save_data)
+        self.btn_next.place(x=716, y=575, height=79, width=235)
+
+        self.btn_back = tk.Button(
+            bd=0, image=ButtonImg2, activebackground='#021118')
+        self.btn_back.place(x=75, y=87.3, height=53, width=95)
+
+        # btn_limpiar = tk.Button(
+        #     text='Limpiar', command=self.clean)
+        # btn_limpiar.grid(row=8, column=3)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
