@@ -85,8 +85,11 @@ def get_implicados():
         connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
-            sql = """ SELECT persona.numero_de_identificacion, persona.nombre, persona.apellido, persona.fecha_de_nacimiento, COUNT(ocurrencia_de_arresto.implicado_numero_de_identificacion) FROM persona LEFT JOIN ocurrencia_de_arresto ON persona.numero_de_identificacion = ocurrencia_de_arresto.implicado_numero_de_identificacion GROUP BY persona.numero_de_identificacion  
-            ORDER BY `COUNT(ocurrencia_de_arresto.implicado_numero_de_identificacion)` DESC"""
+            sql = """ SELECT persona.numero_de_identificacion, persona.nombre, persona.apellido, 
+            persona.fecha_de_nacimiento, COUNT(ocurrencia_de_arresto.implicado_numero_de_identificacion) 
+            FROM persona LEFT JOIN ocurrencia_de_arresto ON persona.numero_de_identificacion = ocurrencia_de_arresto.implicado_numero_de_identificacion 
+            GROUP BY persona.numero_de_identificacion ORDER BY `COUNT(ocurrencia_de_arresto.implicado_numero_de_identificacion)` DESC, 
+            persona.nombre ASC, persona.apellido ASC;"""
             cursor.execute(sql)
             implicados = cursor.fetchall()
             print(implicados)
