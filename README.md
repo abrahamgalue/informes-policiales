@@ -6,6 +6,10 @@
 
 ### Aplicación desktop de registros policiales
 
+![vista-previa](./public/preview/01-app-preview.png)
+
+![vista-previa](./public/preview/02-app-preview.png)
+
 ## 🚀 Descripción
 
 Registra ocurrencias de arrestos llevando un expediente completo del implicado, sus señas de identificacion, complices, condenas (datos amplios)
