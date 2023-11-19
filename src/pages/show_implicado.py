@@ -77,7 +77,7 @@ class ExportarDatos(tk.Tk):
         scrollbar.place(x=938.2,y=192,height=358.6,width=13.8)
         
         
-        from util.implicado import get_implicados
+        from util.persona import get_implicados
         implicado_data = get_implicados()    
         for i in range(len(implicado_data)):
             tree.insert('', tk.END, values=implicado_data[i])
