@@ -86,7 +86,7 @@ class FormularioCondena(tk.Tk):
         print("Datos Señas de Identificacion:",datos_senas)
         print("Datos Condena:",datos_condena)
         
-        from pages.util.implicado import add_persona
+        from pages.util.persona import add_persona
         from pages.util.ocurrencia_de_arresto import add_arresto
         from pages.util.senas_de_identificacion import add_seña
         from pages.util.cond import add_condena

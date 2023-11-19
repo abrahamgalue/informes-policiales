@@ -99,3 +99,26 @@ def get_implicados():
                 cursor.close()
                 connection.close()
                 print("MySQL connection is closed")
+                
+def get_complices():
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """ SELECT persona.numero_de_identificacion, persona.nombre, persona.apellido, persona.fecha_de_nacimiento, 
+            COUNT(complice.ocurrencia_de_arresto_id) FROM persona LEFT JOIN complice 
+            ON persona.numero_de_identificacion = complice.persona_numero_de_identificacion
+            GROUP BY persona.numero_de_identificacion ORDER BY COUNT(complice.ocurrencia_de_arresto_id) DESC, 
+            persona.nombre DESC;"""
+            cursor.execute(sql)
+            implicados = cursor.fetchall()
+            print(implicados)
+            return implicados
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
