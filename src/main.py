@@ -2,6 +2,8 @@
 import tkinter as tk
 from pages.arresto_condena import FormularioArresto
 from pages.exportar import ExportarDatos
+from pages.show_arrestos import MostrarArrestos
+from pages.criminal import FormularioCriminal
 
 img = None
 ButtonPersona1 = None
@@ -65,11 +67,11 @@ class MenuApp(tk.Tk):
         self.fondo.pack()
 
         btn_registrar_persona = tk.Button(
-            bd=0, image=ButtonPersona1, activebackground='#01080e', command=self.to_register)
+            bd=0, image=ButtonPersona1, activebackground='#01080e', command=self.to_register_persona)
         btn_registrar_persona.place(x=115, y=410, height=79.7, width=235.9)
 
         btn_registrar_arresto = tk.Button(
-            bd=0, image=ButtonArresto, activebackground='#01080e')
+            bd=0, image=ButtonArresto, activebackground='#01080e', command=self.to_register_arresto)
         btn_registrar_arresto.place(x=115, y=540, height=79.7, width=235.9)
 
         btn_exportar = tk.Button(
@@ -81,18 +83,28 @@ class MenuApp(tk.Tk):
         self.btn_view_persona.place(x=650, y=410, height=79.7, width=235.9)
 
         self.btn_view_arresto = tk.Button(
-            bd=0, image=ButtonArresto, activebackground='#01080e')
+            bd=0, image=ButtonArresto, activebackground='#01080e', command=self.to_show_arrestos)
         self.btn_view_arresto.place(x=650, y=540, height=79.7, width=235.9)
 
         self.btn_creditos = tk.Button(
             bd=0, image=ButtonCreditos, activebackground='#01080e')
         self.btn_creditos.place(x=417.9, y=656.7, height=55.5, width=164.3)
-
-    def to_register(self):
+    
+    def to_register_persona(self):
+        """Create a new person"""
+        self.destroy()
+        FormularioCriminal()
+        
+    def to_register_arresto(self):
         """Create a new record"""
         self.destroy()
         FormularioArresto()
 
+    def to_show_arrestos(self):
+        """Mostrar tabla de arrestos"""
+        self.destroy()
+        MostrarArrestos()
+        
     def to_exportar(self):
         """Exportar datos"""
         self.destroy()
