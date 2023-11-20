@@ -104,7 +104,7 @@ class FormularioArresto(tk.Tk):
         self.btn_next.place(x=716, y=575, height=79, width=235)
 
         self.btn_back = tk.Button(
-            bd=0, image=ButtonImg2, activebackground='#021118')
+            bd=0, image=ButtonImg2, activebackground='#021118', command=self.back_to_menu)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
 
     def definir_patrones_validaciones(self):
@@ -224,6 +224,12 @@ class FormularioArresto(tk.Tk):
         self.crime_entry.delete(0, tk.END)
         self.type_of_crime_entry.delete(0, tk.END)
         self.description_entry.delete(0, tk.END)
+    
+    def back_to_menu(self):
+        """Volver al menu"""
+        from main import MenuApp
+        self.destroy()
+        MenuApp()
 
 
 def main():
