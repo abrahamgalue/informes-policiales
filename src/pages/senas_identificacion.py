@@ -2,7 +2,7 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
-from pages.criminal import tiene_complices,datos_criminal
+from pages.criminal import datos_criminal
 
 datos_senas = []
 img = None
@@ -63,29 +63,29 @@ class FormularioIdentificacion(tk.Tk):
         self.height_entry.place(x=197.3, y=340, height=31, width=210)
         self.height_entry.lift()
 
-        self.skin_color_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
-        self.skin_color_entry.config(bd=0)
-        self.skin_color_entry.place(x=720, y=280, height=31, width=210)
-        self.skin_color_entry.lift()
-
         self.hair_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
         self.hair_entry.config(bd=0)
         self.hair_entry.place(x=197.3, y=400, height=31, width=210)
         self.hair_entry.lift()
-
-        self.hair_color_entry = tk.Entry(
+        
+        self.skin_color_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
-        self.hair_color_entry.config(bd=0)
-        self.hair_color_entry.place(x=720, y=400, height=31, width=210)
-        self.hair_color_entry.lift()
-
+        self.skin_color_entry.config(bd=0)
+        self.skin_color_entry.place(x=720, y=280, height=31, width=210)
+        self.skin_color_entry.lift()
+        
         self.eyes_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
         self.eyes_entry.config(bd=0)
         self.eyes_entry.place(x=720, y=340, height=31, width=210)
         self.eyes_entry.lift()
+        
+        self.hair_color_entry = tk.Entry(
+            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+        self.hair_color_entry.config(bd=0)
+        self.hair_color_entry.place(x=720, y=400, height=31, width=210)
+        self.hair_color_entry.lift()
 
         self.other_features_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
@@ -98,12 +98,8 @@ class FormularioIdentificacion(tk.Tk):
         self.btn_next.place(x=716, y=575, height=79, width=235)
 
         self.btn_back = tk.Button(
-            bd=0, image=ButtonImg2, activebackground='#021118')
+            bd=0, image=ButtonImg2, activebackground='#021118',command=self.back_to_menu)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
-
-        # btn_limpiar = tk.Button(
-        #     text='Limpiar', command=self.clean)
-        # btn_limpiar.grid(row=8, column=3)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
@@ -192,7 +188,6 @@ class FormularioIdentificacion(tk.Tk):
         }
 
         print(criminal_data)
-        print(tiene_complices)
         global datos_senas
         datos_senas = list(criminal_data.values())
         datos_senas.append(datos_criminal[0])
@@ -200,14 +195,9 @@ class FormularioIdentificacion(tk.Tk):
         
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
-        from pages.condena import FormularioCondena
-        from pages.complices import FormularioComplices
+        from main import MenuApp
         self.destroy()
-
-        if tiene_complices:
-            FormularioComplices()
-        else:
-            FormularioCondena()
+        MenuApp()
 
     def clean(self):
         """Limpiar los campos del formulario"""
@@ -218,6 +208,12 @@ class FormularioIdentificacion(tk.Tk):
         self.hair_color_entry.delete(0, tk.END)
         self.eyes_entry.delete(0, tk.END)
         self.other_features_entry.delete(0, tk.END)
+    
+    def back_to_menu(self):
+        """Volver al menu"""
+        from main import MenuApp
+        self.destroy()
+        MenuApp()
 
 
 def main():
