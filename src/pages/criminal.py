@@ -6,7 +6,6 @@ from tkinter import ttk
 from pages.arresto_condena import datos_arresto
 
 datos_criminal = []
-tiene_complices = False
 img = None
 ButtonImg = None
 ButtonImg2 = None
@@ -144,7 +143,7 @@ class FormularioCriminal(tk.Tk):
         self.btn_next.place(x=716, y=575, height=79, width=235)
 
         self.btn_back = tk.Button(
-            bd=0, image=ButtonImg2, activebackground='#021118')
+            bd=0, image=ButtonImg2, activebackground='#021118', command=self.back_to_menu)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
 
         # btn_limpiar = tk.Button(
@@ -238,20 +237,10 @@ class FormularioCriminal(tk.Tk):
             "Alias": self.alias_entry.get()
         }
         print(criminal_data)
-        """ print(self.has_complices_entry.get())
-
-        if self.has_complices_entry.get() == 'Si':
-            global tiene_complices
-            tiene_complices = True """
 
         global datos_criminal
         datos_criminal = list(criminal_data.values())
-        global datos_arresto
-        datos_arresto.append(self.dni_entry.get())
-        print(datos_arresto)
 
-        messagebox.showinfo(
-            'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         from pages.senas_identificacion import FormularioIdentificacion
         self.destroy()
         FormularioIdentificacion()
@@ -267,6 +256,12 @@ class FormularioCriminal(tk.Tk):
         self.address_entry.delete(0, tk.END)
         self.nationality_entry.current(0)
         self.alias_entry.delete(0, tk.END)
+    
+    def back_to_menu(self):
+        """Volver al menu"""
+        from main import MenuApp
+        self.destroy()
+        MenuApp()
 
 
 def main():
