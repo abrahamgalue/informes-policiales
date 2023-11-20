@@ -16,7 +16,7 @@ def id_arresto():
         if connection is not None:
             cursor = connection.cursor()
             cursor.execute("SELECT MAX(id) FROM ocurrencia_de_arresto;")
-            id = cursor.fetchall()[0][0] + 1
+            id = cursor.fetchall()[0][0] 
             print(id)
     except Error as e:
         print("Error while connecting to MySQL", e)
