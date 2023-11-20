@@ -1,6 +1,6 @@
 """Reseñas Policiales"""
 import tkinter as tk
-from pages.arresto_condena import FormularioArresto
+from pages.select_personas_arresto import PersonasArresto
 from pages.exportar import ExportarDatos
 from pages.show_arrestos import MostrarArrestos
 from pages.criminal import FormularioCriminal
@@ -98,7 +98,7 @@ class MenuApp(tk.Tk):
     def to_register_arresto(self):
         """Create a new record"""
         self.destroy()
-        FormularioArresto()
+        PersonasArresto()
 
     def to_show_arrestos(self):
         """Mostrar tabla de arrestos"""
