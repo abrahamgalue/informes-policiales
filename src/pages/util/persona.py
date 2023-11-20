@@ -125,3 +125,21 @@ def get_complices():
                 cursor.close()
                 connection.close()
                 print("MySQL connection is closed")
+                
+def add_complice(values):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            cursor.execute("INSERT INTO complice VALUES (%s, %s);",values)
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                print("MySQL cursor is closed")
+                connection.close()
+                print("MySQL connection is closed")
