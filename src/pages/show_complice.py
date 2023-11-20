@@ -1,7 +1,7 @@
 """Exportar Datos"""
 import tkinter as tk
 from tkinter import ttk
-datos_arresto = []
+
 img = None
 ButtonImg = None
 ButtonVer = None
@@ -10,7 +10,7 @@ ButtonBorrar = None
 icono_grande = None
 icono_chico = None
 
-class ExportarDatos(tk.Tk):
+class MostrarComplice(tk.Tk):
     """Página de exportación de datos"""
 
     def __init__(self):
@@ -58,43 +58,49 @@ class ExportarDatos(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
         
-        style_tree = ttk.Style()
-        style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code", 16))
+        self.style_tree = ttk.Style()
+        self.style_tree.theme_use("clam")
+        self.style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code", 16))
+        self.style_tree.map('Treeview',
+            background=[('selected', 'white')],
+            fieldbackground=[('selected', '#01060a')],
+            foreground=[('selected', '#01060a')]
+        )
         columns = ('Cedula', 'Nombre', 'Apellido','Nacimiento','Arrestos')
-        tree = ttk.Treeview(self, show='headings', columns=columns)
+        self.tree = ttk.Treeview(self, show='headings', columns=columns)
         
-        tree.column('Cedula', width=172, minwidth=172, stretch=False)
-        tree.column('Nombre',width=169, minwidth=169, stretch=False)
-        tree.column('Apellido',width=171, minwidth=171, stretch=False)
-        tree.column('Nacimiento',width=218, minwidth=218, stretch=False)
-        tree.column('Arrestos',width=154, minwidth=154, anchor=tk.CENTER, stretch=False)
+        self.tree.column('Cedula', width=172, minwidth=172, stretch=False)
+        self.tree.column('Nombre',width=169, minwidth=169, stretch=False)
+        self.tree.column('Apellido',width=171, minwidth=171, stretch=False)
+        self.tree.column('Nacimiento',width=218, minwidth=218, stretch=False)
+        self.tree.column('Arrestos',width=154, minwidth=154, anchor=tk.CENTER, stretch=False)
         
-        tree.place(x=55,y=192,height=358.6,width=883.2)
-        tree.heading('Cedula', text='')
+        self.tree.place(x=55,y=192,height=358.6,width=883.2)
+        self.tree.heading('Cedula', text='')
         #Scrollbar
-        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=tree.yview)
-        tree.configure(yscroll=scrollbar.set)
+        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
+        self.tree.configure(yscroll=scrollbar.set)
         scrollbar.place(x=938.2,y=192,height=358.6,width=13.8)
         
         
         from util.persona import get_complices
         implicado_data = get_complices()    
         for i in range(len(implicado_data)):
-            tree.insert('', tk.END, values=implicado_data[i])
+            self.tree.insert('', tk.END, values=implicado_data[i])
         # self.list_implicados = tk.Listbox()
         # self.list_implicados.insert(0, "Python")
         # self.list_implicados.place(x=55,y=192,height=358.6,width=883.2)
          
         self.btn_ver = tk.Button(
-            bd=0, image=ButtonVer, activebackground='#01060a')
+            bd=0, image=ButtonVer, activebackground='#01060a', command=self.get_complice_id)
         self.btn_ver.place(x=230.4, y=580, height=92, width=151)
 
         self.btn_editar = tk.Button(
-            bd=0, image=ButtonEditar, activebackground='#01060a')
+            bd=0, image=ButtonEditar, activebackground='#01060a', command=self.get_complice_id)
         self.btn_editar.place(x=424.4, y=580, height=92, width=151)
 
         self.btn_borrar = tk.Button(
-            bd=0, image=ButtonBorrar, activebackground='#01060a')
+            bd=0, image=ButtonBorrar, activebackground='#01060a', command=self.get_complice_id)
         self.btn_borrar.place(x=618.6, y=580, height=92, width=151)
 
         self.btn_back = tk.Button(
@@ -106,11 +112,17 @@ class ExportarDatos(tk.Tk):
         from main import MenuApp
         self.destroy()
         MenuApp()
-
+        
+    def get_complice_id(self):
+        if len(self.tree.selection()) > 0:
+            selected_item = self.tree.selection()[0]
+            complice_id = self.tree.item(selected_item)['values'][0]
+            print(complice_id)
+            return complice_id
 
 def main():
     """Renderizar la aplicacion"""
-    app = ExportarDatos()
+    app = MostrarComplice()
     app.mainloop()
 
 
