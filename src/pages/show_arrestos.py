@@ -79,7 +79,7 @@ class MostrarArrestos(tk.Tk):
         self.tree.configure(yscroll=scrollbar.set)
         scrollbar.place(x=938.2,y=192,height=358.6,width=13.8)
         
-        from util.ocurrencia_de_arresto import get_arrestos
+        from .util.ocurrencia_de_arresto import get_arrestos
         arresto_data = get_arrestos()    
         for i in range(len(arresto_data)):
             self.tree.insert('', tk.END, values=(arresto_data[i][0],arresto_data[i][1],arresto_data[i][4],arresto_data[i][7]))
