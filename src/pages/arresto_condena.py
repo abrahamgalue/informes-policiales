@@ -2,6 +2,9 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
+from pages.util.ocurrencia_de_arresto import add_arresto
+from pages.util.cond import add_condena
+from pages.util.persona import add_complice
 
 datos_arresto = []
 
@@ -14,9 +17,10 @@ icono_chico = None
 class FormularioArresto(tk.Tk):
     """Formulario de registro de arresto y condena"""
 
-    def __init__(self):
+    def __init__(self, implicado,complices):
         super().__init__()
-
+        self.implicado = implicado
+        self.complices = complices
         self.inicializar_gui()
         self.definir_patrones_validaciones()
 
@@ -176,16 +180,21 @@ class FormularioArresto(tk.Tk):
                 'Descripción inválida', 'El campo Descripción es obligatorio y debe tener máximo 200 caracteres.')
             return
 
-        criminal_data = {
+        print('Implicado:',self.implicado)
+        print('Complices:',self.complices)
+        
+        a_data = {
             "Fecha": self.arrest_date_entry.get(),
             "Hora": self.hour_entry.get(),
             "Lugar": self.place_entry.get(),
             "Delito": self.crime_entry.get(),
             "Tipo de Delito": self.type_of_crime_entry.get(),
-            "Descripción": self.description_entry.get()
+            "Descripción": self.description_entry.get(),
+            "Implicado": self.implicado
         }
-        print(criminal_data)
-
+        print(a_data)
+        arresto_data = list(a_data.values())
+        
         fecha = self.date_entry.get().strip()
 
         if re.match(self.regex_fecha, fecha) is None:
@@ -200,21 +209,26 @@ class FormularioArresto(tk.Tk):
                 'Sentencia inválida', 'El campo sentencia es obligatorio y debe tener máximo 128 caracteres.')
             return
 
-        criminal_data = {
+        c_data = {
             "Fecha": self.date_entry.get(),
-            "Sentencia": self.judgment_entry.get()
+            "Sentencia": self.judgment_entry.get(),
         }
-
-        print(criminal_data)
+        print(c_data)
+        condena_data = list(c_data.values())
         
-        global datos_arresto
-        datos_arresto = list(criminal_data.values())
-       
+        # Se guardan en la base de datos
+        add_arresto(arresto_data)
+        from pages.util.functions import id_arresto
+        condena_data.append(id_arresto())
+        add_condena(condena_data) 
+        for complice in self.complices:
+            add_complice((complice,id_arresto()))
+        
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
-        from pages.criminal import FormularioCriminal
+        from main import MenuApp
         self.destroy()
-        FormularioCriminal()
+        MenuApp()
 
     def clean(self):
         """Limpiar los campos del formulario"""
