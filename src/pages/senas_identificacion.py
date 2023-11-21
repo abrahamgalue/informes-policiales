@@ -52,43 +52,43 @@ class FormularioIdentificacion(tk.Tk):
         self.fondo.pack()
 
         self.weight_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.weight_entry.config(bd=0)
         self.weight_entry.place(x=197.3, y=280, height=31, width=210)
         self.weight_entry.lift()
 
         self.height_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.height_entry.config(bd=0)
         self.height_entry.place(x=197.3, y=340, height=31, width=210)
         self.height_entry.lift()
 
         self.hair_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.hair_entry.config(bd=0)
         self.hair_entry.place(x=197.3, y=400, height=31, width=210)
         self.hair_entry.lift()
         
         self.skin_color_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.skin_color_entry.config(bd=0)
         self.skin_color_entry.place(x=720, y=280, height=31, width=210)
         self.skin_color_entry.lift()
         
         self.eyes_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.eyes_entry.config(bd=0)
         self.eyes_entry.place(x=720, y=340, height=31, width=210)
         self.eyes_entry.lift()
         
         self.hair_color_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.hair_color_entry.config(bd=0)
         self.hair_color_entry.place(x=720, y=400, height=31, width=210)
         self.hair_color_entry.lift()
 
         self.other_features_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.other_features_entry.config(bd=0)
         self.other_features_entry.place(x=364.6, y=460, height=31, width=565.4)
         self.eyes_entry.lift()

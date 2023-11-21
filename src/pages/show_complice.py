@@ -60,7 +60,7 @@ class MostrarComplice(tk.Tk):
         
         self.style_tree = ttk.Style()
         self.style_tree.theme_use("clam")
-        self.style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code", 16))
+        self.style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code Normal", 16))
         self.style_tree.map('Treeview',
             background=[('selected', 'white')],
             fieldbackground=[('selected', '#01060a')],
@@ -87,10 +87,7 @@ class MostrarComplice(tk.Tk):
         implicado_data = get_complices()    
         for i in range(len(implicado_data)):
             self.tree.insert('', tk.END, values=implicado_data[i])
-        # self.list_implicados = tk.Listbox()
-        # self.list_implicados.insert(0, "Python")
-        # self.list_implicados.place(x=55,y=192,height=358.6,width=883.2)
-         
+                 
         self.btn_ver = tk.Button(
             bd=0, image=ButtonVer, activebackground='#01060a', command=self.get_complice_id)
         self.btn_ver.place(x=230.4, y=580, height=92, width=151)

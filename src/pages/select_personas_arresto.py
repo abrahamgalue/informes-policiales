@@ -67,7 +67,7 @@ class PersonasArresto(tk.Tk):
                                             'fieldbackground': '#EFA11A',  # Color del fondo
                                             'background': '#EFA11A',  # color de la flechita
                                             # tipo de fuente
-                                            'font': ('Cascadia Code', 16),
+                                            'font': ('Cascadia Code Normal', 16),
                                             'foreground': 'white',  # color de la fuente
                                             'borderwidth': '0',
                                             'highlightthickness': '0'  # borde
@@ -82,7 +82,7 @@ class PersonasArresto(tk.Tk):
         self.implicado_entry = ttk.Combobox(
             state="readonly",
             values=personas,
-            font=("Cascadia Code", 16),
+            font=("Cascadia Code Normal", 16),
         )
         self.implicado_entry.current(0)
         self.implicado_entry.place(x=240, y=180, height=31, width=210)
@@ -92,7 +92,7 @@ class PersonasArresto(tk.Tk):
         self.complice_entry = ttk.Combobox(
             state="readonly",
             values=personas,
-            font=("Cascadia Code", 16),
+            font=("Cascadia Code Normal", 16),
         )
         self.complice_entry.current(0)
         self.complice_entry.place(x=240, y=230, height=31, width=210)
@@ -100,14 +100,14 @@ class PersonasArresto(tk.Tk):
         
         self.style_tree = ttk.Style()
         self.style_tree.theme_use("clam")
-        self.style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code", 16))
+        self.style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code Normal", 16))
         self.style_tree.map('Treeview',
             background=[('selected', 'white')],
             fieldbackground=[('selected', '#01060a')],
             foreground=[('selected', '#01060a')]
         )
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="black", foreground="white",font=("Cascadia Code", 16))
+        self.style.configure("Treeview.Heading", background="black", foreground="white",font=("Cascadia Code Normal", 16))
         columns = ('Cedula', 'Nombre', 'Apellido')
         self.tree = ttk.Treeview(self, show='headings', columns=columns)
         

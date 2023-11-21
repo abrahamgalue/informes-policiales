@@ -59,7 +59,7 @@ class MostrarArrestos(tk.Tk):
         
         self.style_tree = ttk.Style()
         self.style_tree.theme_use("clam")
-        self.style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code", 16))
+        self.style_tree.configure("Treeview", background="#01060a", fieldbackground="#01060a", foreground="white",font=("Cascadia Code Normal", 16))
         self.style_tree.map('Treeview',
             background=[('selected', 'white')],
             fieldbackground=[('selected', '#01060a')],
@@ -83,9 +83,6 @@ class MostrarArrestos(tk.Tk):
         arresto_data = get_arrestos()    
         for i in range(len(arresto_data)):
             self.tree.insert('', tk.END, values=(arresto_data[i][0],arresto_data[i][1],arresto_data[i][4],arresto_data[i][7]))
-        # self.list_implicados = tk.Listbox()
-        # self.list_implicados.insert(0, "Python")
-        # self.list_implicados.place(x=55,y=192,height=358.6,width=883.2)
          
         self.btn_ver = tk.Button(
             bd=0, image=ButtonVer, activebackground='#01060a', command=self.get_arresto_id)

@@ -56,49 +56,49 @@ class FormularioArresto(tk.Tk):
         self.fondo.pack()
 
         self.arrest_date_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.arrest_date_entry.config(bd=0)
         self.arrest_date_entry.place(x=234, y=183, height=31, width=210)
         self.arrest_date_entry.lift()
 
         self.hour_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.hour_entry.config(bd=0)
         self.hour_entry.place(x=234, y=233, height=31, width=210)
         self.hour_entry.lift()
 
         self.place_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.place_entry.config(bd=0)
         self.place_entry.place(x=234, y=283, height=31, width=210)
         self.place_entry.lift()
 
         self.crime_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.crime_entry.config(bd=0)
         self.crime_entry.place(x=715, y=183, height=31, width=210)
         self.crime_entry.lift()
 
         self.type_of_crime_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.type_of_crime_entry.config(bd=0)
         self.type_of_crime_entry.place(x=715, y=233, height=31, width=210)
         self.type_of_crime_entry.lift()
 
         self.description_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.description_entry.config(bd=0)
         self.description_entry.place(x=715, y=283, height=31, width=210)
         self.description_entry.lift()
 
         self.date_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.date_entry.config(bd=0)
         self.date_entry.place(x=234, y=478, height=31, width=210)
         self.date_entry.lift()
 
         self.judgment_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.judgment_entry.config(bd=0)
         self.judgment_entry.place(x=715, y=478, height=31, width=210)
         self.judgment_entry.lift()

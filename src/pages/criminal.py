@@ -54,45 +54,45 @@ class FormularioCriminal(tk.Tk):
         self.fondo.pack()
 
         self.dni_entry = tk.Entry(self, background="#EFA11A", font=(
-            "Cascadia Code", 16), fg="white")
+            "Cascadia Code Normal", 16), fg="white")
         self.dni_entry.config(bd=0)
         self.dni_entry.place(x=234, y=250, height=31, width=210)
         self.dni_entry.lift()
 
         self.name_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.name_entry.config(bd=0)
         self.name_entry.place(x=234, y=300, height=31, width=210)
         self.name_entry.lift()
 
         self.lastname_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.lastname_entry.config(bd=0)
         self.lastname_entry.place(x=234, y=350, height=31, width=210)
         self.lastname_entry.lift()
 
         self.alias_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.alias_entry.config(bd=0)
         self.alias_entry.place(x=234, y=400, height=31, width=210)
         self.alias_entry.lift()
 
         # telefono
         self.phone_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.phone_entry.config(bd=0)
         self.phone_entry.place(x=646, y=450, height=31, width=305)
         self.phone_entry.lift()
 
         # direccion
         self.address_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.address_entry.config(bd=0)
         self.address_entry.place(x=646, y=500, height=31, width=305)
         self.address_entry.lift()
 
         self.dob_entry = tk.Entry(self, background="#EFA11A", font=(
-            "Cascadia Code", 16), fg="white")
+            "Cascadia Code Normal", 16), fg="white")
         self.dob_entry.config(bd=0)
         self.dob_entry.place(x=234, y=580, height=31, width=210)
         self.dob_entry.lift()
@@ -108,7 +108,7 @@ class FormularioCriminal(tk.Tk):
                                             'fieldbackground': '#EFA11A',  # Color del fondo
                                             'background': '#EFA11A',  # color de la flechita
                                             # tipo de fuente
-                                            'font': ('Cascadia Code', 16),
+                                            'font': ('Cascadia Code Normal', 16),
                                             'foreground': 'white',  # color de la fuente
                                             'borderwidth': '0',
                                             'highlightthickness': '0'  # borde
@@ -120,7 +120,7 @@ class FormularioCriminal(tk.Tk):
         self.sex_entry = ttk.Combobox(
             state="readonly",
             values=["Masculino", "Femenino"],
-            font=("Cascadia Code", 16),
+            font=("Cascadia Code Normal", 16),
         )
         self.sex_entry.current(0)
         self.sex_entry.place(x=234, y=500, height=31, width=210)
@@ -132,7 +132,7 @@ class FormularioCriminal(tk.Tk):
             state="readonly",
             values=['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana', 'Ecuador', 'El Salvador', 'Estados Unidos', 'España', 'Guatemala',
                     'Guyana', 'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela'],
-            font=("Cascadia Code", 16),
+            font=("Cascadia Code Normal", 16),
         )
         self.nationality_entry.current(0)
         self.nationality_entry.place(x=234, y=450, height=31, width=210)
