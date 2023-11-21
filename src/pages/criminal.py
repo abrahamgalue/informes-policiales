@@ -3,7 +3,6 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-from pages.arresto_condena import datos_arresto
 
 datos_criminal = []
 img = None
