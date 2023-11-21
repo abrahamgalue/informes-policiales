@@ -1,16 +1,15 @@
 """Ver persona"""
 import tkinter as tk
-from tkinter import ttk
 
-datos_arresto = []
 img = None
 ButtonImg = None
 icono_grande = None
 icono_chico = None
-ButtonSig = None
+ButtonImplicados = None
+ButtonComplices = None
 
 
-class SeePersona(tk.Tk):
+class VisualizePersona(tk.Tk):
     """Página de exportación de datos"""
 
     def __init__(self):
@@ -25,9 +24,9 @@ class SeePersona(tk.Tk):
         self.resizable(0, 0)
 
         bg_file = './src/img/visualize.png'
-        sig_file = './src/img/see_persona_btn/senas_btn.png'
+        implicados_file = './src/img/visualize_btn/implicados_btn.png'
         back_file = './src/img/back_button.png'
-        ver_file= './src/img/see_persona_btn/ver_btn.png'
+        complices_file= './src/img/visualize_btn/complices_btn.png'
 
         global icono_grande
         icono_grande = tk.PhotoImage(file='./src/img/icon-32.png')
@@ -43,24 +42,24 @@ class SeePersona(tk.Tk):
         global ButtonImg
         ButtonImg = tk.PhotoImage(file=back_file)
 
-        global ButtonSig
-        ButtonSig=tk.PhotoImage(file=sig_file)
+        global ButtonImplicados
+        ButtonImplicados=tk.PhotoImage(file=implicados_file)
 
-        global ButtonVer
-        ButtonVer=tk.PhotoImage(file=ver_file)
+        global ButtonComplices
+        ButtonComplices=tk.PhotoImage(file=complices_file)
 
         self.fondo = tk.Canvas(self, width=1000, height=750)
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
 
-        self.btn_senas= tk.Button(
-            bd=0, image=ButtonSig, activebackground='#021118')
-        self.btn_senas.place(x=119.1, y=354.1, height=79.7, width=267.1)
+        self.btn_implicados= tk.Button(
+            bd=0, image=ButtonImplicados, activebackground='#021118')
+        self.btn_implicados.place(x=119.1, y=354.1, height=79.7, width=267.1)
 
 
-        self.btn_senas= tk.Button(
-            bd=0, image=ButtonSig, activebackground='#021118')
-        self.btn_senas.place(x=650.7, y=354.1, height=79.7, width=267.1)
+        self.btn_complices= tk.Button(
+            bd=0, image=ButtonComplices, activebackground='#021118')
+        self.btn_complices.place(x=650.7, y=354.1, height=79.7, width=267.1)
 
         self.btn_back = tk.Button(
             bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_menu)
@@ -76,7 +75,7 @@ class SeePersona(tk.Tk):
 
 def main():
     """Renderizar la aplicacion"""
-    app = SeePersona()
+    app = VisualizePersona()
     app.mainloop()
 
 

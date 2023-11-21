@@ -4,6 +4,7 @@ from pages.select_personas_arresto import PersonasArresto
 from pages.exportar import ExportarDatos
 from pages.show_arrestos import MostrarArrestos
 from pages.criminal import FormularioCriminal
+from pages.visualize import VisualizePersona
 
 img = None
 ButtonPersona1 = None
@@ -79,7 +80,7 @@ class MenuApp(tk.Tk):
         btn_exportar.place(x=382.5, y=477, height=79.7, width=235.9)
 
         self.btn_view_persona = tk.Button(
-            bd=0, image=ButtonPersona2, activebackground='#01080e')
+            bd=0, image=ButtonPersona2, activebackground='#01080e', command=self.to_vizualise)
         self.btn_view_persona.place(x=650, y=410, height=79.7, width=235.9)
 
         self.btn_view_arresto = tk.Button(
@@ -100,6 +101,11 @@ class MenuApp(tk.Tk):
         self.destroy()
         PersonasArresto()
 
+    def to_vizualise(self):
+        """Mostrar tabla de arrestos"""
+        self.destroy()
+        VisualizePersona()
+    
     def to_show_arrestos(self):
         """Mostrar tabla de arrestos"""
         self.destroy()
