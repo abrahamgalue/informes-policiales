@@ -112,8 +112,8 @@ class PersonasArresto(tk.Tk):
         self.tree = ttk.Treeview(self, show='headings', columns=columns)
         
         self.tree.column('Cedula', width=115, minwidth=115, stretch=False)
-        self.tree.column('Nombre',width=197, minwidth=197, stretch=False)
-        self.tree.column('Apellido',width=309, minwidth=309, stretch=False)
+        self.tree.column('Nombre',width=232, minwidth=232, stretch=False)
+        self.tree.column('Apellido',width=233, minwidth=233, stretch=False)
         
         self.tree.heading('Cedula', text='Cedula')
         self.tree.heading('Nombre', text='Nombre')
