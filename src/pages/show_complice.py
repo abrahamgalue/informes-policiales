@@ -95,7 +95,7 @@ class MostrarComplice(tk.Tk):
         self.btn_ver.place(x=230.4, y=580, height=92, width=151)
 
         self.btn_editar = tk.Button(
-            bd=0, image=ButtonEditar, activebackground='#01060a', command=self.get_complice_id)
+            bd=0, image=ButtonEditar, activebackground='#01060a', command=self.edit_complice)
         self.btn_editar.place(x=424.4, y=580, height=92, width=151)
 
         self.btn_borrar = tk.Button(
@@ -118,6 +118,12 @@ class MostrarComplice(tk.Tk):
             complice_id = self.tree.item(selected_item)['values'][0]
             print(complice_id)
             return complice_id
+    
+    def edit_complice(self):
+        id = self.get_complice_id()
+        from pages.criminal import FormularioCriminal
+        self.destroy()
+        FormularioCriminal(edit=True,persona_id=id)
 
 def main():
     """Renderizar la aplicacion"""

@@ -3,8 +3,9 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 from pages.criminal import datos_criminal
+from pages.util.persona import add_persona, update_persona
+from pages.util.senas_de_identificacion import add_seña, get_seña, update_seña
 
-datos_senas = []
 img = None
 ButtonImg = None
 ButtonImg2 = None
@@ -15,9 +16,11 @@ icono_chico = None
 class FormularioIdentificacion(tk.Tk):
     """Formulario de señas de identificacion"""
 
-    def __init__(self):
+    def __init__(self, edit=False, persona_id=0):
         super().__init__()
-
+        self.edit = edit
+        self.persona_id = persona_id
+        self.datos_criminal = datos_criminal
         self.inicializar_gui()
         self.definir_patrones_validaciones()
 
@@ -52,44 +55,89 @@ class FormularioIdentificacion(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
 
+        if self.edit:
+            senas_data = get_seña(self.persona_id)
+        
+        weight_text = tk.StringVar()
+        if self.edit:
+            weight_text.set(senas_data[0][0])
+        else:
+            weight_text.set("")
         self.weight_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", 
+            textvariable=weight_text)
         self.weight_entry.config(bd=0)
         self.weight_entry.place(x=197.3, y=280, height=31, width=210)
         self.weight_entry.lift()
 
+        height_text = tk.StringVar()
+        if self.edit:
+            height_text.set(senas_data[0][1])
+        else:
+            height_text.set("")
         self.height_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white",
+            textvariable=height_text)
         self.height_entry.config(bd=0)
         self.height_entry.place(x=197.3, y=340, height=31, width=210)
         self.height_entry.lift()
 
+        hair_text = tk.StringVar()
+        if self.edit:
+            hair_text.set(senas_data[0][3])
+        else:
+            hair_text.set("")
         self.hair_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white",
+            textvariable=hair_text)
         self.hair_entry.config(bd=0)
         self.hair_entry.place(x=197.3, y=400, height=31, width=210)
         self.hair_entry.lift()
 
+        skin_color_text = tk.StringVar()
+        if self.edit:
+            skin_color_text.set(senas_data[0][2])
+        else:
+            skin_color_text.set("")
         self.skin_color_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white",
+            textvariable=skin_color_text)
         self.skin_color_entry.config(bd=0)
         self.skin_color_entry.place(x=720, y=280, height=31, width=210)
         self.skin_color_entry.lift()
 
+        eyes_text = tk.StringVar()
+        if self.edit:
+            eyes_text.set(senas_data[0][5])
+        else:
+            eyes_text.set("")
         self.eyes_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white",
+            textvariable=eyes_text)
         self.eyes_entry.config(bd=0)
         self.eyes_entry.place(x=720, y=340, height=31, width=210)
         self.eyes_entry.lift()
 
+        hair_color_text = tk.StringVar()
+        if self.edit:
+            hair_color_text.set(senas_data[0][4])
+        else:
+            hair_color_text.set("")
         self.hair_color_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white",
+            textvariable=hair_color_text)
         self.hair_color_entry.config(bd=0)
         self.hair_color_entry.place(x=720, y=400, height=31, width=210)
         self.hair_color_entry.lift()
 
+        other_features_text = tk.StringVar()
+        if self.edit:
+            other_features_text.set(senas_data[0][6])
+        else:
+            other_features_text.set("")
         self.other_features_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white",
+            textvariable=other_features_text)
         self.other_features_entry.config(bd=0)
         self.other_features_entry.place(x=364.6, y=460, height=31, width=565.4)
         self.eyes_entry.lift()
@@ -178,7 +226,7 @@ class FormularioIdentificacion(tk.Tk):
                 'Otras caracteristicas inválidas', 'El campo Otras caracteristicas debe tener como máximo 60 caracteres.')
             return
 
-        criminal_data = {
+        senas_data = {
             "Peso": self.weight_entry.get(),
             "Altura": self.height_entry.get(),
             "Color de Piel": self.skin_color_entry.get(),
@@ -188,27 +236,28 @@ class FormularioIdentificacion(tk.Tk):
             "Otras caracteristicas": self.other_features_entry.get()
         }
 
-        print(criminal_data)
-        global datos_senas
-        datos_senas = list(criminal_data.values())
-        datos_senas.append(datos_criminal[0])
+        print(senas_data)
+        datos_senas = list(senas_data.values())
         print(datos_senas)
+
+        if self.edit:
+            self.datos_criminal = self.datos_criminal[1:]
+            self.datos_criminal.append(self.persona_id)
+            print(self.datos_criminal)
+            datos_senas.append(self.persona_id)
+            update_persona(self.datos_criminal)
+            update_seña(datos_senas)
+        else:
+            print(self.datos_criminal)
+            datos_senas.append(self.datos_criminal[0])
+            add_persona(self.datos_criminal)
+            add_seña(datos_senas)
 
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         from main import MenuApp
         self.destroy()
         MenuApp()
-
-    def clean(self):
-        """Limpiar los campos del formulario"""
-        self.weight_entry.delete(0, tk.END)
-        self.height_entry.delete(0, tk.END)
-        self.skin_color_entry.delete(0, tk.END)
-        self.hair_entry.delete(0, tk.END)
-        self.hair_color_entry.delete(0, tk.END)
-        self.eyes_entry.delete(0, tk.END)
-        self.other_features_entry.delete(0, tk.END)
 
     def back_to_menu(self):
         """Volver al menu"""

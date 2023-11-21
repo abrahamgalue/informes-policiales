@@ -80,6 +80,30 @@ def get_personas():
                 connection.close()
                 print("MySQL connection is closed")
 
+def update_persona(values):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """ UPDATE persona SET nombre = %s, apellido = %s, 
+            fecha_de_nacimiento = %s, sexo = %s, telefono = %s,
+            direccion = %s, nacionalidad = %s, alias = %s 
+            WHERE persona.numero_de_identificacion = %s """
+            cursor.execute(sql,values)
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                print("MySQL cursor is closed")
+                connection.close()
+                print("MySQL connection is closed")
+# datos = ('prueba 1','prueba 1','1010-01-02','Masculino','+1 0101010011','Prueba','Hell','prueba',1010101)
+# update_persona(datos)
+
 def get_implicados():
     try:
         connection = coneccion()
