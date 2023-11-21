@@ -2,7 +2,8 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from .util.persona import get_personas,get_persona
+from .util.persona import get_personas,get_persona, get_complices_arresto
+from .util.ocurrencia_de_arresto import get_arresto
 
 img = None
 ButtonImg = None
@@ -15,8 +16,10 @@ icono_chico = None
 class PersonasArresto(tk.Tk):
     """Página de exportación de datos"""
 
-    def __init__(self):
+    def __init__(self, edit=False, arresto_id=0):
         super().__init__()
+        self.edit = edit
+        self.arresto_id = arresto_id
         self.inicializar_gui()
 
     def inicializar_gui(self):
@@ -58,6 +61,10 @@ class PersonasArresto(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
         
+        if self.edit:
+            implicado = get_arresto(self.arresto_id)[0][7]
+            complices = get_complices_arresto(self.arresto_id)
+            
         self.combostyle = ttk.Style()
 
         self.combostyle.theme_create('combostyle', parent='alt',
@@ -84,7 +91,11 @@ class PersonasArresto(tk.Tk):
             values=personas,
             font=("Cascadia Code Normal", 16),
         )
-        self.implicado_entry.current(0)
+        if self.edit:
+            implicado_index = personas.index(implicado)
+            self.implicado_entry.current(implicado_index)
+        else:
+            self.implicado_entry.current(0)
         self.implicado_entry.place(x=240, y=180, height=31, width=210)
         self.implicado_entry.pack
         
@@ -124,7 +135,9 @@ class PersonasArresto(tk.Tk):
         scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
         scrollbar.place(x=668.2,y=295.1,height=250,width=13.8)
-                       
+        if self.edit:
+            for i in range(len(complices)):
+                self.tree.insert('', tk.END, values=complices[i])       
          
         self.btn_add = tk.Button(
             bd=0, image=ButtonAdd, activebackground='#01060a',command=self.add_complice)
@@ -191,13 +204,18 @@ class PersonasArresto(tk.Tk):
         
         from pages.arresto_condena import FormularioArresto
         self.destroy()
-        FormularioArresto(implicado,complices)
+        FormularioArresto(implicado,complices,edit=self.edit,arresto_id=self.arresto_id)
             
     def back_to_menu(self):
         """Volver al menu"""
-        from main import MenuApp
-        self.destroy()
-        MenuApp()
+        if self.edit:
+            from pages.show_arrestos import MostrarArrestos
+            self.destroy()
+            MostrarArrestos()
+        else:
+            from main import MenuApp
+            self.destroy()
+            MenuApp()
 
 def main():
     """Renderizar la aplicacion"""

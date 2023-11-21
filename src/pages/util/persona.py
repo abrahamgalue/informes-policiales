@@ -143,3 +143,44 @@ def add_complice(values):
                 print("MySQL cursor is closed")
                 connection.close()
                 print("MySQL connection is closed")
+                
+def get_complices_arresto(id):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """ SELECT persona.numero_de_identificacion, persona.nombre, persona.apellido FROM persona JOIN complice 
+            ON persona.numero_de_identificacion = complice.persona_numero_de_identificacion 
+            WHERE complice.ocurrencia_de_arresto_id = (%s) ORDER BY persona.nombre ASC, persona.apellido ASC;"""
+            cursor.execute(sql,(id,))
+            implicados = cursor.fetchall()
+            print(implicados)
+            return implicados
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
+# get_complices_arresto(9)
+
+def delete_complices_arresto(id):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """ DELETE FROM complice WHERE complice.ocurrencia_de_arresto_id = (%s);"""
+            cursor.execute(sql,(id,))
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
+# delete_complices_arresto(3)

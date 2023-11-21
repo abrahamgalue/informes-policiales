@@ -81,3 +81,26 @@ def get_arrestos():
                 connection.close()
                 print("MySQL connection is closed")
             return implicados
+def update_arresto(values):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """UPDATE `ocurrencia_de_arresto` SET `fecha` = %s, 
+            `hora` = %s, `lugar` = %s, `delito` = %s, 
+            `tipo_de_delito` = %s, `descripcion` = %s, 
+            `implicado_numero_de_identificacion` = %s WHERE `ocurrencia_de_arresto`.`id` = %s"""
+            cursor.execute(sql,values)
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                print("MySQL cursor is closed")
+                connection.close()
+                print("MySQL connection is closed")
+# datos = ('2000-02-02','18:00:00','No se','Ser Feo','Delito de Belleza','Esta muy feo','30557711',3)
+# update_arresto(datos)

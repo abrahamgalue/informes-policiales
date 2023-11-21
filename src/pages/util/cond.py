@@ -78,3 +78,25 @@ def get_condena(id):
                 connection.close()
                 print("MySQL connection is closed")
 # get_condena(1)
+
+def update_condena(values):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """UPDATE `condena` SET `fecha` = %s, `sentencia` = %s 
+            WHERE `condena`.`ocurrencia_de_arresto_id` = %s;"""
+            cursor.execute(sql,values)
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                print("MySQL cursor is closed")
+                connection.close()
+                print("MySQL connection is closed")
+# datos = ['2023-11-07','Super Muerte', 3]
+# update_condena(datos)

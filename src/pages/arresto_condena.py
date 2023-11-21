@@ -2,11 +2,9 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
-from pages.util.ocurrencia_de_arresto import add_arresto
-from pages.util.cond import add_condena
-from pages.util.persona import add_complice
-
-datos_arresto = []
+from pages.util.ocurrencia_de_arresto import add_arresto, get_arresto, update_arresto
+from pages.util.cond import add_condena, get_condena, update_condena
+from pages.util.persona import add_complice, delete_complices_arresto
 
 img = None
 ButtonImg = None
@@ -17,10 +15,12 @@ icono_chico = None
 class FormularioArresto(tk.Tk):
     """Formulario de registro de arresto y condena"""
 
-    def __init__(self, implicado,complices):
+    def __init__(self, implicado,complices, edit=False, arresto_id = 0):
         super().__init__()
         self.implicado = implicado
         self.complices = complices
+        self.edit = edit
+        self.arresto_id = arresto_id
         self.inicializar_gui()
         self.definir_patrones_validaciones()
 
@@ -55,50 +55,94 @@ class FormularioArresto(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
 
+        if self.edit:
+            arresto_data = get_arresto(self.arresto_id)
+            condena_data = get_condena(arresto_data[0][0])
+
+        arrest_date_text = tk.StringVar()
+        if self.edit:
+            arrest_date_text.set(arresto_data[0][1])
+        else:
+            arrest_date_text.set("")
         self.arrest_date_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=arrest_date_text)
         self.arrest_date_entry.config(bd=0)
         self.arrest_date_entry.place(x=234, y=183, height=31, width=210)
         self.arrest_date_entry.lift()
 
+        hour_text = tk.StringVar()
+        if self.edit:
+            hour_text.set(arresto_data[0][2])
+        else:
+            hour_text.set("")
         self.hour_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=hour_text)
         self.hour_entry.config(bd=0)
         self.hour_entry.place(x=234, y=233, height=31, width=210)
         self.hour_entry.lift()
 
+        place_text = tk.StringVar()
+        if self.edit:
+            place_text.set(arresto_data[0][3])
+        else:
+            place_text.set("")
         self.place_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=place_text)
         self.place_entry.config(bd=0)
         self.place_entry.place(x=234, y=283, height=31, width=210)
         self.place_entry.lift()
 
+        crime_text = tk.StringVar()
+        if self.edit:
+            crime_text.set(arresto_data[0][4])
+        else:
+            crime_text.set("")
         self.crime_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=crime_text)
         self.crime_entry.config(bd=0)
         self.crime_entry.place(x=715, y=183, height=31, width=210)
         self.crime_entry.lift()
 
+        type_of_crime_text = tk.StringVar()
+        if self.edit:
+            type_of_crime_text.set(arresto_data[0][5])
+        else:
+            type_of_crime_text.set("")
         self.type_of_crime_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=type_of_crime_text)
         self.type_of_crime_entry.config(bd=0)
         self.type_of_crime_entry.place(x=715, y=233, height=31, width=210)
         self.type_of_crime_entry.lift()
 
+        description_text = tk.StringVar()
+        if self.edit:
+            description_text.set(arresto_data[0][6])
+        else:
+            description_text.set("")
         self.description_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=description_text)
         self.description_entry.config(bd=0)
         self.description_entry.place(x=715, y=283, height=31, width=210)
         self.description_entry.lift()
 
+        date_text = tk.StringVar()
+        if self.edit:
+            date_text.set(condena_data[0][0])
+        else:
+            date_text.set("")
         self.date_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=date_text)
         self.date_entry.config(bd=0)
         self.date_entry.place(x=234, y=478, height=31, width=210)
         self.date_entry.lift()
 
+        judgment_text = tk.StringVar()
+        if self.edit:
+            judgment_text.set(condena_data[0][1])
+        else:
+            judgment_text.set("")
         self.judgment_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=judgment_text)
         self.judgment_entry.config(bd=0)
         self.judgment_entry.place(x=715, y=478, height=31, width=210)
         self.judgment_entry.lift()
@@ -217,12 +261,21 @@ class FormularioArresto(tk.Tk):
         condena_data = list(c_data.values())
         
         # Se guardan en la base de datos
-        add_arresto(arresto_data)
-        from pages.util.functions import id_arresto
-        condena_data.append(id_arresto())
-        add_condena(condena_data) 
-        for complice in self.complices:
-            add_complice((complice,id_arresto()))
+        if self.edit:
+            arresto_data.append(self.arresto_id)
+            update_arresto(arresto_data)
+            condena_data.append(self.arresto_id)
+            update_condena(condena_data)
+            delete_complices_arresto(self.arresto_id)
+            for complice in self.complices:
+                add_complice((complice,self.arresto_id))
+        else:
+            add_arresto(arresto_data)
+            from pages.util.functions import id_arresto
+            condena_data.append(id_arresto())
+            add_condena(condena_data) 
+            for complice in self.complices:
+                add_complice((complice,id_arresto()))
         
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
@@ -241,9 +294,14 @@ class FormularioArresto(tk.Tk):
     
     def back_to_menu(self):
         """Volver al menu"""
-        from main import MenuApp
-        self.destroy()
-        MenuApp()
+        if self.edit:
+            from pages.show_arrestos import MostrarArrestos
+            self.destroy()
+            MostrarArrestos()
+        else:
+            from main import MenuApp
+            self.destroy()
+            MenuApp()
 
 
 def main():
