@@ -11,6 +11,7 @@ ButtonImg2 = None
 icono_grande = None
 icono_chico = None
 
+
 class FormularioIdentificacion(tk.Tk):
     """Formulario de señas de identificacion"""
 
@@ -68,19 +69,19 @@ class FormularioIdentificacion(tk.Tk):
         self.hair_entry.config(bd=0)
         self.hair_entry.place(x=197.3, y=400, height=31, width=210)
         self.hair_entry.lift()
-        
+
         self.skin_color_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.skin_color_entry.config(bd=0)
         self.skin_color_entry.place(x=720, y=280, height=31, width=210)
         self.skin_color_entry.lift()
-        
+
         self.eyes_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.eyes_entry.config(bd=0)
         self.eyes_entry.place(x=720, y=340, height=31, width=210)
         self.eyes_entry.lift()
-        
+
         self.hair_color_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
         self.hair_color_entry.config(bd=0)
@@ -98,7 +99,7 @@ class FormularioIdentificacion(tk.Tk):
         self.btn_next.place(x=716, y=575, height=79, width=235)
 
         self.btn_back = tk.Button(
-            bd=0, image=ButtonImg2, activebackground='#021118',command=self.back_to_menu)
+            bd=0, image=ButtonImg2, activebackground='#021118', command=self.back_to_menu)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
 
     def definir_patrones_validaciones(self):
@@ -142,13 +143,6 @@ class FormularioIdentificacion(tk.Tk):
                 'Altura inválida', 'El campo Altura debe ser un número con mínimo 2 dígitos enteros y dos decimales (e.g., 78.00).')
             return
 
-        color_piel = self.skin_color_entry.get().strip()
-
-        if re.match(self.regex_color_piel, color_piel) is None:
-            messagebox.showwarning(
-                'Color de piel inválido', 'El campo Color de piel debe tener mínimo 3 caracteres y máximo 45.')
-            return
-
         cabello = self.hair_entry.get().strip()
 
         if re.match(self.regex_cabello, cabello) is None:
@@ -156,11 +150,11 @@ class FormularioIdentificacion(tk.Tk):
                 'Cabello inválido', 'El campo Cabello debe tener mínimo 4 caracteres y máximo 45.')
             return
 
-        color_cabello = self.hair_color_entry.get().strip()
+        color_piel = self.skin_color_entry.get().strip()
 
-        if re.match(self.regex_color_cabello, color_cabello) is None:
+        if re.match(self.regex_color_piel, color_piel) is None:
             messagebox.showwarning(
-                'Color de cabello inválido', 'El campo Color de cabello debe tener mínimo 5 caracteres y máximo 45.')
+                'Color de piel inválido', 'El campo Color de piel debe tener mínimo 3 caracteres y máximo 45.')
             return
 
         ojos = self.eyes_entry.get().strip()
@@ -168,6 +162,13 @@ class FormularioIdentificacion(tk.Tk):
         if re.match(self.regex_ojos, ojos) is None:
             messagebox.showwarning(
                 'Ojos inválidos', 'El Campo Ojos debe tener mínimo 3 caracteres y máximo 45.')
+            return
+
+        color_cabello = self.hair_color_entry.get().strip()
+
+        if re.match(self.regex_color_cabello, color_cabello) is None:
+            messagebox.showwarning(
+                'Color de cabello inválido', 'El campo Color de cabello debe tener mínimo 5 caracteres y máximo 45.')
             return
 
         otras_caracteristicas = self.other_features_entry.get().strip()
@@ -192,7 +193,7 @@ class FormularioIdentificacion(tk.Tk):
         datos_senas = list(criminal_data.values())
         datos_senas.append(datos_criminal[0])
         print(datos_senas)
-        
+
         messagebox.showinfo(
             'Mensaje', 'Los datos se guardaron de forma satisfactoria.')
         from main import MenuApp
@@ -208,7 +209,7 @@ class FormularioIdentificacion(tk.Tk):
         self.hair_color_entry.delete(0, tk.END)
         self.eyes_entry.delete(0, tk.END)
         self.other_features_entry.delete(0, tk.END)
-    
+
     def back_to_menu(self):
         """Volver al menu"""
         from main import MenuApp

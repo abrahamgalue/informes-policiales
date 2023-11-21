@@ -77,6 +77,12 @@ class FormularioCriminal(tk.Tk):
         self.alias_entry.place(x=234, y=400, height=31, width=210)
         self.alias_entry.lift()
 
+        self.dob_entry = tk.Entry(self, background="#EFA11A", font=(
+            "Cascadia Code Normal", 16), fg="white")
+        self.dob_entry.config(bd=0)
+        self.dob_entry.place(x=234, y=580, height=31, width=210)
+        self.dob_entry.lift()
+
         # telefono
         self.phone_entry = tk.Entry(
             self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
@@ -90,12 +96,6 @@ class FormularioCriminal(tk.Tk):
         self.address_entry.config(bd=0)
         self.address_entry.place(x=646, y=500, height=31, width=305)
         self.address_entry.lift()
-
-        self.dob_entry = tk.Entry(self, background="#EFA11A", font=(
-            "Cascadia Code Normal", 16), fg="white")
-        self.dob_entry.config(bd=0)
-        self.dob_entry.place(x=234, y=580, height=31, width=210)
-        self.dob_entry.lift()
 
         # """ NO TOCAR """
 
@@ -197,6 +197,13 @@ class FormularioCriminal(tk.Tk):
                 'Apellido inválido', 'El campo Apellido es obligatorio y debe tener máximo 45 caracteres.')
             return
 
+        alias = self.alias_entry.get().strip()
+
+        if re.match(self.regex_alias, alias) is None:
+            messagebox.showwarning(
+                'Alias inválido', 'El campo Alias debe tener máximo 45 caracteres.')
+            return
+
         fecha = self.dob_entry.get().strip()
 
         if re.match(self.regex_fecha, fecha) is None:
@@ -216,13 +223,6 @@ class FormularioCriminal(tk.Tk):
         if re.match(self.regex_direccion, direccion) is None:
             messagebox.showwarning(
                 'Dirección inválida', 'El campo Dirección es obligatorio y debe tener máximo 200 caracteres.')
-            return
-
-        alias = self.alias_entry.get().strip()
-
-        if re.match(self.regex_alias, alias) is None:
-            messagebox.showwarning(
-                'Alias inválido', 'El campo Alias debe tener máximo 45 caracteres.')
             return
 
         criminal_data = {

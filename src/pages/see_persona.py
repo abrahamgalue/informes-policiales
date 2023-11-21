@@ -147,7 +147,7 @@ class SeePersona(tk.Tk):
                                             'fieldbackground': '#EFA11A',  # Color del fondo
                                             'background': '#EFA11A',  # color de la flechita
                                             # tipo de fuente
-                                            'font': ('Cascadia Code', 16),
+                                            'font': ('Cascadia Code Normal', 16),
                                             'foreground': 'white',  # color de la fuente
                                             'borderwidth': '0',
                                             'highlightthickness': '0'  # borde
@@ -159,7 +159,7 @@ class SeePersona(tk.Tk):
         self.arrestos_box = ttk.Combobox(
             state="readonly",
             values=arrestos,
-            font=("Cascadia Code", 16),
+            font=("Cascadia Code Normal", 16),
         )
         self.arrestos_box.current(0)
         self.arrestos_box.place(x=231.5, y=580, height=31, width=210)
