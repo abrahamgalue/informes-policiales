@@ -83,9 +83,12 @@ class PersonasArresto(tk.Tk):
         # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
         self.combostyle.theme_use('combostyle')
         personas = list()
-        personas_data = get_personas()    
-        for i in range(len(personas_data)):
-            personas.append(personas_data[i][0])
+        personas_data = get_personas()
+        if personas_data == []:
+            personas = ["No hay"]
+        else:   
+            for i in range(len(personas_data)):
+                personas.append(personas_data[i][0])
         self.implicado_entry = ttk.Combobox(
             state="readonly",
             values=personas,
