@@ -173,7 +173,7 @@ def get_complices_arresto(id):
         connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
-            sql = """ SELECT persona.numero_de_identificacion, persona.nombre, persona.apellido FROM persona JOIN complice 
+            sql = """ SELECT * FROM persona JOIN complice 
             ON persona.numero_de_identificacion = complice.persona_numero_de_identificacion 
             WHERE complice.ocurrencia_de_arresto_id = (%s) ORDER BY persona.nombre ASC, persona.apellido ASC;"""
             cursor.execute(sql,(id,))
@@ -190,6 +190,26 @@ def get_complices_arresto(id):
                 print("MySQL connection is closed")
 # get_complices_arresto(9)
 
+def get_arrestos_complice(ced):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """ SELECT ocurrencia_de_arresto_id FROM `complice` 
+            WHERE persona_numero_de_identificacion = %s;"""
+            cursor.execute(sql,(ced,))
+            implicados = cursor.fetchall()
+            print(implicados)
+            return implicados
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed") 
+              
 def delete_complices_arresto(id):
     try:
         connection = coneccion()

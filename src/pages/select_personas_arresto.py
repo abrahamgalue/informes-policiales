@@ -63,7 +63,7 @@ class PersonasArresto(tk.Tk):
         
         if self.edit:
             implicado = get_arresto(self.arresto_id)[0][7]
-            complices = get_complices_arresto(self.arresto_id)
+            complices = get_complices_arresto(self.arresto_id)[:3]
             
         self.combostyle = ttk.Style()
 
@@ -83,9 +83,12 @@ class PersonasArresto(tk.Tk):
         # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
         self.combostyle.theme_use('combostyle')
         personas = list()
-        personas_data = get_personas()    
-        for i in range(len(personas_data)):
-            personas.append(personas_data[i][0])
+        personas_data = get_personas()
+        if personas_data == []:
+            personas = ["No hay"]
+        else:   
+            for i in range(len(personas_data)):
+                personas.append(personas_data[i][0])
         self.implicado_entry = ttk.Combobox(
             state="readonly",
             values=personas,

@@ -2,7 +2,6 @@
 import re
 import tkinter as tk
 from tkinter import messagebox
-from pages.criminal import datos_criminal
 from pages.util.persona import add_persona, update_persona
 from pages.util.senas_de_identificacion import add_seña, get_seña, update_seña
 
@@ -16,7 +15,7 @@ icono_chico = None
 class FormularioIdentificacion(tk.Tk):
     """Formulario de señas de identificacion"""
 
-    def __init__(self, edit=False, persona_id=0):
+    def __init__(self,datos_criminal, edit=False, persona_id=0):
         super().__init__()
         self.edit = edit
         self.persona_id = persona_id

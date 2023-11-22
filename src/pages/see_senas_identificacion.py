@@ -1,7 +1,7 @@
 """Ver persona"""
 import tkinter as tk
 from tkinter import ttk
-
+from pages.util.senas_de_identificacion import get_seña
 datos_arresto = []
 img = None
 ButtonImg = None
@@ -11,12 +11,15 @@ icono_chico = None
 ButtonVer=None
 
 
-class SeePersona(tk.Tk):
+class SeeSenas(tk.Tk):
     """Página de exportación de datos"""
 
-    def __init__(self):
+    def __init__(self,persona_id,complice,arresto,arresto_id):
         super().__init__()
-
+        self.persona_id = persona_id
+        self.complice = complice
+        self.arresto = arresto
+        self.arresto_id = arresto_id
         self.inicializar_gui()
 
     def inicializar_gui(self):
@@ -54,8 +57,10 @@ class SeePersona(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
 
+        senas_data = get_seña(self.persona_id)
+        
         p_text = tk.StringVar()
-        p_text.set("Ale")
+        p_text.set(senas_data[0][0])
         self.peso_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=p_text,state='readonly')
         self.peso_text.config(bd=0)
@@ -63,7 +68,7 @@ class SeePersona(tk.Tk):
         self.peso_text.lift()
         #altura
         a_text = tk.StringVar()
-        a_text.set("weibo")
+        a_text.set(senas_data[0][1])
         self.altura_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=a_text,state='readonly')
         self.altura_text.config(bd=0)
@@ -72,7 +77,7 @@ class SeePersona(tk.Tk):
 
         #cabello
         C_text = tk.StringVar()
-        C_text.set("sexo")
+        C_text.set(senas_data[0][3])
         self.Cabello_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=C_text,state='readonly')
         self.Cabello_text.config(bd=0)
@@ -81,7 +86,7 @@ class SeePersona(tk.Tk):
 
         #color de piel
         cp_text = tk.StringVar()
-        cp_text.set("Faker")
+        cp_text.set(senas_data[0][2])
         self.color_piel_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=cp_text, state='readonly')
         self.color_piel_text.config(bd=0)
@@ -89,7 +94,7 @@ class SeePersona(tk.Tk):
         self.color_piel_text.lift()
         #ojos
         o_text = tk.StringVar()
-        o_text.set("Todo el dia")
+        o_text.set(senas_data[0][5])
         self.ojos_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=o_text, state='readonly')
         self.ojos_text.config(bd=0)
@@ -98,7 +103,7 @@ class SeePersona(tk.Tk):
         #color de cabello
 
         Cc_text = tk.StringVar()
-        Cc_text.set("senor bigote")
+        Cc_text.set(senas_data[0][4])
         self.color_cabello_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=Cc_text, state='readonly')
         self.color_cabello_text.config(bd=0)
@@ -107,7 +112,10 @@ class SeePersona(tk.Tk):
 
         #OTRAS CARACTERISTICAS
         oc_text = tk.StringVar()
-        oc_text.set("Maracaibo tierra amada")
+        if senas_data[0][6] == None:
+            oc_text.set("Ninguna")
+        else:
+            oc_text.set(senas_data[0][6])
         self.otras_caracteristicas_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=oc_text, state='readonly')
         self.otras_caracteristicas_text.config(bd=0)
@@ -115,19 +123,20 @@ class SeePersona(tk.Tk):
         self.otras_caracteristicas_text.lift()
 
         self.btn_back = tk.Button(
-            bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_menu)
+            bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_persona)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
 
-    def back_to_menu(self):
+    def back_to_persona(self):
         """Volver al menu"""
-        from main import MenuApp
+        from pages.see_persona import SeePersona
         self.destroy()
-        MenuApp()
+        SeePersona(persona_id=self.persona_id,complice=self.complice, arresto=self.arresto, 
+                   arresto_id=self.arresto_id)
 
 
 def main():
     """Renderizar la aplicacion"""
-    app = SeePersona()
+    app = SeeSenas()
     app.mainloop()
 
 

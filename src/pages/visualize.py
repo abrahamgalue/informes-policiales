@@ -53,12 +53,12 @@ class VisualizePersona(tk.Tk):
         self.fondo.pack()
 
         self.btn_implicados= tk.Button(
-            bd=0, image=ButtonImplicados, activebackground='#021118')
+            bd=0, image=ButtonImplicados, activebackground='#021118', command=self.to_implicado)
         self.btn_implicados.place(x=119.1, y=354.1, height=79.7, width=267.1)
 
 
         self.btn_complices= tk.Button(
-            bd=0, image=ButtonComplices, activebackground='#021118')
+            bd=0, image=ButtonComplices, activebackground='#021118', command=self.to_complices)
         self.btn_complices.place(x=650.7, y=354.1, height=79.7, width=267.1)
 
         self.btn_back = tk.Button(
@@ -71,7 +71,14 @@ class VisualizePersona(tk.Tk):
         from main import MenuApp
         self.destroy()
         MenuApp()
-
+    def to_implicado(self):
+        from pages.show_implicado import MostrarImplicados
+        self.destroy()
+        MostrarImplicados()
+    def to_complices(self):
+        from pages.show_complice import MostrarComplice
+        self.destroy()
+        MostrarComplice()
 
 def main():
     """Renderizar la aplicacion"""

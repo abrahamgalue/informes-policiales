@@ -63,6 +63,25 @@ def get_arresto(id):
                 connection.close()
                 print("MySQL connection is closed")
 # get_persona(12345678)
+def get_arrestos_implicado(ced):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM ocurrencia_de_arresto WHERE `implicado_numero_de_identificacion` = %s;",(ced,))
+            implicado = cursor.fetchall()
+            print(implicado)
+            return implicado
+    except Error as e:
+        print("Error", e)
+    finally:
+        if connection is not None :
+            if connection.is_connected():
+                cursor.close()
+                print("MySQL cursor is closed")
+                connection.close()
+                print("MySQL connection is closed")
+# get_arrestos_implicado(1010101)
 
 def get_arrestos():
     try:
