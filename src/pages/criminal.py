@@ -55,7 +55,7 @@ class FormularioCriminal(tk.Tk):
         self.fondo.pack()
 
         if self.edit:
-            persona_data = get_persona(self.arresto_id)
+            persona_data = get_persona(self.persona_id)
 
         dni_text = tk.StringVar()
         if self.edit:
