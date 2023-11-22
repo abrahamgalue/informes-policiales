@@ -1,6 +1,8 @@
 """Ver persona"""
 import tkinter as tk
 from tkinter import ttk
+from .util.persona import get_persona, get_arrestos_complice
+from .util.ocurrencia_de_arresto import get_arrestos_implicado
 
 datos_arresto = []
 img = None
@@ -14,9 +16,10 @@ ButtonVer=None
 class SeePersona(tk.Tk):
     """Página de exportación de datos"""
 
-    def __init__(self):
+    def __init__(self,persona_id,complice=False):
         super().__init__()
-
+        self.persona_id = persona_id
+        self.complice = complice
         self.inicializar_gui()
 
     def inicializar_gui(self):
@@ -54,8 +57,10 @@ class SeePersona(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
 
+        persona_data = get_persona(self.persona_id)
+        
         c_text = tk.StringVar()
-        c_text.set("Ale")
+        c_text.set(persona_data[0][0])
         self.cedula_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=c_text,state='readonly')
         self.cedula_text.config(bd=0)
@@ -63,7 +68,7 @@ class SeePersona(tk.Tk):
         self.cedula_text.lift()
 
         n_text = tk.StringVar()
-        n_text.set("weibo")
+        n_text.set(persona_data[0][1])
         self.nombre_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=n_text,state='readonly')
         self.nombre_text.config(bd=0)
@@ -71,7 +76,7 @@ class SeePersona(tk.Tk):
         self.nombre_text.lift()
 
         ap_text = tk.StringVar()
-        ap_text.set("sexo")
+        ap_text.set(persona_data[0][2])
         self.apellido_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=ap_text,state='readonly')
         self.apellido_text.config(bd=0)
@@ -79,7 +84,7 @@ class SeePersona(tk.Tk):
         self.apellido_text.lift()
 
         al_text = tk.StringVar()
-        al_text.set("Faker")
+        al_text.set(persona_data[0][8])
         self.alias_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=al_text, state='readonly')
         self.alias_text.config(bd=0)
@@ -87,7 +92,7 @@ class SeePersona(tk.Tk):
         self.alias_text.lift()
 
         sex_text = tk.StringVar()
-        sex_text.set("Todo el dia")
+        sex_text.set(persona_data[0][4])
         self.sexo_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=sex_text, state='readonly')
         self.sexo_text.config(bd=0)
@@ -95,7 +100,7 @@ class SeePersona(tk.Tk):
         self.sexo_text.lift()
 
         naci_text = tk.StringVar()
-        naci_text.set("senor bigote")
+        naci_text.set(persona_data[0][3])
         self.nacimiento_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=naci_text, state='readonly')
         self.nacimiento_text.config(bd=0)
@@ -103,7 +108,7 @@ class SeePersona(tk.Tk):
         self.nacimiento_text.lift()
 
         nd_text = tk.StringVar()
-        nd_text.set("Austriaco")
+        nd_text.set(persona_data[0][7])
         self.nacionalidad_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=nd_text, state='readonly')
         self.nacionalidad_text.config(bd=0)
@@ -111,7 +116,7 @@ class SeePersona(tk.Tk):
         self.nacionalidad_text.lift()
 
         t_text = tk.StringVar()
-        t_text.set("hitler")
+        t_text.set(persona_data[0][5])
         self.telefono_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=t_text, state='readonly')
         self.telefono_text.config(bd=0)
@@ -119,7 +124,7 @@ class SeePersona(tk.Tk):
         self.telefono_text.lift()
 
         d_text = tk.StringVar()
-        d_text.set("Maracaibo tierra amada")
+        d_text.set(persona_data[0][6])
         self.direccion_text = tk.Entry(
             self,background="white", font=("Cascadia Code Normal", 16), fg="#EFA11A",textvariable=d_text, state='readonly')
         self.direccion_text.config(bd=0)
@@ -135,7 +140,7 @@ class SeePersona(tk.Tk):
         self.btn_senas.place(x=716.1, y=575.5, height=79, width=235)
 
         self.btn_back = tk.Button(
-            bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_menu)
+            bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_visualize)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
         #combobox
         self.combostyle = ttk.Style()
@@ -155,7 +160,17 @@ class SeePersona(tk.Tk):
                                 )
         # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
         self.combostyle.theme_use('combostyle')
-        arrestos=[1,2,3]   
+        arrestos= list()
+        if self.complice:
+            arrestos_data = get_arrestos_complice(self.persona_id)
+        else:
+            arrestos_data = get_arrestos_implicado(self.persona_id)
+        
+        if arrestos_data == []:
+            arrestos = ["No hay"]
+        else:
+            for i in range(len(arrestos_data)):
+                arrestos.append(arrestos_data[i][0])      
         self.arrestos_box = ttk.Combobox(
             state="readonly",
             values=arrestos,
@@ -165,11 +180,11 @@ class SeePersona(tk.Tk):
         self.arrestos_box.place(x=231.5, y=580, height=31, width=210)
         self.arrestos_box.pack
 
-    def back_to_menu(self):
+    def back_to_visualize(self):
         """Volver al menu"""
-        from main import MenuApp
+        from pages.visualize import VisualizePersona
         self.destroy()
-        MenuApp()
+        VisualizePersona()
 
 
 def main():

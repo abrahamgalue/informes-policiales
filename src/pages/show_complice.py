@@ -85,13 +85,13 @@ class MostrarComplice(tk.Tk):
         scrollbar.place(x=938.2,y=192,height=358.6,width=13.8)
         
         
-        from util.persona import get_complices
+        from .util.persona import get_complices
         implicado_data = get_complices()    
         for i in range(len(implicado_data)):
             self.tree.insert('', tk.END, values=implicado_data[i])
                  
         self.btn_ver = tk.Button(
-            bd=0, image=ButtonVer, activebackground='#01060a', command=self.get_complice_id)
+            bd=0, image=ButtonVer, activebackground='#01060a', command=self.see_complice)
         self.btn_ver.place(x=230.4, y=580, height=92, width=151)
 
         self.btn_editar = tk.Button(
@@ -121,9 +121,21 @@ class MostrarComplice(tk.Tk):
     
     def edit_complice(self):
         id = self.get_complice_id()
-        from pages.criminal import FormularioCriminal
-        self.destroy()
-        FormularioCriminal(edit=True,persona_id=id)
+        if id == None:
+            print("No selection")
+        else:
+            from pages.criminal import FormularioCriminal
+            self.destroy()
+            FormularioCriminal(edit=True,persona_id=id)
+    
+    def see_complice(self):
+        id = self.get_complice_id()
+        if id == None:
+            print("No selection")
+        else:
+            from pages.see_persona import SeePersona
+            self.destroy()
+            SeePersona(persona_id=id,complice=True)
 
 def main():
     """Renderizar la aplicacion"""
