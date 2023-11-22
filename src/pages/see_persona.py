@@ -136,11 +136,11 @@ class SeePersona(tk.Tk):
         self.btn_ver.place(x=451.6, y=580, height=31, width=139.8)
 
         self.btn_senas= tk.Button(
-            bd=0, image=ButtonSig, activebackground='#021118')
+            bd=0, image=ButtonSig, activebackground='#021118', command=self.to_senas)
         self.btn_senas.place(x=716.1, y=575.5, height=79, width=235)
 
         self.btn_back = tk.Button(
-            bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_visualize)
+            bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_show)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
         #combobox
         self.combostyle = ttk.Style()
@@ -180,12 +180,21 @@ class SeePersona(tk.Tk):
         self.arrestos_box.place(x=231.5, y=580, height=31, width=210)
         self.arrestos_box.pack
 
-    def back_to_visualize(self):
+    def back_to_show(self):
         """Volver al menu"""
-        from pages.visualize import VisualizePersona
+        if self.complice:
+            from pages.show_complice import MostrarComplice
+            self.destroy()
+            MostrarComplice()
+        else:
+            from pages.show_implicado import MostrarImplicados
+            self.destroy()
+            MostrarImplicados()
+            
+    def to_senas(self):
+        from pages.see_senas_identificacion import SeeSenas
         self.destroy()
-        VisualizePersona()
-
+        SeeSenas(persona_id=self.persona_id, complice=self.complice)
 
 def main():
     """Renderizar la aplicacion"""
