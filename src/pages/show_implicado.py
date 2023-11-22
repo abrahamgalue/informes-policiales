@@ -106,9 +106,9 @@ class MostrarImplicados(tk.Tk):
 
     def back_to_menu(self):
         """Volver al menu"""
-        from main import MenuApp
+        from pages.visualize import VisualizePersona
         self.destroy()
-        MenuApp()
+        VisualizePersona()
         
     def get_implicado_id(self):
         if len(self.tree.selection()) > 0:

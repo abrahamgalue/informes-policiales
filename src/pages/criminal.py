@@ -15,10 +15,11 @@ icono_chico = None
 class FormularioCriminal(tk.Tk):
     """Formulario de registro de criminal"""
 
-    def __init__(self,edit=False,persona_id=0):
+    def __init__(self,edit=False,persona_id=0,complice = False):
         super().__init__()
         self.edit = edit
         self.persona_id = persona_id
+        self.complice = complice
         self.inicializar_gui()
         self.definir_patrones_validaciones()
 
@@ -309,9 +310,16 @@ class FormularioCriminal(tk.Tk):
     
     def back_to_menu(self):
         """Volver al menu"""
+        from pages.show_implicado import MostrarImplicados
+        from pages.show_complice import MostrarComplice
         from main import MenuApp
         self.destroy()
-        MenuApp()
+        if self.complice:
+            MostrarComplice()
+        elif self.edit and self.complice == False:
+            MostrarImplicados()
+        else:        
+            MenuApp()
 
 
 def main():

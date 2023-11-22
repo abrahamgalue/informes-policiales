@@ -108,9 +108,9 @@ class MostrarComplice(tk.Tk):
 
     def back_to_menu(self):
         """Volver al menu"""
-        from main import MenuApp
+        from pages.visualize import VisualizePersona
         self.destroy()
-        MenuApp()
+        VisualizePersona()
         
     def get_complice_id(self):
         if len(self.tree.selection()) > 0:
@@ -126,7 +126,7 @@ class MostrarComplice(tk.Tk):
         else:
             from pages.criminal import FormularioCriminal
             self.destroy()
-            FormularioCriminal(edit=True,persona_id=id)
+            FormularioCriminal(edit=True,persona_id=id, complice=True)
     
     def see_complice(self):
         id = self.get_complice_id()
