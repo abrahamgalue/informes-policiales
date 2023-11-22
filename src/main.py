@@ -5,7 +5,7 @@ from pages.exportar import ExportarDatos
 from pages.show_arrestos import MostrarArrestos
 from pages.criminal import FormularioCriminal
 from pages.visualize import VisualizePersona
-from pages.see_creditos import SeeCreditos
+from pages.creditos import SeeCreditos
 img = None
 ButtonPersona1 = None
 ButtonPersona2 = None
