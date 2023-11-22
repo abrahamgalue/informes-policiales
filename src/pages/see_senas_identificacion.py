@@ -14,10 +14,12 @@ ButtonVer=None
 class SeeSenas(tk.Tk):
     """Página de exportación de datos"""
 
-    def __init__(self,persona_id,complice):
+    def __init__(self,persona_id,complice,arresto,arresto_id):
         super().__init__()
         self.persona_id = persona_id
         self.complice = complice
+        self.arresto = arresto
+        self.arresto_id = arresto_id
         self.inicializar_gui()
 
     def inicializar_gui(self):
@@ -128,7 +130,8 @@ class SeeSenas(tk.Tk):
         """Volver al menu"""
         from pages.see_persona import SeePersona
         self.destroy()
-        SeePersona(persona_id=self.persona_id,complice=self.complice)
+        SeePersona(persona_id=self.persona_id,complice=self.complice, arresto=self.arresto, 
+                   arresto_id=self.arresto_id)
 
 
 def main():

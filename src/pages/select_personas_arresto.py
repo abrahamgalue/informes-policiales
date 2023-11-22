@@ -63,7 +63,7 @@ class PersonasArresto(tk.Tk):
         
         if self.edit:
             implicado = get_arresto(self.arresto_id)[0][7]
-            complices = get_complices_arresto(self.arresto_id)
+            complices = get_complices_arresto(self.arresto_id)[:3]
             
         self.combostyle = ttk.Style()
 

@@ -173,7 +173,7 @@ def get_complices_arresto(id):
         connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
-            sql = """ SELECT persona.numero_de_identificacion, persona.nombre, persona.apellido FROM persona JOIN complice 
+            sql = """ SELECT * FROM persona JOIN complice 
             ON persona.numero_de_identificacion = complice.persona_numero_de_identificacion 
             WHERE complice.ocurrencia_de_arresto_id = (%s) ORDER BY persona.nombre ASC, persona.apellido ASC;"""
             cursor.execute(sql,(id,))

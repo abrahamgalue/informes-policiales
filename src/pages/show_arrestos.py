@@ -88,7 +88,7 @@ class MostrarArrestos(tk.Tk):
             self.tree.insert('', tk.END, values=(arresto_data[i][0],arresto_data[i][1],arresto_data[i][4],arresto_data[i][7]))
          
         self.btn_ver = tk.Button(
-            bd=0, image=ButtonVer, activebackground='#01060a', command=self.get_arresto_id)
+            bd=0, image=ButtonVer, activebackground='#01060a', command=self.see_arresto)
         self.btn_ver.place(x=230.4, y=580, height=92, width=151)
 
         self.btn_editar = tk.Button(
@@ -115,12 +115,24 @@ class MostrarArrestos(tk.Tk):
             arresto_id = self.tree.item(selected_item)['values'][0]
             print(arresto_id)
             return arresto_id
-        
+    
+    def see_arresto(self):
+        id = self.get_arresto_id()
+        if id == None:
+            print("No selection")
+        else:
+            from pages.see_arresto import SeeArresto
+            self.destroy()
+            SeeArresto(arresto_id=id)
+    
     def edit_arresto(self):
         id = self.get_arresto_id()
-        from pages.select_personas_arresto import PersonasArresto
-        self.destroy()
-        PersonasArresto(edit=True, arresto_id=id)
+        if id == None:
+            print("No selection")
+        else:
+            from pages.select_personas_arresto import PersonasArresto
+            self.destroy()
+            PersonasArresto(edit=True, arresto_id=id)
 
 def main():
     """Renderizar la aplicacion"""
