@@ -5,7 +5,7 @@ img = None
 ButtonImg = None
 icono_grande = None
 icono_chico = None
-class SeePersona(tk.Tk):
+class SeeCreditos(tk.Tk):
     
 
     def __init__(self):
@@ -55,7 +55,7 @@ class SeePersona(tk.Tk):
 
 def main():
     """Renderizar la aplicacion"""
-    app = SeePersona()
+    app = SeeCreditos()
     app.mainloop()
 
 
