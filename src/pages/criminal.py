@@ -5,7 +5,6 @@ from tkinter import messagebox
 from tkinter import ttk
 from pages.util.persona import get_persona
 
-datos_criminal = []
 img = None
 ButtonImg = None
 ButtonImg2 = None
@@ -289,13 +288,12 @@ class FormularioCriminal(tk.Tk):
             "Alias": self.alias_entry.get()
         }
         print(criminal_data)
-
-        global datos_criminal
-        datos_criminal = list(criminal_data.values())
+        
+        self.datos_criminal = list(criminal_data.values())
 
         from pages.senas_identificacion import FormularioIdentificacion
         self.destroy()
-        FormularioIdentificacion(self.edit,self.persona_id)
+        FormularioIdentificacion(self.datos_criminal,self.edit,self.persona_id)
 
     def clean(self):
         """Limpiar los campos del formulario"""
