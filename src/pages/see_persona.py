@@ -202,7 +202,7 @@ class SeePersona(tk.Tk):
             self.combostyle.theme_use('combostyle')
             arrestos_implicado= list()
             
-            self.arrestos_implicado_data = get_arrestos_complice(self.persona_id)
+            self.arrestos_implicado_data = get_arrestos_implicado(self.persona_id)
             
             
             if self.arrestos_implicado_data == []:
@@ -224,7 +224,7 @@ class SeePersona(tk.Tk):
             self.btn_ver_implicado.place(x=144.4, y=670, height=31, width=139.8)
 
             arrestos_complice= list()
-            self.arrestos_complice_data = get_arrestos_implicado(self.persona_id)
+            self.arrestos_complice_data = get_arrestos_complice(self.persona_id)
             
             if self.arrestos_complice_data == []:
                 arrestos_complice = ["No hay"]

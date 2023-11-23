@@ -79,7 +79,7 @@ def export_arrestos():
 
     id= [a[i][0] for i in range(len(a))]
     fecha= [a[i][1].strftime("%Y-%m-%d") for i in range(len(a))]
-    hora= [a[i][2] for i in range(len(a))]
+    hora= [str(a[i][2]) for i in range(len(a))]
     lugar= [a[i][3] for i in range(len(a))]
     delito= [a[i][4] for i in range(len(a))]
     Tdelito= [a[i][5] for i in range(len(a))]
@@ -125,5 +125,5 @@ def export_arrestos():
                     len(str(series.name)) # len of column name/header
                     )) + 1 # adding a little extra space
                 worksheet.set_column(idx+sc, idx+sc, max_len) # set column width
-            sc+=10
+            sc+=11
             

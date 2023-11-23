@@ -87,6 +87,7 @@ class PersonasArresto(tk.Tk):
         if personas_data == []:
             messagebox.showinfo(
             'Mensaje', f'No hay personas agregadas.')
+            self.destroy()
             from main import MenuApp
             MenuApp()
         else:   
