@@ -3,7 +3,7 @@
 # pip install openpyxl
 # pip install XlsxWriter
 import pandas as pd
-from .persona import get_personas,get_persona
+from .persona import get_personas,get_persona, get_complices_data
 from .senas_de_identificacion import get_señas
 from .ocurrencia_de_arresto import get_arrestos
 from .cond import get_condenas
@@ -108,14 +108,25 @@ def export_arrestos():
         'Fecha Condena': fechaC,
         'Sentencia': sentencia,
         'Id Arresto': id_a,
-       
     })
-    
+    com = get_complices_data()
+    id_a_c= [com[i][0] for i in range(len(com))]
+    id_c= [com[i][1] for i in range(len(com))]
+    nombre_c= [com[i][2] for i in range(len(com))]
+    ape_c= [com[i][3] for i in range(len(com))]
+    complices = pd.DataFrame({
+        'Id Arresto': id_a_c,
+        'Id Complice': id_c,
+        'Nombre Complice': nombre_c,
+        'Apellido Complice': ape_c,
+    })
     file_name = 'Arrestos'
-    sheets = [('Arresto', arresto), ('Arresto', condena)]
+    sheets = [('Arresto', arresto), ('Arresto', condena),('Arresto',complices)]
     sc = 0
+    i = 0
     with pd.ExcelWriter(f"..\informes-policiales\exports\{file_name}.xlsx") as writer:
         for sheetname, df in sheets: # loop through `dict` of dataframes
+            
             df.to_excel(writer, sheet_name=sheetname,index=False,startcol=sc)
             worksheet = writer.sheets[sheetname] # pull worksheet object
             for idx, col in enumerate(df.columns): # loop through all columns
@@ -125,5 +136,8 @@ def export_arrestos():
                     len(str(series.name)) # len of column name/header
                     )) + 1 # adding a little extra space
                 worksheet.set_column(idx+sc, idx+sc, max_len) # set column width
-            sc+=11
-            
+            if i == 3:
+                sc += 3
+            else:
+                i+=1
+                sc+=11
