@@ -1,6 +1,6 @@
 """Exportar Datos"""
 import tkinter as tk
-
+from tkinter import messagebox
 datos_arresto = []
 img = None
 ButtonImg = None
@@ -59,7 +59,7 @@ class ExportarDatos(tk.Tk):
         self.fondo.pack()
 
         self.btn_export_personas = tk.Button(
-            bd=0, image=ButtonPersonas, activebackground='#01060a')
+            bd=0, image=ButtonPersonas, activebackground='#01060a',command=self.personas)
         self.btn_export_personas.place(x=366.5, y=300, height=79, width=267)
 
         self.btn_export_arrestos = tk.Button(
@@ -80,6 +80,11 @@ class ExportarDatos(tk.Tk):
         self.destroy()
         MenuApp()
 
+    def personas(self):
+        from pages.util.export import export_personas
+        export_personas()
+        messagebox.showinfo(
+            'Mensaje', 'Los datos se exportaron de forma satisfactoria a la carpeta \informes-policiales\exports.')
 
 def main():
     """Renderizar la aplicacion"""
