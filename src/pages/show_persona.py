@@ -138,7 +138,7 @@ class MostrarPersonas(tk.Tk):
         else:
             from pages.see_persona import SeePersona
             self.destroy()
-            SeePersona(persona_id=id)
+            SeePersona(persona_id=id,arresto=True)
 
 def main():
     """Renderizar la aplicacion"""
