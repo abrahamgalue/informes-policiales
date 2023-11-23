@@ -63,7 +63,7 @@ class ExportarDatos(tk.Tk):
         self.btn_export_personas.place(x=366.5, y=300, height=79, width=267)
 
         self.btn_export_arrestos = tk.Button(
-            bd=0, image=ButtonArrestos, activebackground='#01060a')
+            bd=0, image=ButtonArrestos, activebackground='#01060a',command=self.arrestos)
         self.btn_export_arrestos.place(x=366.5, y=406.2, height=79, width=267)
 
         self.btn_export_todo = tk.Button(
@@ -85,6 +85,11 @@ class ExportarDatos(tk.Tk):
         export_personas()
         messagebox.showinfo(
             'Mensaje', 'Los datos se exportaron de forma satisfactoria a la carpeta \informes-policiales\exports.')
+    def arrestos(self):
+        from pages.util.export import export_arrestos
+        export_arrestos()
+        messagebox.showinfo(
+            'Mensaje', 'Los datos se exportaron de forma satisfactoria a la carpeta \informes-policiales\exports.')    
 
 def main():
     """Renderizar la aplicacion"""

@@ -46,7 +46,7 @@ def get_condenas():
         connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM condena ORDER BY fecha;")
+            cursor.execute("SELECT * FROM condena ORDER BY ocurrencia_de_arresto_id;")
             señas = cursor.fetchall()
             print(señas)
             return señas
