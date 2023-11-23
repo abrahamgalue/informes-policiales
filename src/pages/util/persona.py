@@ -67,7 +67,7 @@ def get_personas():
         connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM persona ORDER BY nombre;")
+            cursor.execute("SELECT * FROM persona ORDER BY nombre ASC, apellido ASC;")
             implicados = cursor.fetchall()
             print(implicados)
             return implicados
@@ -195,7 +195,7 @@ def get_arrestos_complice(ced):
         connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
-            sql = """ SELECT ocurrencia_de_arresto_id FROM `complice` 
+            sql = """ SELECT complice.ocurrencia_de_arresto_id, ocurrencia_de_arresto.fecha FROM `complice` JOIN ocurrencia_de_arresto ON complice.ocurrencia_de_arresto_id = ocurrencia_de_arresto.id 
             WHERE persona_numero_de_identificacion = %s;"""
             cursor.execute(sql,(ced,))
             implicados = cursor.fetchall()

@@ -7,6 +7,7 @@ icono_grande = None
 icono_chico = None
 ButtonImplicados = None
 ButtonComplices = None
+ButtonTodas = None
 
 
 class VisualizePersona(tk.Tk):
@@ -25,8 +26,10 @@ class VisualizePersona(tk.Tk):
 
         bg_file = './src/img/visualize.png'
         implicados_file = './src/img/visualize_btn/implicados_btn.png'
-        back_file = './src/img/back_button.png'
         complices_file= './src/img/visualize_btn/complices_btn.png'
+        todas_file= './src/img/visualize_btn/todas_btn.png'
+        back_file = './src/img/back_button.png'
+        
 
         global icono_grande
         icono_grande = tk.PhotoImage(file='./src/img/icon-32.png')
@@ -47,6 +50,9 @@ class VisualizePersona(tk.Tk):
 
         global ButtonComplices
         ButtonComplices=tk.PhotoImage(file=complices_file)
+        
+        global ButtonTodas
+        ButtonTodas=tk.PhotoImage(file=todas_file)
 
         self.fondo = tk.Canvas(self, width=1000, height=750)
         self.fondo.create_image(0, 0, image=img, anchor='nw')
@@ -60,6 +66,11 @@ class VisualizePersona(tk.Tk):
         self.btn_complices= tk.Button(
             bd=0, image=ButtonComplices, activebackground='#021118', command=self.to_complices)
         self.btn_complices.place(x=650.7, y=354.1, height=79.7, width=267.1)
+        
+        self.btn_todas= tk.Button(
+            bd=0, image=ButtonTodas, activebackground='#021118', command=self.to_todas)
+        self.btn_todas.place(x=400, y=500, height=80, width=235.9)
+
 
         self.btn_back = tk.Button(
             bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_menu)
@@ -79,6 +90,10 @@ class VisualizePersona(tk.Tk):
         from pages.show_complice import MostrarComplice
         self.destroy()
         MostrarComplice()
+    def to_todas(self):
+        from pages.show_persona import MostrarPersonas
+        self.destroy()
+        MostrarPersonas()
 
 def main():
     """Renderizar la aplicacion"""
