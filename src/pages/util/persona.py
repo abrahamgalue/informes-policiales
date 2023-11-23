@@ -1,5 +1,7 @@
 from mysql.connector import Error
 from .functions import coneccion
+from .senas_de_identificacion import remove_seña
+from .ocurrencia_de_arresto import get_arrestos_persona, delete_arresto
 
 def add_persona(values):
     try:
@@ -41,6 +43,32 @@ def remove_persona(ced):
                 print("MySQL connection is closed")
 # remove_persona(12345678)
 
+def delete_arrestos_complice(ced):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """ DELETE FROM complice WHERE complice.persona_numero_de_identificacion = (%s);"""
+            cursor.execute(sql,(ced,))
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
+                
+def delete_persona(ced):
+    delete_arrestos_complice(ced)
+    remove_seña(ced)
+    arrestos = get_arrestos_persona(ced)
+    for i in range(len(arrestos)):
+        delete_arresto(arrestos[i][0])
+    remove_persona(ced)
+    
 def get_persona(ced):
     try:
         connection = coneccion()
@@ -228,3 +256,4 @@ def delete_complices_arresto(id):
                 connection.close()
                 print("MySQL connection is closed")
 # delete_complices_arresto(3)
+

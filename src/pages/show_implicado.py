@@ -1,7 +1,7 @@
 """Exportar Datos"""
 import tkinter as tk
 from tkinter import ttk
-
+from tkinter import messagebox
 img = None
 ButtonImg = None
 ButtonVer = None
@@ -102,7 +102,7 @@ class MostrarImplicados(tk.Tk):
         self.btn_editar.place(x=424.4, y=580, height=92, width=151)
 
         self.btn_borrar = tk.Button(
-            bd=0, image=ButtonBorrar, activebackground='#01060a', command=self.get_implicado_id)
+            bd=0, image=ButtonBorrar, activebackground='#01060a', command=self.borrar_persona)
         self.btn_borrar.place(x=618.6, y=580, height=92, width=151)
 
         self.btn_back = tk.Button(
@@ -125,7 +125,8 @@ class MostrarImplicados(tk.Tk):
     def edit_implicado(self):
         id = self.get_implicado_id()
         if id == None:
-            print("No selection")
+            messagebox.showinfo(
+            'Mensaje', f'Ninguna persona ha sido seleccionada.')
         else:
             from pages.criminal import FormularioCriminal
             self.destroy()
@@ -134,11 +135,26 @@ class MostrarImplicados(tk.Tk):
     def see_implicado(self):
         id = self.get_implicado_id()
         if id == None:
-            print("No selection")
+            messagebox.showinfo(
+            'Mensaje', f'Ninguna persona ha sido seleccionada.')
         else:
             from pages.see_persona import SeePersona
             self.destroy()
             SeePersona(persona_id=id)
+    def borrar_persona(self):
+        id = self.get_implicado_id()
+        if id == None:
+            messagebox.showinfo(
+            'Mensaje', f'Ninguna persona ha sido seleccionada.')
+        else:
+            borrar = messagebox.askyesno('Mensaje', '¿Desea borrar a la persona?. Esto borrará toda su informacion y los arrestos en los que esta implicado.')
+            if borrar:
+                from pages.util.persona import delete_persona
+                delete_persona(id)
+                messagebox.showinfo(
+                'Mensaje', f'La persona de id {id} ha sido borrada de forma satisfactoria.')
+                self.destroy()
+                MostrarImplicados()
 
 def main():
     """Renderizar la aplicacion"""

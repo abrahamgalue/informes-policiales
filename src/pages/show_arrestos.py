@@ -1,7 +1,7 @@
 """Exportar Datos"""
 import tkinter as tk
 from tkinter import ttk
-
+from tkinter import messagebox
 img = None
 ButtonImg = None
 ButtonVer = None
@@ -101,7 +101,7 @@ class MostrarArrestos(tk.Tk):
         self.btn_editar.place(x=424.4, y=580, height=92, width=151)
 
         self.btn_borrar = tk.Button(
-            bd=0, image=ButtonBorrar, activebackground='#01060a', command=self.get_arresto_id)
+            bd=0, image=ButtonBorrar, activebackground='#01060a', command=self.delete_arresto)
         self.btn_borrar.place(x=618.6, y=580, height=92, width=151)
 
         self.btn_back = tk.Button(
@@ -124,7 +124,8 @@ class MostrarArrestos(tk.Tk):
     def see_arresto(self):
         id = self.get_arresto_id()
         if id == None:
-            print("No selection")
+            messagebox.showinfo(
+            'Mensaje', f'Ningun arresto ha sido seleccionado.')
         else:
             from pages.see_arresto import SeeArresto
             self.destroy()
@@ -133,11 +134,28 @@ class MostrarArrestos(tk.Tk):
     def edit_arresto(self):
         id = self.get_arresto_id()
         if id == None:
-            print("No selection")
+            messagebox.showinfo(
+            'Mensaje', f'Ningun arresto ha sido seleccionado.')
         else:
             from pages.select_personas_arresto import PersonasArresto
             self.destroy()
             PersonasArresto(edit=True, arresto_id=id)
+    
+    def delete_arresto(self):
+        id = self.get_arresto_id()
+        print(id)
+        if id == None:
+            messagebox.showinfo(
+            'Mensaje', f'Ningun arresto ha sido seleccionado.')
+        else:
+            borrar = messagebox.askyesno('Mensaje', '¿Desea borrar el arresto?.')
+            if borrar:
+                from pages.util.ocurrencia_de_arresto import delete_arresto
+                delete_arresto(id)
+                messagebox.showinfo(
+                'Mensaje', f'El arresto {id} ha sido borrado de forma satisfactoria.')
+                self.destroy()
+                MostrarArrestos()
 
 def main():
     """Renderizar la aplicacion"""
