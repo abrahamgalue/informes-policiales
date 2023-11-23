@@ -85,7 +85,10 @@ class PersonasArresto(tk.Tk):
         personas = list()
         personas_data = get_personas()
         if personas_data == []:
-            personas = ["No hay"]
+            messagebox.showinfo(
+            'Mensaje', f'No hay personas agregadas.')
+            from main import MenuApp
+            MenuApp()
         else:   
             for i in range(len(personas_data)):
                 personas.append(personas_data[i][0])
