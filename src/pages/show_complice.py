@@ -67,7 +67,12 @@ class MostrarComplice(tk.Tk):
             foreground=[('selected', '#01060a')]
         )
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="black", foreground="white",font=("Cascadia Code Normal", 16))
+        self.style.configure("Treeview.Heading", background="#01060a", foreground="white",font=("Cascadia Code Normal", 16))
+        self.style.map('Treeview.Heading',
+            background=[('selected', '#01060a')],
+            fieldbackground=[('selected', '#01060a')],
+            foreground=[('selected', '#01060a')]
+        )
         columns = ('Cedula', 'Nombre', 'Apellido','Nacimiento','Arrestos')
         self.tree = ttk.Treeview(self, show='headings', columns=columns)
         

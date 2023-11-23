@@ -121,7 +121,12 @@ class PersonasArresto(tk.Tk):
             foreground=[('selected', '#01060a')]
         )
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="black", foreground="white",font=("Cascadia Code Normal", 16))
+        self.style.configure("Treeview.Heading", background="#01060a", foreground="white",font=("Cascadia Code Normal", 16))
+        self.style.map('Treeview.Heading',
+            background=[('selected', '#01060a')],
+            fieldbackground=[('selected', '#01060a')],
+            foreground=[('selected', '#01060a')]
+        )
         columns = ('Cedula', 'Nombre', 'Apellido')
         self.tree = ttk.Treeview(self, show='headings', columns=columns)
         
@@ -133,11 +138,11 @@ class PersonasArresto(tk.Tk):
         self.tree.heading('Nombre', text='Nombre')
         self.tree.heading('Apellido', text='Apellido')
         
-        self.tree.place(x=85,y=295.1,height=250,width=583.2)
+        self.tree.place(x=85,y=345.1,height=250,width=583.2)
         #Scrollbar
         scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
-        scrollbar.place(x=668.2,y=295.1,height=250,width=13.8)
+        scrollbar.place(x=668.2,y=345.1,height=250,width=13.8)
         if self.edit:
             for i in range(len(complices)):
                 self.tree.insert('', tk.END, values=complices[i])       
