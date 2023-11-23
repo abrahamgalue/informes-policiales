@@ -16,12 +16,13 @@ ButtonVer=None
 class SeeArresto(tk.Tk):
     """Página de exportación de datos"""
 
-    def __init__(self, arresto_id,persona=False,complice=False, persona_id = 0):
+    def __init__(self, arresto_id,persona=False,complice=False, persona_id = 0,implicado=False):
         super().__init__()
         self.arresto_id = arresto_id
         self.persona = persona
         self.persona_id = persona_id
         self.complice = complice
+        self.implicado = implicado
         self.inicializar_gui()
 
     def inicializar_gui(self):
@@ -203,7 +204,15 @@ class SeeArresto(tk.Tk):
         if self.persona:
             from pages.see_persona import SeePersona
             self.destroy()
-            SeePersona(persona_id=self.persona_id, complice=self.complice)
+            SeePersona(persona_id=self.persona_id, complice=self.complice,persona=self.persona,implicado=self.implicado)
+        elif self.implicado:
+            from pages.see_persona import SeePersona
+            self.destroy()
+            SeePersona(persona_id=self.persona_id, complice=self.complice,persona=False,implicado=self.implicado)
+        elif self.complice:
+            from pages.see_persona import SeePersona
+            self.destroy()
+            SeePersona(persona_id=self.persona_id, complice=self.complice,persona=False,implicado=self.implicado)
         else:
             from pages.show_arrestos import MostrarArrestos
             self.destroy()

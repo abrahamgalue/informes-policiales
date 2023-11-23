@@ -140,7 +140,7 @@ class MostrarImplicados(tk.Tk):
         else:
             from pages.see_persona import SeePersona
             self.destroy()
-            SeePersona(persona_id=id)
+            SeePersona(persona_id=id,implicado=True)
     def borrar_persona(self):
         id = self.get_implicado_id()
         if id == None:

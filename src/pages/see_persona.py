@@ -16,12 +16,14 @@ ButtonVer=None
 class SeePersona(tk.Tk):
     """Página de exportación de datos"""
 
-    def __init__(self,persona_id,complice=False,arresto=False, arresto_id = 0):
+    def __init__(self,persona_id,persona=False,complice=False,arresto=False, arresto_id = 0, implicado = False):
         super().__init__()
         self.persona_id = persona_id
         self.complice = complice
         self.arresto = arresto
         self.arresto_id = arresto_id
+        self.persona = persona
+        self.implicado = implicado
         self.inicializar_gui()
 
     def inicializar_gui(self):
@@ -30,10 +32,17 @@ class SeePersona(tk.Tk):
         self.geometry("1000x750")
         self.resizable(0, 0)
 
-        if self.arresto:
-            bg_file = './src/img/persona_see_2.png'
-        else:
+        
+        
+        if self.persona and self.implicado == False and self.complice == False:
             bg_file = './src/img/persona_see.png'
+        elif self.arresto:
+            bg_file = './src/img/persona_see_2.png'
+        elif self.complice:
+            bg_file = './src/img/complice_see.png'
+        elif self.implicado:
+            bg_file = './src/img/implicado_see.png'          
+
         sig_file = './src/img/see_persona_btn/senas_btn.png'
         back_file = './src/img/back_button.png'
         ver_file= './src/img/see_persona_btn/ver_btn.png'
@@ -136,11 +145,6 @@ class SeePersona(tk.Tk):
         self.direccion_text.place(x=231.5, y=520, height=31, width=719.6)
         self.direccion_text.lift()
 
-        if self.arresto != True: 
-            self.btn_ver= tk.Button(
-                bd=0, image=ButtonVer, activebackground='#021118', command=self.to_arresto)
-            self.btn_ver.place(x=451.6, y=580, height=31, width=139.8)
-
         self.btn_senas= tk.Button(
             bd=0, image=ButtonSig, activebackground='#021118', command=self.to_senas)
         self.btn_senas.place(x=716.1, y=575.5, height=79, width=235)
@@ -148,30 +152,32 @@ class SeePersona(tk.Tk):
         self.btn_back = tk.Button(
             bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_show)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
-            
-        if self.arresto != True:    
-            #combobox
-            self.combostyle = ttk.Style()
+           
+        self.combostyle = ttk.Style()
 
-            self.combostyle.theme_create('combostyle', parent='alt',
-                                    settings={'TCombobox':
-                                            {'configure':
-                                            {'selectbackground': '#EFA11A',  # Color al seleccionar una opcion
-                                                'fieldbackground': '#EFA11A',  # Color del fondo
-                                                'background': '#EFA11A',  # color de la flechita
-                                                # tipo de fuente
-                                                'font': ('Cascadia Code Normal', 16),
-                                                'foreground': 'white',  # color de la fuente
-                                                'borderwidth': '0',
-                                                'highlightthickness': '0'  # borde
-                                                }}}
-                                    )
-            # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
-            self.combostyle.theme_use('combostyle')
+        self.combostyle.theme_create('combostyle', parent='alt',
+                                settings={'TCombobox':
+                                        {'configure':
+                                        {'selectbackground': '#EFA11A',  # Color al seleccionar una opcion
+                                            'fieldbackground': '#EFA11A',  # Color del fondo
+                                            'background': '#EFA11A',  # color de la flechita
+                                            # tipo de fuente
+                                            'font': ('Cascadia Code Normal', 16),
+                                            'foreground': 'white',  # color de la fuente
+                                            'borderwidth': '0',
+                                            'highlightthickness': '0'  # borde
+                                            }}}
+                                )
+        # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
+        self.combostyle.theme_use('combostyle')  
+            
+        if self.arresto != True and self.persona != True:    
+            #combobox
+            
             arrestos= list()
             if self.complice:
                 self.arrestos_data = get_arrestos_complice(self.persona_id)
-            else:
+            elif self.implicado:
                 self.arrestos_data = get_arrestos_implicado(self.persona_id)
             
             if self.arrestos_data == []:
@@ -187,9 +193,63 @@ class SeePersona(tk.Tk):
             self.arrestos_box.current(0)
             self.arrestos_box.place(x=231.5, y=580, height=31, width=210)
             self.arrestos_box.pack
+            
+            self.btn_ver= tk.Button(
+            bd=0, image=ButtonVer, activebackground='#021118', command=self.to_arresto)
+            self.btn_ver.place(x=451.6, y=580, height=31, width=139.8)
+            
+        elif self.persona and self.implicado == False and self.complice == False:
+            self.combostyle.theme_use('combostyle')
+            arrestos_implicado= list()
+            
+            self.arrestos_implicado_data = get_arrestos_complice(self.persona_id)
+            
+            
+            if self.arrestos_implicado_data == []:
+                arrestos_implicado = ["No hay"]
+            else:
+                for i in range(len(self.arrestos_implicado_data)):
+                    arrestos_implicado.append(self.arrestos_implicado_data[i][1])      
+            self.arrestos_implicado_box = ttk.Combobox(
+                state="readonly",
+                values=arrestos_implicado,
+                font=("Cascadia Code Normal", 16),
+            )
+            self.arrestos_implicado_box.current(0)
+            self.arrestos_implicado_box.place(x=113.5, y=615, height=31, width=210)
+            self.arrestos_implicado_box.pack
+            
+            self.btn_ver_implicado= tk.Button(
+            bd=0, image=ButtonVer, activebackground='#021118', command=self.to_arresto_implicado)
+            self.btn_ver_implicado.place(x=144.4, y=670, height=31, width=139.8)
 
+            arrestos_complice= list()
+            self.arrestos_complice_data = get_arrestos_implicado(self.persona_id)
+            
+            if self.arrestos_complice_data == []:
+                arrestos_complice = ["No hay"]
+            else:
+                for i in range(len(self.arrestos_complice_data)):
+                    arrestos_complice.append(self.arrestos_complice_data[i][1])      
+            self.arrestos_complice_box = ttk.Combobox(
+                state="readonly",
+                values=arrestos_complice,
+                font=("Cascadia Code Normal", 16),
+            )
+            self.arrestos_complice_box.current(0)
+            self.arrestos_complice_box.place(x=414.8, y=616, height=31, width=210)
+            self.arrestos_complice_box.pack
+            
+            self.btn_ver_complice= tk.Button(
+            bd=0, image=ButtonVer, activebackground='#021118', command=self.to_arresto_complice)
+            self.btn_ver_complice.place(x=446.4, y=671, height=31, width=139.8)
+                
     def back_to_show(self):
         """Volver al menu"""
+        if self.persona:
+            from pages.show_persona import MostrarPersonas
+            self.destroy()
+            MostrarPersonas()
         if self.arresto and self.complice:
             from pages.see_arresto import SeeArresto
             self.destroy()
@@ -202,7 +262,7 @@ class SeePersona(tk.Tk):
             from pages.show_complice import MostrarComplice
             self.destroy()
             MostrarComplice()
-        else:
+        elif self.implicado:
             from pages.show_implicado import MostrarImplicados
             self.destroy()
             MostrarImplicados()
@@ -211,12 +271,27 @@ class SeePersona(tk.Tk):
         from pages.see_senas_identificacion import SeeSenas
         self.destroy()
         SeeSenas(persona_id=self.persona_id, complice=self.complice,
-                 arresto=self.arresto,arresto_id=self.arresto_id)
+                 arresto=self.arresto,arresto_id=self.arresto_id,persona=self.persona, implicado=self.implicado)
     
     def to_arresto(self):
         from pages.see_arresto import SeeArresto
         index_id = self.arrestos_box.current()
         arresto = self.arrestos_data[index_id][0]
+        self.destroy()
+        SeeArresto(persona_id=self.persona_id, complice=self.complice,
+                 persona=False,arresto_id=arresto,implicado=self.implicado)
+    def to_arresto_implicado(self):
+        from pages.see_arresto import SeeArresto
+        index_id = self.arrestos_implicado_box.current()
+        arresto = self.arrestos_implicado_data[index_id][0]
+        self.destroy()
+        SeeArresto(persona_id=self.persona_id, complice=self.complice,
+                 persona=True,arresto_id=arresto)
+        
+    def to_arresto_complice(self):
+        from pages.see_arresto import SeeArresto
+        index_id = self.arrestos_complice_box.current()
+        arresto = self.arrestos_complice_data[index_id][0]
         self.destroy()
         SeeArresto(persona_id=self.persona_id, complice=self.complice,
                  persona=True,arresto_id=arresto)
