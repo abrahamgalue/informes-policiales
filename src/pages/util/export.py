@@ -126,7 +126,7 @@ def export_arrestos():
     i = 0
     with pd.ExcelWriter(f"..\informes-policiales\exports\{file_name}.xlsx") as writer:
         for sheetname, df in sheets: # loop through `dict` of dataframes
-            
+            i+=1
             df.to_excel(writer, sheet_name=sheetname,index=False,startcol=sc)
             worksheet = writer.sheets[sheetname] # pull worksheet object
             for idx, col in enumerate(df.columns): # loop through all columns
@@ -136,8 +136,7 @@ def export_arrestos():
                     len(str(series.name)) # len of column name/header
                     )) + 1 # adding a little extra space
                 worksheet.set_column(idx+sc, idx+sc, max_len) # set column width
-            if i == 3:
-                sc += 3
+            if i == 2:
+                sc += 4
             else:
-                i+=1
                 sc+=11
