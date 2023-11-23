@@ -28,7 +28,7 @@ class ExportarDatos(tk.Tk):
         bg_file = './src/img/export.png'
         arrestos_file = './src/img/export_btn/arrestos_btn.png'
         personas_file = './src/img/export_btn/personas_btn.png'
-        todo_file = './src/img/export_btn/todo_btn.png'
+        # todo_file = './src/img/export_btn/todo_btn.png'
         back_file = './src/img/back_button.png'
 
         global icono_grande
@@ -51,8 +51,8 @@ class ExportarDatos(tk.Tk):
         global ButtonArrestos
         ButtonArrestos = tk.PhotoImage(file=arrestos_file)
 
-        global ButtonTodo
-        ButtonTodo = tk.PhotoImage(file=todo_file)
+        # global ButtonTodo
+        # ButtonTodo = tk.PhotoImage(file=todo_file)
 
         self.fondo = tk.Canvas(self, width=1000, height=750)
         self.fondo.create_image(0, 0, image=img, anchor='nw')
@@ -66,9 +66,9 @@ class ExportarDatos(tk.Tk):
             bd=0, image=ButtonArrestos, activebackground='#01060a',command=self.arrestos)
         self.btn_export_arrestos.place(x=366.5, y=406.2, height=79, width=267)
 
-        self.btn_export_todo = tk.Button(
-            bd=0, image=ButtonTodo, activebackground='#01060a')
-        self.btn_export_todo.place(x=366.5, y=512.3, height=79, width=267)
+        # self.btn_export_todo = tk.Button(
+        #     bd=0, image=ButtonTodo, activebackground='#01060a')
+        # self.btn_export_todo.place(x=366.5, y=512.3, height=79, width=267)
 
         self.btn_back = tk.Button(
             bd=0, image=ButtonImg, activebackground='#021118', command=self.back_to_menu)
