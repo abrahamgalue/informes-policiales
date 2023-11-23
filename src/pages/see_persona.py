@@ -170,15 +170,15 @@ class SeePersona(tk.Tk):
             self.combostyle.theme_use('combostyle')
             arrestos= list()
             if self.complice:
-                arrestos_data = get_arrestos_complice(self.persona_id)
+                self.arrestos_data = get_arrestos_complice(self.persona_id)
             else:
-                arrestos_data = get_arrestos_implicado(self.persona_id)
+                self.arrestos_data = get_arrestos_implicado(self.persona_id)
             
-            if arrestos_data == []:
+            if self.arrestos_data == []:
                 arrestos = ["No hay"]
             else:
-                for i in range(len(arrestos_data)):
-                    arrestos.append(arrestos_data[i][0])      
+                for i in range(len(self.arrestos_data)):
+                    arrestos.append(self.arrestos_data[i][1])      
             self.arrestos_box = ttk.Combobox(
                 state="readonly",
                 values=arrestos,
@@ -215,7 +215,8 @@ class SeePersona(tk.Tk):
     
     def to_arresto(self):
         from pages.see_arresto import SeeArresto
-        arresto = str(self.arrestos_box.get())
+        index_id = self.arrestos_box.current()
+        arresto = self.arrestos_data[index_id][0]
         self.destroy()
         SeeArresto(persona_id=self.persona_id, complice=self.complice,
                  persona=True,arresto_id=arresto)
