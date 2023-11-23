@@ -1,5 +1,6 @@
 from mysql.connector import Error
 from .functions import coneccion
+from .cond import remove_condena
 
 def add_arresto(values):
     try:
@@ -43,6 +44,25 @@ def remove_arresto(id):
                 connection.close()
                 print("MySQL connection is closed")
 # remove_arresto(2)
+
+def delete_arresto(id):
+    remove_condena(id)
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            cursor.execute("DELETE FROM ocurrencia_de_arresto WHERE id = %s;",(id,))
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error", e)
+    finally:
+        if connection is not None :
+            if connection.is_connected():
+                cursor.close()
+                print("MySQL cursor is closed")
+                connection.close()
+                print("MySQL connection is closed")
 
 def get_arresto(id):
     try:
