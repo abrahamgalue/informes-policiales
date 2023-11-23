@@ -160,13 +160,13 @@ class FormularioIdentificacion(tk.Tk):
         patron_color_piel = r'^.{3,45}$'
         self.regex_color_piel = re.compile(patron_color_piel)
 
-        patron_cabello = r'^.{4,45}$'
+        patron_cabello = r'^.{2,45}$'
         self.regex_cabello = re.compile(patron_cabello)
 
-        patron_color_cabello = r'^.{5,45}$'
+        patron_color_cabello = r'^.{3,45}$'
         self.regex_color_cabello = re.compile(patron_color_cabello)
 
-        patron_ojos = r'^.{3,45}$'
+        patron_ojos = r'^.{2,45}$'
         self.regex_ojos = re.compile(patron_ojos)
 
         patron_otras_caracteristicas = r'^.{0,60}$'
