@@ -6,9 +6,9 @@
 
 ### Aplicación desktop de registros policiales
 
-![vista-previa](./public/preview/01-app-preview.png)
+![vista-previa](./public/preview/01-app-preview.jpg)
 
-![vista-previa](./public/preview/02-app-preview.png)
+![vista-previa](./public/preview/02-app-preview.jpg)
 
 ## 🚀 Descripción
 
