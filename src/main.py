@@ -4,7 +4,8 @@ from pages.select_personas_arresto import PersonasArresto
 from pages.exportar import ExportarDatos
 from pages.show_arrestos import MostrarArrestos
 from pages.criminal import FormularioCriminal
-
+from pages.visualize import VisualizePersona
+from pages.creditos import SeeCreditos
 img = None
 ButtonPersona1 = None
 ButtonPersona2 = None
@@ -79,7 +80,7 @@ class MenuApp(tk.Tk):
         btn_exportar.place(x=382.5, y=477, height=79.7, width=235.9)
 
         self.btn_view_persona = tk.Button(
-            bd=0, image=ButtonPersona2, activebackground='#01080e')
+            bd=0, image=ButtonPersona2, activebackground='#01080e', command=self.to_vizualise)
         self.btn_view_persona.place(x=650, y=410, height=79.7, width=235.9)
 
         self.btn_view_arresto = tk.Button(
@@ -87,7 +88,7 @@ class MenuApp(tk.Tk):
         self.btn_view_arresto.place(x=650, y=540, height=79.7, width=235.9)
 
         self.btn_creditos = tk.Button(
-            bd=0, image=ButtonCreditos, activebackground='#01080e')
+            bd=0, image=ButtonCreditos, activebackground='#01080e',command=self.to_credits)
         self.btn_creditos.place(x=417.9, y=656.7, height=55.5, width=164.3)
     
     def to_register_persona(self):
@@ -100,6 +101,11 @@ class MenuApp(tk.Tk):
         self.destroy()
         PersonasArresto()
 
+    def to_vizualise(self):
+        """Mostrar tabla de arrestos"""
+        self.destroy()
+        VisualizePersona()
+    
     def to_show_arrestos(self):
         """Mostrar tabla de arrestos"""
         self.destroy()
@@ -110,6 +116,11 @@ class MenuApp(tk.Tk):
         self.destroy()
         ExportarDatos()
 
+    def to_credits(self):
+        """ mostrar creditos """
+        self.destroy()    
+        SeeCreditos()
+        
     def clean(self):
         """Limpiar los campos del formulario"""
         self.date_entry.delete(0, tk.END)

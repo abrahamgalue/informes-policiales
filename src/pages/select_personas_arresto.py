@@ -2,7 +2,8 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from .util.persona import get_personas,get_persona
+from .util.persona import get_personas,get_persona, get_complices_arresto
+from .util.ocurrencia_de_arresto import get_arresto
 
 img = None
 ButtonImg = None
@@ -15,8 +16,10 @@ icono_chico = None
 class PersonasArresto(tk.Tk):
     """Página de exportación de datos"""
 
-    def __init__(self):
+    def __init__(self, edit=False, arresto_id=0):
         super().__init__()
+        self.edit = edit
+        self.arresto_id = arresto_id
         self.inicializar_gui()
 
     def inicializar_gui(self):
@@ -58,6 +61,10 @@ class PersonasArresto(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
         
+        if self.edit:
+            implicado = get_arresto(self.arresto_id)[0][7]
+            complices = get_complices_arresto(self.arresto_id)[:3]
+            
         self.combostyle = ttk.Style()
 
         self.combostyle.theme_create('combostyle', parent='alt',
@@ -76,15 +83,26 @@ class PersonasArresto(tk.Tk):
         # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
         self.combostyle.theme_use('combostyle')
         personas = list()
-        personas_data = get_personas()    
-        for i in range(len(personas_data)):
-            personas.append(personas_data[i][0])
+        personas_data = get_personas()
+        if personas_data == []:
+            messagebox.showinfo(
+            'Mensaje', f'No hay personas agregadas.')
+            self.destroy()
+            from main import MenuApp
+            MenuApp()
+        else:   
+            for i in range(len(personas_data)):
+                personas.append(personas_data[i][0])
         self.implicado_entry = ttk.Combobox(
             state="readonly",
             values=personas,
             font=("Cascadia Code Normal", 16),
         )
-        self.implicado_entry.current(0)
+        if self.edit:
+            implicado_index = personas.index(implicado)
+            self.implicado_entry.current(implicado_index)
+        else:
+            self.implicado_entry.current(0)
         self.implicado_entry.place(x=240, y=180, height=31, width=210)
         self.implicado_entry.pack
         
@@ -107,24 +125,31 @@ class PersonasArresto(tk.Tk):
             foreground=[('selected', '#01060a')]
         )
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="black", foreground="white",font=("Cascadia Code Normal", 16))
+        self.style.configure("Treeview.Heading", background="#01060a", foreground="white",font=("Cascadia Code Normal", 16))
+        self.style.map('Treeview.Heading',
+            background=[('selected', '#01060a')],
+            fieldbackground=[('selected', '#01060a')],
+            foreground=[('selected', '#01060a')]
+        )
         columns = ('Cedula', 'Nombre', 'Apellido')
         self.tree = ttk.Treeview(self, show='headings', columns=columns)
         
         self.tree.column('Cedula', width=115, minwidth=115, stretch=False)
-        self.tree.column('Nombre',width=197, minwidth=197, stretch=False)
-        self.tree.column('Apellido',width=309, minwidth=309, stretch=False)
+        self.tree.column('Nombre',width=232, minwidth=232, stretch=False)
+        self.tree.column('Apellido',width=233, minwidth=233, stretch=False)
         
         self.tree.heading('Cedula', text='Cedula')
         self.tree.heading('Nombre', text='Nombre')
         self.tree.heading('Apellido', text='Apellido')
         
-        self.tree.place(x=85,y=295.1,height=250,width=583.2)
+        self.tree.place(x=85,y=345.1,height=250,width=583.2)
         #Scrollbar
         scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
-        scrollbar.place(x=668.2,y=295.1,height=250,width=13.8)
-                       
+        scrollbar.place(x=668.2,y=345.1,height=250,width=13.8)
+        if self.edit:
+            for i in range(len(complices)):
+                self.tree.insert('', tk.END, values=complices[i])       
          
         self.btn_add = tk.Button(
             bd=0, image=ButtonAdd, activebackground='#01060a',command=self.add_complice)
@@ -191,13 +216,18 @@ class PersonasArresto(tk.Tk):
         
         from pages.arresto_condena import FormularioArresto
         self.destroy()
-        FormularioArresto(implicado,complices)
+        FormularioArresto(implicado,complices,edit=self.edit,arresto_id=self.arresto_id)
             
     def back_to_menu(self):
         """Volver al menu"""
-        from main import MenuApp
-        self.destroy()
-        MenuApp()
+        if self.edit:
+            from pages.show_arrestos import MostrarArrestos
+            self.destroy()
+            MostrarArrestos()
+        else:
+            from main import MenuApp
+            self.destroy()
+            MenuApp()
 
 def main():
     """Renderizar la aplicacion"""

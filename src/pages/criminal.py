@@ -3,9 +3,8 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-from pages.arresto_condena import datos_arresto
+from pages.util.persona import get_persona
 
-datos_criminal = []
 img = None
 ButtonImg = None
 ButtonImg2 = None
@@ -16,9 +15,11 @@ icono_chico = None
 class FormularioCriminal(tk.Tk):
     """Formulario de registro de criminal"""
 
-    def __init__(self):
+    def __init__(self,edit=False,persona_id=0,complice = False):
         super().__init__()
-
+        self.edit = edit
+        self.persona_id = persona_id
+        self.complice = complice
         self.inicializar_gui()
         self.definir_patrones_validaciones()
 
@@ -53,46 +54,87 @@ class FormularioCriminal(tk.Tk):
         self.fondo.create_image(0, 0, image=img, anchor='nw')
         self.fondo.pack()
 
-        self.dni_entry = tk.Entry(self, background="#EFA11A", font=(
-            "Cascadia Code Normal", 16), fg="white")
-        self.dni_entry.config(bd=0)
+        if self.edit:
+            persona_data = get_persona(self.persona_id)
+
+        dni_text = tk.StringVar()
+        if self.edit:
+            dni_text.set(persona_data[0][0])
+        else:
+            dni_text.set("")
+        self.dni_entry = tk.Entry(self, background="#EFA11A", 
+            font=("Cascadia Code Normal", 16), fg="white", textvariable= dni_text)
+        if self.edit:
+             self.dni_entry.config(bd=0, state='disabled')
+        else:
+            self.dni_entry.config(bd=0)
         self.dni_entry.place(x=234, y=250, height=31, width=210)
         self.dni_entry.lift()
 
-        self.name_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+        name_text = tk.StringVar()
+        if self.edit:
+            name_text.set(persona_data[0][1])
+        else:
+            name_text.set("")
+        self.name_entry = tk.Entry(self, background="#EFA11A", 
+            font=("Cascadia Code Normal", 16), fg="white", textvariable=name_text)
         self.name_entry.config(bd=0)
         self.name_entry.place(x=234, y=300, height=31, width=210)
         self.name_entry.lift()
 
+        lastname_text = tk.StringVar()
+        if self.edit:
+            lastname_text.set(persona_data[0][2])
+        else:
+            lastname_text.set("")
         self.lastname_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=lastname_text)
         self.lastname_entry.config(bd=0)
         self.lastname_entry.place(x=234, y=350, height=31, width=210)
         self.lastname_entry.lift()
 
+        alias_text = tk.StringVar()
+        if self.edit:
+            alias_text.set(persona_data[0][8])
+        else:
+            alias_text.set("")
         self.alias_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=alias_text)
         self.alias_entry.config(bd=0)
         self.alias_entry.place(x=234, y=400, height=31, width=210)
         self.alias_entry.lift()
 
+        dob_text = tk.StringVar()
+        if self.edit:
+            dob_text.set(persona_data[0][3])
+        else:
+            dob_text.set("")
         self.dob_entry = tk.Entry(self, background="#EFA11A", font=(
-            "Cascadia Code Normal", 16), fg="white")
+            "Cascadia Code Normal", 16), fg="white", textvariable=dob_text)
         self.dob_entry.config(bd=0)
         self.dob_entry.place(x=234, y=580, height=31, width=210)
         self.dob_entry.lift()
 
         # telefono
+        phone_text = tk.StringVar()
+        if self.edit:
+            phone_text.set(persona_data[0][5])
+        else:
+            phone_text.set("")
         self.phone_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=phone_text)
         self.phone_entry.config(bd=0)
         self.phone_entry.place(x=646, y=450, height=31, width=305)
         self.phone_entry.lift()
 
         # direccion
+        address_text = tk.StringVar()
+        if self.edit:
+            address_text.set(persona_data[0][6])
+        else:
+            address_text.set("")
         self.address_entry = tk.Entry(
-            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white")
+            self, background="#EFA11A", font=("Cascadia Code Normal", 16), fg="white", textvariable=address_text)
         self.address_entry.config(bd=0)
         self.address_entry.place(x=646, y=500, height=31, width=305)
         self.address_entry.lift()
@@ -116,24 +158,38 @@ class FormularioCriminal(tk.Tk):
                                 )
         # ATTENTION: this applies the new style 'combostyle' to all ttk.Combobox
         combostyle.theme_use('combostyle')
-
+        sex = ["Masculino", "Femenino"]
         self.sex_entry = ttk.Combobox(
             state="readonly",
-            values=["Masculino", "Femenino"],
+            values=sex,
             font=("Cascadia Code Normal", 16),
         )
-        self.sex_entry.current(0)
+        if self.edit:
+            sex_index = sex.index(persona_data[0][4])
+            self.sex_entry.current(sex_index)
+        else:
+            self.sex_entry.current(0)
         self.sex_entry.place(x=234, y=500, height=31, width=210)
         self.sex_entry.pack
         # Nacionalidad NI SE TE OCURRA TOCAR.
         combostyle.theme_use('combostyle')
-
+        nationalities = ['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá',
+                  'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana',
+                  'Ecuador', 'El Salvador', 'Estados Unidos', 'España', 'Guatemala','Guyana', 
+                  'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 
+                  'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 
+                  'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela']
+           
         self.nationality_entry = ttk.Combobox(
             state="readonly",
-            values=['Argentina', 'Bahamas', 'Barbados', 'Belice', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'República Dominicana', 'Ecuador', 'El Salvador', 'Estados Unidos', 'España', 'Guatemala',
-                    'Guyana', 'Haití', 'Honduras', 'Jamaica', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'Saint Kitts y Nevis', 'Santa Lucía', 'San Vicente y las Granadinas', 'Surinam', 'Trinidad y Tobago', 'Uruguay', 'Venezuela'],
+            values=nationalities,
             font=("Cascadia Code Normal", 16),
         )
+        if self.edit:
+            nationality_index = nationalities.index(persona_data[0][7])
+            self.nationality_entry.current(nationality_index)
+        else:
+            self.nationality_entry.current(0)
         self.nationality_entry.current(0)
         self.nationality_entry.place(x=234, y=450, height=31, width=210)
         self.nationality_entry.pack
@@ -145,10 +201,6 @@ class FormularioCriminal(tk.Tk):
         self.btn_back = tk.Button(
             bd=0, image=ButtonImg2, activebackground='#021118', command=self.back_to_menu)
         self.btn_back.place(x=75, y=87.3, height=53, width=95)
-
-        # btn_limpiar = tk.Button(
-        #     text='Limpiar', command=self.clean)
-        # btn_limpiar.grid(row=11, column=3)
 
     def definir_patrones_validaciones(self):
         """Patrones de validación"""
@@ -237,13 +289,12 @@ class FormularioCriminal(tk.Tk):
             "Alias": self.alias_entry.get()
         }
         print(criminal_data)
-
-        global datos_criminal
-        datos_criminal = list(criminal_data.values())
+        
+        self.datos_criminal = list(criminal_data.values())
 
         from pages.senas_identificacion import FormularioIdentificacion
         self.destroy()
-        FormularioIdentificacion()
+        FormularioIdentificacion(self.datos_criminal,self.edit,self.persona_id)
 
     def clean(self):
         """Limpiar los campos del formulario"""
@@ -259,9 +310,16 @@ class FormularioCriminal(tk.Tk):
     
     def back_to_menu(self):
         """Volver al menu"""
+        from pages.show_implicado import MostrarImplicados
+        from pages.show_complice import MostrarComplice
         from main import MenuApp
         self.destroy()
-        MenuApp()
+        if self.complice:
+            MostrarComplice()
+        elif self.edit and self.complice == False:
+            MostrarImplicados()
+        else:        
+            MenuApp()
 
 
 def main():

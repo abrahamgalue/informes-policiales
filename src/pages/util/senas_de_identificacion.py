@@ -45,7 +45,10 @@ def get_señas():
         connection = coneccion()
         if connection is not None:
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM señas_de_identificacion ORDER BY persona_numero_de_identificacion;")
+            sql = """SELECT * FROM señas_de_identificacion JOIN persona 
+            ON persona.numero_de_identificacion = señas_de_identificacion.persona_numero_de_identificacion 
+            ORDER BY persona.nombre ASC,persona.apellido ASC"""
+            cursor.execute(sql)
             señas = cursor.fetchall()
             print(señas)
             return señas
@@ -77,3 +80,28 @@ def get_seña(ced):
                 connection.close()
                 print("MySQL connection is closed")
 # get_seña(3000555)
+
+def update_seña(values):
+    try:
+        connection = coneccion()
+        if connection is not None:
+            cursor = connection.cursor()
+            sql = """ UPDATE señas_de_identificacion SET peso = %s, 
+            altura = %s, color_de_piel = %s, cabello = %s,
+            color_de_cabello = %s, ojos = %s, 
+            otra_caracteristica = %s 
+            WHERE señas_de_identificacion.persona_numero_de_identificacion = %s """
+            cursor.execute(sql,values)
+            print('Warnings:',cursor.fetchwarnings())
+            connection.commit()
+    except Error as e:
+        print("Error", e)
+    finally:
+        if connection is not None:
+            if connection.is_connected():
+                cursor.close()
+                print("MySQL cursor is closed")
+                connection.close()
+                print("MySQL connection is closed")
+# datos = [101.02,101.02,'prueba 1','prueba 1','prueba 1','prueba 1','prueba 1',1010101]
+# update_seña(datos)
